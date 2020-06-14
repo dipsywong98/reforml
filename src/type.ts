@@ -43,7 +43,7 @@ export type FieldComponent<T> = FunctionComponent<{
  * Type of lookup dictionary of field components
  */
 export interface FieldComponents {
-  [type: string]: FieldComponent<unknown>
+  text: FieldComponent<string>
 }
 
 /**

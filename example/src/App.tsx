@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 
-import { BaseForm, ExampleComponent } from 'reforml'
-import 'reforml/dist/index.css'
-import { Fields } from '../../src/type'
+import { Fields, BaseForm } from 'reforml'
 
 const App = () => {
   const [value, setValue] = useState({})
@@ -15,7 +13,6 @@ const App = () => {
   }
   return (
     <div>
-      <ExampleComponent text="Create React Library Example 😄" />
       <BaseForm onChange={setValue} fields={fields} value={value}/>
     </div>
   )
