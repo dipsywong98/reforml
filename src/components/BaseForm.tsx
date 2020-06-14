@@ -1,7 +1,8 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { FieldComponent, Fields, FormValue } from '../type'
 import { useComponents } from './ReformlContext'
+import { mergeDefaultValue } from '../utils/mergeDefaultValue'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -21,6 +22,13 @@ export function BaseForm<T extends FormValue> ({
   value
 }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
   const Components = useComponents()
+  useEffect(() => {
+    const initialValue: T = value ?? {}
+    const flag = mergeDefaultValue(fields, initialValue)
+    if (flag) {
+      onChange({ ...initialValue })
+    }
+  }, [])
   const handleChange = (fieldName: string, fieldValue: unknown): void => {
     onChange({ ...value, [fieldName]: fieldValue })
   }
@@ -35,6 +43,7 @@ export function BaseForm<T extends FormValue> ({
             key={fieldName}
             {...field}
             value={value[fieldName]}
+            name={fieldName}
             onChange={(value: unknown) => handleChange(fieldName, value)}
           />
         )

@@ -26,7 +26,8 @@ export const FieldPropTypes = {
   label: PropTypes.string,
   disabled: PropTypes.bool,
   value: PropTypes.any,
-  helperText: PropTypes.string
+  helperText: PropTypes.string,
+  name: PropTypes.string
 }
 
 /**
@@ -35,6 +36,7 @@ export const FieldPropTypes = {
 export type FieldComponent<T> = FunctionComponent<{
   onChange: (value: T, event?: Event) => unknown
   value?: T
+  name?: string
 } & Field<T>>
 
 /**
