@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import React, { FunctionComponent } from 'react'
 import PropTypes from 'prop-types'
 
 /**
@@ -30,11 +30,13 @@ export const FieldPropTypes = {
   name: PropTypes.string
 }
 
+export type ValueCallback<T> = (value: T, event?: React.ChangeEvent<unknown>|undefined) => unknown
+
 /**
  * Type of a field component
  */
 export type FieldComponent<T> = FunctionComponent<{
-  onChange: (value: T, event?: Event) => unknown
+  onChange: ValueCallback<T>
   value?: T
   name?: string
 } & Field<T>>
@@ -44,6 +46,7 @@ export type FieldComponent<T> = FunctionComponent<{
  */
 export interface FieldComponents {
   text: FieldComponent<string>
+  number: FieldComponent<number>
 }
 
 /**

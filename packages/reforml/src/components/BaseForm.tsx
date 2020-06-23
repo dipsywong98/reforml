@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { FieldComponent, FieldComponents, Fields, FormValue } from '../type'
+import { FieldComponent, FieldComponents, Fields, FormValue, ValueCallback } from '../type'
 import { useComponents } from './ReformlContext'
 import { mergeDefaultValue } from '../utils/mergeDefaultValue'
 
@@ -11,7 +11,7 @@ export const BaseFormPropTypes = {
 }
 
 export interface BaseFormProps<T extends FormValue> {
-  onChange: (value: T) => unknown
+  onChange: ValueCallback<T>
   fields: Fields
   value: T
 }
@@ -38,7 +38,8 @@ export function BaseForm<T extends FormValue> ({
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <React.Fragment>
       {Object.entries(fields).map(([fieldName, field]) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         const Component: FieldComponent<unknown> = Components[field.type]
         return (
           <Component
