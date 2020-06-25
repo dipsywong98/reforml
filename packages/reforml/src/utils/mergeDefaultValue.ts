@@ -1,4 +1,4 @@
-import { Fields, FormValue } from '../type'
+import { Fields, FormValue } from '../types'
 
 export function mergeDefaultValue (fields: Fields, initialValue: FormValue): boolean {
   let flag = false

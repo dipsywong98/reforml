@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import { DefaultComponents } from './fields/DefaultComponents'
-import { FieldComponents } from '../type'
+import { FieldComponents } from '../types'
 
 export interface ReformlContextInterface {
   components: FieldComponents

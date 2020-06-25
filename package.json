@@ -2,9 +2,52 @@
   "name": "reforml-project",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.22.1"
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^10.4.1",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^12.12.38",
+    "@types/react": "^16.9.27",
+    "@types/react-dom": "^16.9.7",
+    "@typescript-eslint/eslint-plugin": "3",
+    "@typescript-eslint/parser": "^2.26.0",
+    "babel-eslint": "^10.0.3",
+    "cross-env": "^7.0.2",
+    "gh-pages": "^2.2.0",
+    "microbundle-crl": "^0.13.10",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.9.5",
+    "lerna": "^3.22.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-config-standard-react": "^9.2.0",
+    "eslint-config-standard-with-typescript": "^18.0.2",
+    "eslint-plugin-import": "2",
+    "eslint-plugin-node": "11",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-promise": "4",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-standard": "4"
   },
   "workspaces": [
-     "packages/*"
-  ]
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "cd packages/reforml && yarn build",
+    "watch": "cd packages/reforml && yarn start",
+    "example": "cd packages/example && yarn start",
+    "prepare": "cd packages/reforml && yarn prepare",
+    "test": "cd packages/reforml && yarn test",
+    "test:build": "cd packages/reforml && yarn test:build",
+    "test:lint": "cd packages/reforml && yarn test:lint",
+    "test:unit": "cd packages/reforml && yarn test:unit",
+    "test:watch": "cd packages/reforml && yarn test:watch",
+    "predeploy": "cd packages/reforml && yarn predeploy",
+    "deploy": "cd packages/reforml && yarn deploy"
+  }
 }

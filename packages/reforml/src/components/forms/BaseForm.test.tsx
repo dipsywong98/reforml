@@ -2,8 +2,8 @@ import { BaseForm } from './BaseForm'
 import { render } from 'react-dom'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
-import { Fields, FormValue } from '../type'
-import { container } from '../utils/testHelper'
+import { Fields, FormValue } from '../../types'
+import { container } from '../../utils/testHelper'
 
 describe('BaseForm', () => {
   it('generates no errors when no fields', () => {
