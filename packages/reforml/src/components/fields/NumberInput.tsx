@@ -9,7 +9,7 @@ export const NumberInput: FieldComponent<number> = ({
   ...props
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    onChange?.(Number.parseFloat(event.target.value), event)
+    onChange?.(Number.parseFloat(event.target.value))
   }
   return (
     <React.Fragment>

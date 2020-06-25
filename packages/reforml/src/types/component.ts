@@ -14,7 +14,11 @@ export const FieldPropTypes = {
   name: PropTypes.string
 }
 
-export type ValueCallback<T> = (value: T, event?: React.ChangeEvent<unknown>|undefined) => unknown
+export type ValueCallback<T> = ((param: T | (
+  React.ChangeEvent<unknown> &
+  {
+    target: { value: T }
+  })) => unknown)
 
 export type FieldComponentProps<T> = {
   onChange?: ValueCallback<T>
@@ -30,8 +34,10 @@ export type FieldComponent<T> = FunctionComponent<FieldComponentProps<T>>
 /**
  * Type of lookup dictionary of field components
  */
-export type FieldComponents<T={[type: string]: FieldComponent<never>}> = {
+export type FieldComponents<T = { [type: string]: FieldComponent<never> }> = {
   text: FieldComponent<string>
   number: FieldComponent<number>
-  select: FieldComponent<number|string>
+  select: FieldComponent<number | string>
+  helperText: FunctionComponent
+  label: FunctionComponent
 } | T

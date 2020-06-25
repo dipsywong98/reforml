@@ -19,7 +19,7 @@ export const Select: FieldComponent<string | number> = ({ options, value, onChan
     [options]
   )
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    onChange?.(event.target.value, event)
+    onChange?.(event)
   }
   return (
     <select value={value} onChange={handleChange}>

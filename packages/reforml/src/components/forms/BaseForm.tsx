@@ -17,10 +17,10 @@ export interface BaseFormProps<T extends FormValue> {
 }
 
 export function BaseForm<T extends FormValue> ({
-  onChange,
-  fields,
-  value
-}: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
+                                                 onChange,
+                                                 fields,
+                                                 value
+                                               }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
   const Components: FieldComponents = useComponents()
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -40,13 +40,33 @@ export function BaseForm<T extends FormValue> ({
       {Object.entries(fields).map(([fieldName, field]) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const Component: FieldComponent<unknown> = Components[field.type]
+
+        function changeHandler<U> (param: React.ChangeEvent<unknown> & {
+          target: { value: U }
+        }): void
+        function changeHandler<U> (param: U): void
+
+        function changeHandler<U> (param: U | (React.ChangeEvent<unknown> & {
+          target: { value: U }
+        })): void {
+          if (typeof param === 'object') {
+            if ('target' in param) {
+              handleChange(fieldName, param.target.value)
+            } else {
+              handleChange(fieldName, param)
+            }
+          } else {
+            handleChange(fieldName, param)
+          }
+        }
+
         return (
           <Component
             key={fieldName}
             {...field}
             value={value[fieldName]}
             name={fieldName}
-            onChange={(value: unknown) => handleChange(fieldName, value)}
+            onChange={changeHandler}
           />
         )
       })}

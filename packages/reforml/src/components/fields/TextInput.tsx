@@ -9,7 +9,7 @@ export const TextInput: FieldComponent<string> = ({
   ...props
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    onChange?.(event.target.value, event)
+    onChange?.(event)
   }
   return (
     <React.Fragment>
