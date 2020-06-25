@@ -1,3 +1,1 @@
-import { ChangeEvent } from 'react'
-
-export type ValueCallback<T> = (param: T|ChangeEvent) => unknown
+export type ValueCallback<T> = (param: T | {target: {value: T}}) => unknown

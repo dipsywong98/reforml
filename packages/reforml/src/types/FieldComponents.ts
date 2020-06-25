@@ -8,8 +8,6 @@ export interface FieldComponents {
   text: FieldComponent<string>
   number: FieldComponent<number>
   select: FieldComponent<number | string>
-  HelperText: FunctionComponent
-  LabelText: FunctionComponent
   FieldWrapper: FunctionComponent
   [type: string]: FunctionComponent
 }

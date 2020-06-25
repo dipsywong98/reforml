@@ -1,7 +1,8 @@
 import { FieldComponent, FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useComponents } from '../ReformlContext'
+import { HelperText } from './HelperText'
+import { LabelText } from './LabelText'
 
 export const TextInput: FieldComponent<string> = ({
   helperText,
@@ -14,7 +15,6 @@ export const TextInput: FieldComponent<string> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     onChange?.(event.target.value)
   }
-  const { LabelText, HelperText } = useComponents()
   return (
     <label>
       <LabelText>

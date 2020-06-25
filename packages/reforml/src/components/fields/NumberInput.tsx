@@ -9,8 +9,12 @@ export const NumberInput: FieldComponent<number> = ({
   defaultVal,
   ...props
 }) => {
-  const handleChange = (value: string): void => {
-    onChange?.(Number.parseFloat(value))
+  const handleChange = (value: string | {target: {value: string}}): void => {
+    if (typeof value === 'string') {
+      onChange?.(Number.parseFloat(value))
+    } else if ('value' in value.target) {
+      onChange?.(Number.parseFloat(value.target.value))
+    }
   }
   return (
     <TextInput
