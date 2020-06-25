@@ -1,17 +1,22 @@
 import { Fields, FormValue } from '../types'
 
-export function mergeDefaultValue (fields: Fields, initialValue: FormValue): boolean {
+/**
+ * Apply the default value of fields to formValue if not present
+ * @param fields
+ * @param formValue
+ */
+export function mergeDefaultValue (fields: Fields, formValue: FormValue): boolean {
   let flag = false
   Object.entries({ ...fields }).forEach(([fieldName, field]) => {
-    if (initialValue[fieldName] === undefined) {
+    if (formValue[fieldName] === undefined) {
       if (field.default !== undefined) {
         flag = true
         if (Array.isArray(field.default)) {
-          initialValue[fieldName] = Object.assign([], field.default)
+          formValue[fieldName] = Object.assign([], field.default)
         } else if (typeof field.default === 'object') {
-          initialValue[fieldName] = Object.assign({}, field.default)
+          formValue[fieldName] = Object.assign({}, field.default)
         } else {
-          initialValue[fieldName] = field.default
+          formValue[fieldName] = field.default
         }
       }
     }

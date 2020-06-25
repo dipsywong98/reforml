@@ -1,17 +1,30 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useMemo } from 'react'
 import { FieldComponent, FieldPropTypes } from '../../types'
+import { processOptions } from '../../utils/processOptions'
 
 const propTypes = {
-  ...FieldPropTypes,
-  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  ...FieldPropTypes
 }
 
-export const Select: FieldComponent<string | number> = ({ options }) => {
+export const Select: FieldComponent<string | number> = ({ options, value, onChange, valueKey, labelKey }) => {
+  const valueLabel = useMemo(
+    () => (
+      options !== undefined
+        ? processOptions(options, {
+          valueKey,
+          labelKey
+        })
+        : []
+    ),
+    [options]
+  )
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    onChange?.(event.target.value, event)
+  }
   return (
-    <select>
-      {options?.map(option => (
-        <option key={option}>{option}</option>
+    <select value={value} onChange={handleChange}>
+      {valueLabel?.map(({ value, label }) => (
+        <option key={label} value={value}>{label}</option>
       ))}
     </select>
   )

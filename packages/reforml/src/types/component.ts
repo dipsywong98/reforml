@@ -11,8 +11,7 @@ export const FieldPropTypes = {
   value: PropTypes.any,
   helperText: PropTypes.string,
   onChange: PropTypes.func,
-  name: PropTypes.string,
-  options: PropTypes.array
+  name: PropTypes.string
 }
 
 export type ValueCallback<T> = (value: T, event?: React.ChangeEvent<unknown>|undefined) => unknown
