@@ -6,7 +6,7 @@ import { TextInput } from './TextInput'
 export const NumberInput: FieldComponent<number> = ({
   onChange,
   value,
-  defaultValue,
+  defaultVal,
   ...props
 }) => {
   const handleChange = (value: string): void => {
@@ -18,7 +18,7 @@ export const NumberInput: FieldComponent<number> = ({
       type='number'
       {...props}
       value={value?.toString()}
-      defaultValue={defaultValue?.toString()}
+      defaultVal={defaultVal?.toString()}
     />
   )
 }

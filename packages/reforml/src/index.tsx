@@ -1,3 +1,2 @@
-export * from './components/ReformlContext'
-export * from './components/forms/BaseForm'
+export * from './components/'
 export * from './types'

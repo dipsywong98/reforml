@@ -7,7 +7,7 @@ export interface BasicField<T> {
   type?: string
   label?: string
   disabled?: boolean
-  defaultValue?: T
+  defaultVal?: T
   helperText?: string
 }
 

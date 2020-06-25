@@ -6,11 +6,11 @@ import React from 'react'
 import { container } from '../../utils/testHelper'
 import { fireEvent } from '@testing-library/react'
 
-describe('TextInput', () => {
+describe('Select', () => {
   it('can render minimal text field', () => {
     const fields: Fields = {
       myField: {
-        type: 'text'
+        type: 'select'
       }
     }
     const mockFn = jest.fn(() => '')
@@ -18,13 +18,14 @@ describe('TextInput', () => {
       render(<BaseForm fields={fields} onChange={mockFn} value={{}}/>, container)
     })
     expect(mockFn).not.toHaveBeenCalled()
-    expect(container?.querySelector('input[name="myField"]')).toBeTruthy()
+    expect(container?.querySelector('select[name="myField"]')).toBeTruthy()
   })
 
-  it('can input string value', () => {
+  it('can select value', () => {
     const fields: Fields = {
       myField: {
-        type: 'text'
+        type: 'select',
+        options: ['a', 'b', 'c']
       }
     }
     let value: FormValue = {}
@@ -35,13 +36,14 @@ describe('TextInput', () => {
       render(<BaseForm fields={fields} onChange={mockFn} value={value}/>, container)
     })
     expect(mockFn).not.toHaveBeenCalled()
-    const input = container?.querySelector('input[name="myField"]')
-    expect(input).toBeTruthy()
-    if (input !== null && input !== undefined) {
+    const select = container?.querySelector('select[name="myField"]')
+    expect(select).toBeTruthy()
+    expect(select?.childElementCount).toEqual(3)
+    if (select !== null && select !== undefined) {
       act(() => {
-        fireEvent.change(input, { target: { value: 'some value' } })
+        fireEvent.change(select, { target: { value: 'c' } })
       })
-      expect(value.myField).toEqual('some value')
+      expect(value.myField).toEqual('c')
     }
   })
 })

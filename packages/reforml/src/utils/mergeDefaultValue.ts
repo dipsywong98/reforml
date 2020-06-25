@@ -9,14 +9,14 @@ export function mergeDefaultValue (fields: Fields, formValue: FormValue): boolea
   let flag = false
   Object.entries({ ...fields }).forEach(([fieldName, field]) => {
     if (formValue[fieldName] === undefined) {
-      if (field.defaultValue !== undefined) {
+      if (field.defaultVal !== undefined) {
         flag = true
-        if (Array.isArray(field.defaultValue)) {
-          formValue[fieldName] = Object.assign([], field.defaultValue)
-        } else if (typeof field.defaultValue === 'object') {
-          formValue[fieldName] = Object.assign({}, field.defaultValue)
+        if (Array.isArray(field.defaultVal)) {
+          formValue[fieldName] = Object.assign([], field.defaultVal)
+        } else if (typeof field.defaultVal === 'object') {
+          formValue[fieldName] = Object.assign({}, field.defaultVal)
         } else {
-          formValue[fieldName] = field.defaultValue
+          formValue[fieldName] = field.defaultVal
         }
       }
     }

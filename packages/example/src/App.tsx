@@ -9,7 +9,7 @@ const App: FunctionComponent = () => {
       type: 'text',
       label: 'my label',
       helperText: 'help',
-      defaultValue: 'hello world'
+      defaultVal: 'hello world'
     },
     myNumberField: {
       type: 'number',

@@ -4,12 +4,13 @@ import PropTypes from 'prop-types'
 import { useComponents } from '../ReformlContext'
 
 export const TextInput: FieldComponent<string> = ({
-                                                    helperText,
-                                                    onChange,
-                                                    value,
-                                                    label,
-                                                    ...props
-                                                  }) => {
+  helperText,
+  onChange,
+  value,
+  label,
+  defaultVal,
+  ...props
+}) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     onChange?.(event.target.value)
   }

@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react'
 import { FieldPropTypes } from '../../types'
 import { processOptions } from '../../utils/processOptions'
-import { OptionsFieldComponent } from '../../types/fields/options'
+import { OptionsFieldComponent } from '../../types/fields'
 
 const propTypes = {
   ...FieldPropTypes
 }
 
-export const Select: OptionsFieldComponent<string|number> = ({ options, value, onChange, valueKey, labelKey }) => {
+export const Select: OptionsFieldComponent<string|number> = ({ options, value, onChange, valueKey, labelKey, ...props }) => {
   const valueLabel = useMemo(
     () => (
       options !== undefined
@@ -23,7 +23,7 @@ export const Select: OptionsFieldComponent<string|number> = ({ options, value, o
     onChange?.(event.target.value)
   }
   return (
-    <select value={value} onChange={handleChange}>
+    <select value={value} onChange={handleChange} {...props}>
       {valueLabel?.map(({ value, label }) => (
         <option key={label} value={value}>{label}</option>
       ))}

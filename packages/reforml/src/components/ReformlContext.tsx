@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react'
-import { DefaultComponents } from './fields/DefaultComponents'
-import { FieldComponent, FieldComponents } from '../types'
+import { DefaultComponents } from './fields'
+import { FieldComponents } from '../types'
 
-export interface ReformlContextInterface<T = { [type: string]: FieldComponent<unknown> }> {
-  components: FieldComponents<T>
+export interface ReformlContextInterface {
+  components: FieldComponents
 }
 
 const ReformlContext = createContext<ReformlContextInterface>({ components: DefaultComponents })

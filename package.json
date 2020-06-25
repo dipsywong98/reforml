@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.4.1",
     "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^26.0.3",
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
@@ -14,15 +14,6 @@
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
-    "gh-pages": "^2.2.0",
-    "microbundle-crl": "^0.13.10",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
-    "typescript": "^3.9.5",
-    "lerna": "^3.22.1",
     "eslint-config-prettier": "^6.7.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-config-standard-react": "^9.2.0",
@@ -32,7 +23,16 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-promise": "4",
     "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-standard": "4"
+    "eslint-plugin-standard": "4",
+    "gh-pages": "^2.2.0",
+    "lerna": "^3.22.1",
+    "microbundle-crl": "^0.13.10",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.9.5"
   },
   "workspaces": [
     "packages/*"
@@ -49,5 +49,8 @@
     "test:watch": "cd packages/reforml && yarn test:watch",
     "predeploy": "cd packages/reforml && yarn predeploy",
     "deploy": "cd packages/reforml && yarn deploy"
+  },
+  "dependencies": {
+    "ts-jest": "^26.1.1"
   }
 }

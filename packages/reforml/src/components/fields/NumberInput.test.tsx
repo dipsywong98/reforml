@@ -6,11 +6,11 @@ import React from 'react'
 import { container } from '../../utils/testHelper'
 import { fireEvent } from '@testing-library/react'
 
-describe('TextInput', () => {
+describe('NumberInput', () => {
   it('can render minimal text field', () => {
     const fields: Fields = {
       myField: {
-        type: 'text'
+        type: 'number'
       }
     }
     const mockFn = jest.fn(() => '')
@@ -21,10 +21,10 @@ describe('TextInput', () => {
     expect(container?.querySelector('input[name="myField"]')).toBeTruthy()
   })
 
-  it('can input string value', () => {
+  it('can input number value', () => {
     const fields: Fields = {
       myField: {
-        type: 'text'
+        type: 'number'
       }
     }
     let value: FormValue = {}
@@ -39,9 +39,9 @@ describe('TextInput', () => {
     expect(input).toBeTruthy()
     if (input !== null && input !== undefined) {
       act(() => {
-        fireEvent.change(input, { target: { value: 'some value' } })
+        fireEvent.change(input, { target: { value: '123' } })
       })
-      expect(value.myField).toEqual('some value')
+      expect(value.myField).toEqual(123)
     }
   })
 })

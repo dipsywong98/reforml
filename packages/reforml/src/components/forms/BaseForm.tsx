@@ -17,10 +17,10 @@ export interface BaseFormProps<T extends FormValue> {
 }
 
 export function BaseForm<T extends FormValue> ({
-                                                 onChange,
-                                                 fields,
-                                                 value
-                                               }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
+  onChange,
+  fields,
+  value
+}: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
   const Components: FieldComponents = useComponents()
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -33,7 +33,7 @@ export function BaseForm<T extends FormValue> ({
   const handleChange = (fieldName: string, fieldValue: unknown): void => {
     onChange({ ...value, [fieldName]: fieldValue })
   }
-  const {FieldWrapper} = useComponents()
+  const { FieldWrapper } = useComponents()
   return (
     // TODO: IDK how to remove this fragment without conflicting the type
     // eslint-disable-next-line react/jsx-no-useless-fragment

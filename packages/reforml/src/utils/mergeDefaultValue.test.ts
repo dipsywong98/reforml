@@ -5,11 +5,11 @@ describe('mergeDefaultValue', () => {
     const fields = {
       f1: {
         type: 'text',
-        defaultValue: 'default text'
+        defaultVal: 'default text'
       },
       f2: {
         type: 'number',
-        defaultValue: 1234
+        defaultVal: 1234
       }
     }
     const formValue = {
@@ -27,11 +27,22 @@ describe('mergeDefaultValue', () => {
     const fields = {
       f1: {
         type: 'text',
-        defaultValue: 'default text'
+        defaultVal: 'default text'
       },
       f2: {
         type: 'number',
-        defaultValue: 1234
+        defaultVal: 1234
+      },
+      f3: {
+        type: 'array',
+        defaultVal: [1, 2, 3]
+      },
+      f4: {
+        type: 'number',
+        defaultVal: {
+          a: 1,
+          b: 2
+        }
       }
     }
     const formValue = {
@@ -41,7 +52,12 @@ describe('mergeDefaultValue', () => {
     expect(result).toBe(true)
     expect(formValue).toEqual({
       f1: 'my text',
-      f2: 1234
+      f2: 1234,
+      f3: [1, 2, 3],
+      f4: {
+        a: 1,
+        b: 2
+      }
     })
   })
 })
