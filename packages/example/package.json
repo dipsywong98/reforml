@@ -6,7 +6,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "run-s test:unit test:lint test:build",
+    "test:build": "run-s build",
+    "test:lint": "eslint src/**/*.*",
+    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -25,6 +29,7 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "cross-env": "^7.0.2",
     "gh-pages": "^2.2.0"
   },
   "eslintConfig": {

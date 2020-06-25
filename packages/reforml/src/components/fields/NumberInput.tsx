@@ -1,21 +1,25 @@
 import { FieldComponent, FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { TextInput } from './TextInput'
 
 export const NumberInput: FieldComponent<number> = ({
-  helperText,
   onChange,
   value,
+  defaultValue,
   ...props
 }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    onChange?.(Number.parseFloat(event.target.value))
+  const handleChange = (value: string): void => {
+    onChange?.(Number.parseFloat(value))
   }
   return (
-    <React.Fragment>
-      <input {...props} type='number' onChange={handleChange} value={value}/>
-      {(helperText !== undefined ? <p>{helperText}</p> : null)}
-    </React.Fragment>
+    <TextInput
+      onChange={handleChange}
+      type='number'
+      {...props}
+      value={value?.toString()}
+      defaultValue={defaultValue?.toString()}
+    />
   )
 }
 

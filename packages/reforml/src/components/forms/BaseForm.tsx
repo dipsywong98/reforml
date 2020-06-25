@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { FieldComponent, FieldComponents, Fields, FormValue, ValueCallback } from '../../types'
+import { FieldComponent, FieldComponents, Fields, FormValue } from '../../types'
 import { useComponents } from '../ReformlContext'
 import { mergeDefaultValue } from '../../utils/mergeDefaultValue'
 
@@ -11,7 +11,7 @@ export const BaseFormPropTypes = {
 }
 
 export interface BaseFormProps<T extends FormValue> {
-  onChange: ValueCallback<T>
+  onChange: (value: T) => unknown
   fields: Fields
   value: T
 }
@@ -33,18 +33,17 @@ export function BaseForm<T extends FormValue> ({
   const handleChange = (fieldName: string, fieldValue: unknown): void => {
     onChange({ ...value, [fieldName]: fieldValue })
   }
+  const {FieldWrapper} = useComponents()
   return (
     // TODO: IDK how to remove this fragment without conflicting the type
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <React.Fragment>
       {Object.entries(fields).map(([fieldName, field]) => {
+        if (field.type === undefined) {
+          throw Error(`'type' attribute is missing in field ${fieldName}`)
+        }
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const Component: FieldComponent<unknown> = Components[field.type]
-
-        function changeHandler<U> (param: React.ChangeEvent<unknown> & {
-          target: { value: U }
-        }): void
-        function changeHandler<U> (param: U): void
 
         function changeHandler<U> (param: U | (React.ChangeEvent<unknown> & {
           target: { value: U }
@@ -61,13 +60,14 @@ export function BaseForm<T extends FormValue> ({
         }
 
         return (
-          <Component
-            key={fieldName}
-            {...field}
-            value={value[fieldName]}
-            name={fieldName}
-            onChange={changeHandler}
-          />
+          <FieldWrapper key={fieldName}>
+            <Component
+              {...field}
+              value={value[fieldName]}
+              name={fieldName}
+              onChange={changeHandler}
+            />
+          </FieldWrapper>
         )
       })}
     </React.Fragment>

@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 
 import { BaseForm, Fields } from 'reforml'
 
-const App = () => {
+const App: FunctionComponent = () => {
   const [value, setValue] = useState({})
   const fields: Fields = {
     myTextField: {
       type: 'text',
+      label: 'my label',
       helperText: 'help',
-      default: 'hello world'
+      defaultValue: 'hello world'
     },
     myNumberField: {
       type: 'number',
@@ -25,6 +26,11 @@ const App = () => {
   }
   return (
     <div>
+      <code>
+        <pre>
+          {JSON.stringify(value, null, 2)}
+        </pre>
+      </code>
       <BaseForm onChange={setValue} fields={fields} value={value}/>
     </div>
   )

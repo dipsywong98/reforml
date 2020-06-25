@@ -5,11 +5,11 @@ describe('mergeDefaultValue', () => {
     const fields = {
       f1: {
         type: 'text',
-        default: 'default text'
+        defaultValue: 'default text'
       },
       f2: {
         type: 'number',
-        default: 1234
+        defaultValue: 1234
       }
     }
     const formValue = {
@@ -27,11 +27,11 @@ describe('mergeDefaultValue', () => {
     const fields = {
       f1: {
         type: 'text',
-        default: 'default text'
+        defaultValue: 'default text'
       },
       f2: {
         type: 'number',
-        default: 1234
+        defaultValue: 1234
       }
     }
     const formValue = {

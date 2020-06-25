@@ -21,11 +21,11 @@ describe('BaseForm', () => {
     const fields: Fields = {
       defaultValueField: {
         type: 'text',
-        default: 'default'
+        defaultValue: 'default'
       },
       existingValueField: {
         type: 'text',
-        default: 'another default'
+        defaultValue: 'another default'
       }
     }
     let value: FormValue = { existingValueField: 'existing value' }

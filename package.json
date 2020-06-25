@@ -44,7 +44,7 @@
     "prepare": "cd packages/reforml && yarn prepare",
     "test": "cd packages/reforml && yarn test",
     "test:build": "cd packages/reforml && yarn test:build",
-    "test:lint": "cd packages/reforml && yarn test:lint",
+    "test:lint": "eslint packages/*/src/**/*.*",
     "test:unit": "cd packages/reforml && yarn test:unit",
     "test:watch": "cd packages/reforml && yarn test:watch",
     "predeploy": "cd packages/reforml && yarn predeploy",
