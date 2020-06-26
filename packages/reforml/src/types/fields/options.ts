@@ -33,3 +33,9 @@ export const OptionsFieldPropTypes = {
   valueKey: DigKeyPropType,
   labelKey: DigKeyPropType
 }
+
+export const BaseSelectPropTypes = {
+  options: PropTypes.array.isRequired
+}
+
+export type BaseSelectComponent<T> = FunctionComponent<CommonFieldComponentProps<T> & { options: Array<{ label: string, value: T }> }>

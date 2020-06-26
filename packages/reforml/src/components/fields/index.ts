@@ -1,6 +1,4 @@
-export * from './DefaultComponents'
+export * from './DefaultFieldComponents'
 export * from './NumberInput'
 export * from './Select'
 export * from './TextInput'
-export { HelperText } from './HelperText'
-export { LabelText } from './LabelText'

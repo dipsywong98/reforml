@@ -1,9 +1,8 @@
 import { FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { HelperText } from './HelperText'
-import { LabelText } from './LabelText'
 import { BoolFieldComponent } from '../../types/fields/bool'
+import { useBaseComponents } from '../BaseComponentsContext'
 
 export const Checkbox: BoolFieldComponent<unknown> = ({
   helperText,
@@ -28,9 +27,10 @@ export const Checkbox: BoolFieldComponent<unknown> = ({
       onChange?.(falseValue)
     }
   }
+  const { LabelText, HelperText, BaseCheckbox } = useBaseComponents()
   return (
     <label className='form-check'>
-      <input type='checkbox' onChange={handleChange} checked={flag} {...props} />
+      <BaseCheckbox onChange={handleChange} checked={flag} {...props} />
       <LabelText>
         {label}
       </LabelText>

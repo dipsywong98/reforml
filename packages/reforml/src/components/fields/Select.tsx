@@ -2,16 +2,18 @@ import React, { useMemo } from 'react'
 import { FieldPropTypes } from '../../types'
 import { processOptions } from '../../utils/processOptions'
 import { OptionsFieldComponent } from '../../types/fields'
+import { useBaseComponents } from '../BaseComponentsContext'
+import { FieldDecoration } from './FieldDecoration'
 
 const propTypes = {
   ...FieldPropTypes
 }
 
-export const Select: OptionsFieldComponent<string|number> = ({ options, value, onChange, valueKey, labelKey, ...props }) => {
+export const Select: OptionsFieldComponent<string | number> = ({ helperText, label, options, value, onChange, valueKey, labelKey, ...props }) => {
   const valueLabel = useMemo(
     () => (
       options !== undefined
-        ? processOptions<string|number>(options, {
+        ? processOptions<string | number>(options, {
           valueKey,
           labelKey
         })
@@ -19,15 +21,12 @@ export const Select: OptionsFieldComponent<string|number> = ({ options, value, o
     ),
     [options]
   )
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    onChange?.(event.target.value)
-  }
+
+  const { BaseSelect } = useBaseComponents()
   return (
-    <select value={value} onChange={handleChange} {...props}>
-      {valueLabel?.map(({ value, label }) => (
-        <option key={label} value={value}>{label}</option>
-      ))}
-    </select>
+    <FieldDecoration helperText={helperText} label={label}>
+      <BaseSelect options={valueLabel} value={value} onChange={onChange} {...props} />
+    </FieldDecoration>
   )
 }
 

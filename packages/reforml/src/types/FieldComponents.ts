@@ -8,6 +8,5 @@ export interface FieldComponents {
   text: FieldComponent<string>
   number: FieldComponent<number>
   select: FieldComponent<number | string>
-  FieldWrapper: FunctionComponent
-  [type: string]: FunctionComponent
+  [type: string]: FunctionComponent<unknown> | undefined
 }

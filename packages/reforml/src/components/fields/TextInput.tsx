@@ -1,8 +1,8 @@
 import { FieldComponent, FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { HelperText } from './HelperText'
-import { LabelText } from './LabelText'
+import { useBaseComponents } from '../BaseComponentsContext'
+import { FieldDecoration } from './FieldDecoration'
 
 export const TextInput: FieldComponent<string> = ({
   helperText,
@@ -12,21 +12,11 @@ export const TextInput: FieldComponent<string> = ({
   defaultVal,
   ...props
 }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    onChange?.(event.target.value)
-  }
+  const { BaseInput } = useBaseComponents()
   return (
-    <label>
-      <LabelText>
-        {label}
-      </LabelText>
-      <div>
-        <input className='form-control' {...props} onChange={handleChange} value={value}/>
-      </div>
-      <div>
-        {(helperText !== undefined ? <HelperText>{helperText}</HelperText> : null)}
-      </div>
-    </label>
+    <FieldDecoration label={label} helperText={helperText}>
+      <BaseInput {...props} onChange={onChange} value={value}/>
+    </FieldDecoration>
   )
 }
 

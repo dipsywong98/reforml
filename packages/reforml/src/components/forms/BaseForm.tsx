@@ -1,8 +1,9 @@
 import React, { ReactElement, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { FieldComponent, FieldComponents, Fields, FormValue } from '../../types'
-import { useComponents } from '../ReformlContext'
+import { useFieldComponents } from '../FieldComponentsContext'
 import { mergeDefaultValue } from '../../utils/mergeDefaultValue'
+import { useBaseComponents } from '../BaseComponentsContext'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -21,7 +22,7 @@ export function BaseForm<T extends FormValue> ({
   fields,
   value
 }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
-  const Components: FieldComponents = useComponents()
+  const Components: FieldComponents = useFieldComponents()
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     const initialValue: T = value || {}
@@ -33,7 +34,7 @@ export function BaseForm<T extends FormValue> ({
   const handleChange = (fieldName: string, fieldValue: unknown): void => {
     onChange({ ...value, [fieldName]: fieldValue })
   }
-  const { FieldWrapper } = useComponents()
+  const { FieldWrapper } = useBaseComponents()
   return (
     // TODO: IDK how to remove this fragment without conflicting the type
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -43,7 +44,10 @@ export function BaseForm<T extends FormValue> ({
           throw Error(`'type' attribute is missing in field ${fieldName}`)
         }
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const Component: FieldComponent<unknown> = Components[field.type]
+        const Component: FieldComponent<unknown> | undefined = Components[field.type]
+        if (Component === undefined) {
+          throw Error(`'type' attribute is missing in field ${fieldName}`)
+        }
 
         function changeHandler<U> (param: U | (React.ChangeEvent<unknown> & {
           target: { value: U }

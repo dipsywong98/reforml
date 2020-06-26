@@ -16,7 +16,8 @@ export interface Fields {
 }
 
 export type FieldComponentProps<T> = CommonFieldComponentProps<T> & Field<T>
-export type FieldComponent<T> = FunctionComponent<FieldComponentProps<T>>
+export type FieldComponent<T> = FunctionComponent<FieldComponentProps<T> & { [prop: string]: unknown }>
+export type BaseFieldComponent<T> = FunctionComponent<CommonFieldComponentProps<T>>
 
 /**
  * PropTypes of a field component

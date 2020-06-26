@@ -4,9 +4,9 @@ import React from 'react'
 import { act } from 'react-dom/test-utils'
 import { FieldComponent, FieldComponents, FieldPropTypes, Fields, FormValue } from '../../types'
 import { container } from '../../utils/testHelper'
-import { DefaultComponents } from '../fields'
-import { ReformlProvider } from '../ReformlContext'
+import { DefaultFieldComponents } from '../fields'
 import { fireEvent } from '@testing-library/react'
+import { ReformlProvider } from '../ReformlProvider'
 
 describe('BaseForm', () => {
   it('generates no errors when no fields', () => {
@@ -70,12 +70,12 @@ describe('BaseForm', () => {
     }
     MyText.propTypes = FieldPropTypes
     const components: FieldComponents = {
-      ...DefaultComponents,
+      ...DefaultFieldComponents,
       text: MyText,
-      oldText: DefaultComponents.text
+      oldText: DefaultFieldComponents.text
     }
     act(() => {
-      render(<ReformlProvider value={{ components }}>
+      render(<ReformlProvider fieldComponents={components}>
         <BaseForm fields={fields} onChange={mockFn} value={value}/>
       </ReformlProvider>, container)
     })
