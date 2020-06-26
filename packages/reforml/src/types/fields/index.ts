@@ -2,11 +2,13 @@ import { FunctionComponent } from 'react'
 import { OptionsField } from './options'
 import { BasicField, BasicFieldPropTypes, CommonFieldComponentProps } from './basic'
 import { BoolField } from './bool'
+import { MultiSelectField, MultiSelectValue } from './multiSelect'
 
 /**
  * Definition of any Field in yaml
+ * Update this when new field is added
  */
-export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T>
+export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>>
 
 /**
  * Definition of field dictionary
@@ -28,3 +30,4 @@ export const FieldPropTypes = {
 
 export * from './basic'
 export * from './options'
+export * from './multiSelect'

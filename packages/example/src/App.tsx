@@ -28,6 +28,17 @@ const App: FunctionComponent = () => {
       helperText: 'help',
       label: 'hi',
       trueValue: 123
+    },
+    check_group: {
+      type: 'checkbox_group',
+      helperText: 'help help',
+      options: ['1', '2', '3']
+    },
+    check_group2: {
+      type: 'checkbox_group',
+      helperText: 'helphelp',
+      options: [{ value: '1', helperText: '123' }, '2', '3'],
+      output: 'object'
     }
   }
   return (

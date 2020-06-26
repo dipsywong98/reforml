@@ -1,17 +1,19 @@
 import { DigKey, Options } from '../types'
 import { digKey } from './digKey'
+import { useMemo } from 'react'
 
 interface ValueLabel<T> {
   value: T
   label: string
+  [otherProps: string]: unknown
 }
 
-interface ProcessOption {
+interface ProcessSettings {
   valueKey?: DigKey
   labelKey?: DigKey
 }
 
-export const processOptions = <T> (options: Options<T>, { valueKey, labelKey }: ProcessOption = {}): Array<ValueLabel<T>> => {
+export const processOptions = <T> (options: Options<T>, { valueKey, labelKey }: ProcessSettings = {}): Array<ValueLabel<T>> => {
   if (Array.isArray(options)) {
     return options.map((option) => {
       let value: T
@@ -30,13 +32,25 @@ export const processOptions = <T> (options: Options<T>, { valueKey, labelKey }: 
         } else if ('label' in option) {
           const digged = option.label
           label = typeof digged === 'string' ? digged : JSON.stringify(digged)
+        } else if (typeof value === 'string' || typeof value === 'number') {
+          label = value.toString()
         }
+        return { ...option, value, label }
       } else {
         value = option
+        return { value, label }
       }
-      return { value, label }
     })
   } else {
     return Object.entries(options).map(([label, value]) => ({ value, label }))
   }
 }
+
+export const useProcessOptionsMemo = <T>(options?: Options<T>, settings?: ProcessSettings): Array<ValueLabel<T>> => useMemo(
+  () => (
+    options !== undefined
+      ? processOptions<T>(options, settings)
+      : []
+  ),
+  [options]
+)

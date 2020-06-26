@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { FieldPropTypes } from '../../types'
-import { processOptions } from '../../utils/processOptions'
+import { useProcessOptionsMemo } from '../../utils/useProcessOptionsMemo'
 import { OptionsFieldComponent } from '../../types/fields'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { FieldDecoration } from './FieldDecoration'
@@ -10,17 +10,7 @@ const propTypes = {
 }
 
 export const Select: OptionsFieldComponent<string | number> = ({ helperText, label, options, value, onChange, valueKey, labelKey, ...props }) => {
-  const valueLabel = useMemo(
-    () => (
-      options !== undefined
-        ? processOptions<string | number>(options, {
-          valueKey,
-          labelKey
-        })
-        : []
-    ),
-    [options]
-  )
+  const valueLabel = useProcessOptionsMemo<string | number>(options, { labelKey, valueKey })
 
   const { BaseSelect } = useBaseComponents()
   return (

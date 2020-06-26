@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { FieldComponent } from './fields'
+import { FieldComponent, MultiSelectFieldComponent, MultiSelectValue, OptionsFieldComponent } from './fields'
 
 /**
  * Type of lookup dictionary of field components
@@ -7,6 +7,8 @@ import { FieldComponent } from './fields'
 export interface FieldComponents {
   text: FieldComponent<string>
   number: FieldComponent<number>
-  select: FieldComponent<number | string>
+  select: OptionsFieldComponent<number | string>
+  checkbox: FieldComponent<unknown>
+  checkbox_group: MultiSelectFieldComponent<MultiSelectValue<unknown>>
   [type: string]: FunctionComponent<unknown> | undefined
 }

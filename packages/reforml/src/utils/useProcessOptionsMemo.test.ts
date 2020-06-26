@@ -1,4 +1,4 @@
-import { processOptions } from './processOptions'
+import { processOptions } from './useProcessOptionsMemo'
 
 describe('processOptions', () => {
   it('can process label to value map', () => {
@@ -46,7 +46,9 @@ describe('processOptions', () => {
         label: JSON.stringify({
           a: 1,
           b: 2
-        })
+        }),
+        a: 1,
+        b: 2
       }, {
         value: {
           a: 3,
@@ -55,7 +57,29 @@ describe('processOptions', () => {
         label: JSON.stringify({
           a: 3,
           b: 4
-        })
+        }),
+        a: 3,
+        b: 4
+      }])
+    })
+
+    it('can process with value and without label will display value', () => {
+      const optionDef = [{
+        value: 1,
+        b: 2
+      }, {
+        value: 4,
+        a: 3
+      }]
+      const result = processOptions(optionDef)
+      expect(result).toEqual([{
+        value: 1,
+        label: '1',
+        b: 2
+      }, {
+        value: 4,
+        label: '4',
+        a: 3
       }])
     })
 
@@ -94,10 +118,18 @@ describe('processOptions', () => {
       const result = processOptions(optionDef, { valueKey: 'a', labelKey: ['b', 'c'] })
       expect(result).toEqual([{
         value: 1,
-        label: '2'
+        label: '2',
+        a: 1,
+        b: {
+          c: 2
+        }
       }, {
         value: '3',
-        label: '4'
+        label: '4',
+        a: '3',
+        b: {
+          c: 4
+        }
       }])
     })
   })
