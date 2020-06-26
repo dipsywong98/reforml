@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react'
-import { BasicField, CommonFieldComponentProps } from './basic'
+import { BasicField, BasicFieldPropTypes, CommonFieldComponentProps } from './basic'
+import PropTypes from 'prop-types'
 
 /**
  * DigKey type
@@ -8,6 +9,8 @@ import { BasicField, CommonFieldComponentProps } from './basic'
  * string array is to dig through the nested structure
  */
 export type DigKey = string | string[]
+
+export const DigKeyPropType = PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 
 export type Option<T> = {
   [key: string]: unknown | T
@@ -23,3 +26,10 @@ export interface OptionsField<T> extends BasicField<T>{
 
 export type OptionsFieldComponentProps<T> = CommonFieldComponentProps<T> & OptionsField<T>
 export type OptionsFieldComponent<T> = FunctionComponent<OptionsFieldComponentProps<T>>
+
+export const OptionsFieldPropTypes = {
+  ...BasicFieldPropTypes,
+  options: PropTypes.array,
+  valueKey: DigKeyPropType,
+  labelKey: DigKeyPropType
+}

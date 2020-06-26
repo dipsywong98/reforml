@@ -22,6 +22,12 @@ const App: FunctionComponent = () => {
         label1: 1,
         label2: 2
       }
+    },
+    check: {
+      type: 'checkbox',
+      helperText: 'help',
+      label: 'hi',
+      trueValue: 123
     }
   }
   return (

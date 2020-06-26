@@ -1,11 +1,12 @@
 import { FunctionComponent } from 'react'
 import { OptionsField } from './options'
 import { BasicField, BasicFieldPropTypes, CommonFieldComponentProps } from './basic'
+import { BoolField } from './bool'
 
 /**
  * Definition of any Field in yaml
  */
-export type Field<T> = BasicField<T> | OptionsField<T>
+export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T>
 
 /**
  * Definition of field dictionary
