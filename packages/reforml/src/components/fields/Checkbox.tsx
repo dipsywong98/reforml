@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { BoolFieldComponent } from '../../types/fields/bool'
 import { useBaseComponents } from '../BaseComponentsContext'
+import { useProcessBool } from '../../hooks/useProcessBool'
 
 export const Checkbox: BoolFieldComponent<unknown> = ({
   helperText,
@@ -14,19 +15,7 @@ export const Checkbox: BoolFieldComponent<unknown> = ({
   falseValue,
   ...props
 }) => {
-  const flag: boolean = (typeof value === 'boolean' ? value : trueValue !== undefined && value === trueValue)
-  const handleChange = (): void => {
-    const newValue = !flag
-    if (newValue) {
-      if (trueValue !== undefined) {
-        onChange?.(trueValue)
-      } else {
-        onChange?.(true)
-      }
-    } else {
-      onChange?.(falseValue)
-    }
-  }
+  const [flag, handleChange] = useProcessBool(value, onChange, { trueValue, falseValue })
   const { LabelText, HelperText, BaseCheckbox } = useBaseComponents()
   return (
     <label className='form-check'>

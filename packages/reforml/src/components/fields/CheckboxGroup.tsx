@@ -2,8 +2,8 @@ import { FieldPropTypes, MultiSelectFieldComponent, MultiSelectValue } from '../
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useFieldComponents } from '../FieldComponentsContext'
-import { useProcessOptionsMemo } from '../../utils/useProcessOptionsMemo'
-import { useProcessMultiSelectMemo } from '../../utils/useProcessMultiSelectMemo'
+import { useProcessOptionsMemo } from '../../hooks/useProcessOptionsMemo'
+import { useProcessMultiSelectMemo } from '../../hooks/useProcessMultiSelectMemo'
 import { FieldDecoration } from './FieldDecoration'
 
 export const CheckboxGroup: MultiSelectFieldComponent<MultiSelectValue<unknown>> = ({

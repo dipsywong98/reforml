@@ -13,7 +13,8 @@ const App: FunctionComponent = () => {
     },
     myNumberField: {
       type: 'number',
-      helperText: 'help2'
+      helperText: 'help2',
+      defaultVal: 123
     },
     mySelectField: {
       type: 'select',
@@ -21,7 +22,8 @@ const App: FunctionComponent = () => {
       options: {
         label1: 1,
         label2: 2
-      }
+      },
+      defaultVal: 2
     },
     check: {
       type: 'checkbox',

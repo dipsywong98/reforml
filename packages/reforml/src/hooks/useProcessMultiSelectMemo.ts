@@ -1,5 +1,5 @@
 import { MultiSelectOutput, MultiSelectValue } from '../types/fields'
-import { isSet } from './isSet'
+import { isSet } from '../utils/isSet'
 import { ValueCallback } from '../types'
 import { useMemo } from 'react'
 

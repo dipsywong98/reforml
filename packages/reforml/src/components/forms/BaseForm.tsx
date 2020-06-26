@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { FieldComponent, FieldComponents, Fields, FormValue } from '../../types'
 import { useFieldComponents } from '../FieldComponentsContext'
@@ -23,14 +23,18 @@ export function BaseForm<T extends FormValue> ({
   value
 }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
   const Components: FieldComponents = useFieldComponents()
-  useEffect(() => {
+  const appliedDefault = useRef<boolean>(false)
+  let flag = false
+  if (!appliedDefault.current) {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    const initialValue: T = value || {}
-    const flag = mergeDefaultValue(fields, initialValue)
+    flag = mergeDefaultValue(fields, value)
+    appliedDefault.current = true
+  }
+  useEffect(() => {
     if (flag) {
-      onChange({ ...initialValue })
+      onChange({ ...value })
     }
-  }, [])
+  }, [flag])
   const handleChange = (fieldName: string, fieldValue: unknown): void => {
     onChange({ ...value, [fieldName]: fieldValue })
   }

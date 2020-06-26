@@ -1,5 +1,5 @@
 import { DigKey, Options } from '../types'
-import { digKey } from './digKey'
+import { digKey } from '../utils/digKey'
 import { useMemo } from 'react'
 
 interface ValueLabel<T> {
