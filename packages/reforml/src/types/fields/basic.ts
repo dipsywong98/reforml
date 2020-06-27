@@ -9,6 +9,7 @@ export interface BasicField<T> {
   disabled?: boolean
   defaultVal?: T
   helperText?: string
+  defaultNewVal?: unknown
 }
 
 export interface CommonFieldComponentProps<T> {

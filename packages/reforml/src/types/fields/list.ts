@@ -8,6 +8,7 @@ export interface ListField<T extends unknown[]> extends BasicField<T> {
   deletable?: boolean
   editable?: boolean
   creatable?: boolean
+  defaultNewVal?: unknown
 }
 
 export type ListFieldComponentProps<T extends unknown[]> = CommonFieldComponentProps<T> & ListField<T>

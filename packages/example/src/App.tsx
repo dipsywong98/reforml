@@ -41,6 +41,15 @@ const App: FunctionComponent = () => {
       helperText: 'helphelp',
       options: [{ value: '1', helperText: '123' }, '2', '3'],
       output: 'object'
+    },
+    myList: {
+      type: 'list',
+      defaultNewVal: [],
+      of: {
+        type: 'list',
+        of: 'text',
+        defaultNewVal: ''
+      }
     }
   }
   return (
