@@ -1,6 +1,6 @@
 import { MultiSelectOutput, MultiSelectValue } from '../types/fields'
 import { isSet } from '../utils/isSet'
-import { ValueCallback } from '../types'
+import { ValueEventCallback } from '../types'
 import { useMemo } from 'react'
 
 export const processMultiSelectValue = <T> (value?: MultiSelectValue<T>): Set<T> => {
@@ -39,7 +39,7 @@ export type ProcessMultiSelectReturnType<T> = [
   (value: T) => () => unknown
 ]
 
-export const useProcessMultiSelectMemo = <T> (onChange?: ValueCallback<MultiSelectValue<T>>, value?: MultiSelectValue<T>, output: MultiSelectOutput = 'array'): ProcessMultiSelectReturnType<T> => {
+export const useProcessMultiSelectMemo = <T> (onChange?: ValueEventCallback<MultiSelectValue<T>>, value?: MultiSelectValue<T>, output: MultiSelectOutput = 'array'): ProcessMultiSelectReturnType<T> => {
   return useMemo(() => {
     const flags = processMultiSelectValue(value)
     const setFlag = (value: T) => (): void => {

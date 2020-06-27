@@ -1,4 +1,4 @@
-import { ValueCallback } from '../types'
+import { ValueEventCallback } from '../types'
 
 interface ProcessSettings<T> {
   trueValue?: T
@@ -7,7 +7,7 @@ interface ProcessSettings<T> {
 
 type ProcessBoolReturnType = [boolean, () => void]
 
-export const useProcessBool = <T> (value?: T, onChange?: ValueCallback<T>, { trueValue, falseValue }: ProcessSettings<T> = {}): ProcessBoolReturnType => {
+export const useProcessBool = <T> (value?: T, onChange?: ValueEventCallback<T>, { trueValue, falseValue }: ProcessSettings<T> = {}): ProcessBoolReturnType => {
   const flag: boolean = (typeof value === 'boolean' ? value : trueValue !== undefined && value === trueValue)
   const handleChange = (): void => {
     const newValue = !flag

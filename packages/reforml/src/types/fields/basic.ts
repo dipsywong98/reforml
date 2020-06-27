@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 import PropTypes from 'prop-types'
 import { FieldComponentProps } from './index'
-import { ValueCallback } from '../ValueCallback'
+import { ValueEventCallback } from '../ValueEventCallback'
 
 export interface BasicField<T> {
   type?: string
@@ -12,7 +12,7 @@ export interface BasicField<T> {
 }
 
 export interface CommonFieldComponentProps<T> {
-  onChange?: ValueCallback<T>
+  onChange?: ValueEventCallback<T>
   value?: T
   name?: string
 }

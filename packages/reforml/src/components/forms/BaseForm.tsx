@@ -4,6 +4,8 @@ import { FieldComponent, FieldComponents, Fields, FormValue } from '../../types'
 import { useFieldComponents } from '../FieldComponentsContext'
 import { mergeDefaultValue } from '../../utils/mergeDefaultValue'
 import { useBaseComponents } from '../BaseComponentsContext'
+import { getComponent } from '../../utils/getComponent'
+import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -44,28 +46,9 @@ export function BaseForm<T extends FormValue> ({
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <React.Fragment>
       {Object.entries(fields).map(([fieldName, field]) => {
-        if (field.type === undefined) {
-          throw Error(`'type' attribute is missing in field ${fieldName}`)
-        }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const Component: FieldComponent<unknown> | undefined = Components[field.type]
-        if (Component === undefined) {
-          throw Error(`'type' attribute is missing in field ${fieldName}`)
-        }
+        const Component: FieldComponent<unknown> = getComponent(Components, field, fieldName)
 
-        function changeHandler<U> (param: U | (React.ChangeEvent<unknown> & {
-          target: { value: U }
-        })): void {
-          if (typeof param === 'object') {
-            if ('target' in param) {
-              handleChange(fieldName, param.target.value)
-            } else {
-              handleChange(fieldName, param)
-            }
-          } else {
-            handleChange(fieldName, param)
-          }
-        }
+        const changeHandler = generalizeValueCallback((value) => handleChange(fieldName, value))
 
         return (
           <FieldWrapper key={fieldName}>

@@ -3,12 +3,13 @@ import { OptionsField } from './options'
 import { BasicField, BasicFieldPropTypes, CommonFieldComponentProps } from './basic'
 import { BoolField } from './bool'
 import { MultiSelectField, MultiSelectValue } from './multiSelect'
+import { ListField } from './list'
 
 /**
  * Definition of any Field in yaml
  * Update this when new field is added
  */
-export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>>
+export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>> | ListField<T[]>
 
 /**
  * Definition of field dictionary
