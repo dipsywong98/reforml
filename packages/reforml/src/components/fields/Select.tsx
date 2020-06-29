@@ -3,7 +3,7 @@ import { FieldPropTypes } from '../../types'
 import { useProcessOptionsMemo } from '../../hooks/useProcessOptionsMemo'
 import { OptionsFieldComponent } from '../../types/fields'
 import { useBaseComponents } from '../BaseComponentsContext'
-import { FieldDecoration } from './FieldDecoration'
+import { FieldDecoration } from '../base/FieldDecoration'
 
 const propTypes = {
   ...FieldPropTypes

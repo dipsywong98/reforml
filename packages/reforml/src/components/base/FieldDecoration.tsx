@@ -8,7 +8,8 @@ export const FieldDecorationPropTypes = {
   children: PropTypes.node
 }
 
-export const FieldDecoration: FunctionComponent<PropTypes.InferProps<typeof FieldDecorationPropTypes>> = ({
+export type FieldDecorationComponent = FunctionComponent<PropTypes.InferProps<typeof FieldDecorationPropTypes>>
+export const FieldDecoration: FieldDecorationComponent = ({
   helperText,
   label,
   children
@@ -16,15 +17,9 @@ export const FieldDecoration: FunctionComponent<PropTypes.InferProps<typeof Fiel
   const { HelperText, LabelText } = useBaseComponents()
   return (
     <label>
-      <LabelText>
-        {label}
-      </LabelText>
-      <div>
-        {children}
-      </div>
-      <div>
-        {(helperText !== undefined ? <HelperText>{helperText}</HelperText> : null)}
-      </div>
+      {label !== undefined ? <LabelText>{label}</LabelText> : null}
+      {children}
+      {(helperText !== undefined ? <HelperText>{helperText}</HelperText> : null)}
     </label>
   )
 }

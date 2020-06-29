@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react'
+import 'reforml/dist/index.css'
 
 import { BaseForm, Fields } from 'reforml'
 
@@ -17,6 +18,7 @@ const App: FunctionComponent = () => {
       defaultVal: 123
     },
     mySelectField: {
+      label: 'hi',
       type: 'select',
       helperText: 'help',
       options: {
@@ -33,23 +35,30 @@ const App: FunctionComponent = () => {
     },
     check_group: {
       type: 'checkbox_group',
+      label: 'checkbox group',
       helperText: 'help help',
       options: ['1', '2', '3']
     },
     check_group2: {
       type: 'checkbox_group',
+      label: 'checkbox group',
       helperText: 'helphelp',
       options: [{ value: '1', helperText: '123' }, '2', '3'],
       output: 'object'
     },
     myList: {
       type: 'list',
+      label: 'list',
       defaultNewVal: [],
       of: {
         type: 'list',
         of: 'text',
-        defaultNewVal: ''
-      }
+        defaultNewVal: '',
+        placeholder: 'new2'
+      },
+      creatable: true,
+      editable: true,
+      placeholder: 'new'
     }
   }
   return (

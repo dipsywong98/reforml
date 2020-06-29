@@ -9,7 +9,8 @@ export interface BasicField<T> {
   disabled?: boolean
   defaultVal?: T
   helperText?: string
-  defaultNewVal?: unknown
+  placeholder?: string
+  createLabel?: string
 }
 
 export interface CommonFieldComponentProps<T> {

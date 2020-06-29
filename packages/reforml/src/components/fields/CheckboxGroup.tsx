@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useFieldComponents } from '../FieldComponentsContext'
 import { useProcessOptionsMemo } from '../../hooks/useProcessOptionsMemo'
 import { useProcessMultiSelectMemo } from '../../hooks/useProcessMultiSelectMemo'
-import { FieldDecoration } from './FieldDecoration'
+import { FieldDecoration } from '../base/FieldDecoration'
 
 export const CheckboxGroup: MultiSelectFieldComponent<MultiSelectValue<unknown>> = ({
   helperText,

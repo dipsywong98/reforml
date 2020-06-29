@@ -2,7 +2,7 @@ import { FieldComponent, FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useBaseComponents } from '../BaseComponentsContext'
-import { FieldDecoration } from './FieldDecoration'
+import { FieldDecoration } from '../base/FieldDecoration'
 
 export const TextInput: FieldComponent<string> = ({
   helperText,

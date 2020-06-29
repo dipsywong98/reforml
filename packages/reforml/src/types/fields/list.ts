@@ -9,6 +9,7 @@ export interface ListField<T extends unknown[]> extends BasicField<T> {
   editable?: boolean
   creatable?: boolean
   defaultNewVal?: unknown
+  createLabel?: string
 }
 
 export type ListFieldComponentProps<T extends unknown[]> = CommonFieldComponentProps<T> & ListField<T>
@@ -18,5 +19,9 @@ export const ListFieldPropTypes = {
   of: PropTypes.oneOfType([PropTypes.string, PropTypes.shape(FieldPropTypes)]),
   deletable: PropTypes.bool,
   editable: PropTypes.bool,
-  creatable: PropTypes.bool
+  creatable: PropTypes.bool,
+  defaultNewVal: PropTypes.any,
+  createLabel: PropTypes.string,
+  createPlaceholder: PropTypes.string,
+  hi: PropTypes.bool
 }

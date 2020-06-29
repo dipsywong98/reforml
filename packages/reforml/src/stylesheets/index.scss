@@ -1,0 +1,101 @@
+.reforml-form-group {
+  margin-bottom: 1rem;
+
+  .flex {
+    display: flex;
+  }
+
+  .box {
+    display: block
+  }
+
+  .form-label {
+    margin-bottom: .5rem;
+  }
+
+  .text-muted {
+    color: #6c757d;
+  }
+
+  .form-text {
+    display: block;
+    margin-top: .25rem;
+  }
+
+  .small, small {
+    font-size: 80%;
+    font-weight: 400;
+  }
+
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    box-sizing: border-box;
+  }
+
+  input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  .form-check-input {
+  }
+
+  .btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  .btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  .list-input-decoration {
+    border: 1px #ced4da solid;
+    border-radius: .25rem;
+
+    .list-input-label {
+      padding: .375rem .75rem;
+      line-height: 1.5;
+      border-bottom: 1px #ced4da solid;
+    }
+
+    .list-input-create-box {
+      background-color: #e8e8e8;
+      padding: 0.5rem 0.3rem;
+    }
+
+    .list-input-item-box {
+      border-bottom: 1px #ced4da solid;
+      padding: 0.3rem;
+    }
+  }
+}
+

@@ -16,17 +16,25 @@ export const Checkbox: BoolFieldComponent<unknown> = ({
   ...props
 }) => {
   const [flag, handleChange] = useProcessBool(value, onChange, { trueValue, falseValue })
-  const { LabelText, HelperText, BaseCheckbox } = useBaseComponents()
+  const { LabelText, HelperText, BaseCheckbox, Flex, Box } = useBaseComponents()
   return (
-    <label className='form-check'>
-      <BaseCheckbox onChange={handleChange} checked={flag} {...props} />
+    <Box>
       <LabelText>
-        {label}
+        <Flex>
+          <Box>
+            <BaseCheckbox onChange={handleChange} checked={flag} {...props} />
+          </Box>
+          <Box>
+            <Box>
+              {label}
+            </Box>
+            <Box>
+              {(helperText !== undefined ? <HelperText>{helperText}</HelperText> : null)}
+            </Box>
+          </Box>
+        </Flex>
       </LabelText>
-      <div>
-        {(helperText !== undefined ? <HelperText>{helperText}</HelperText> : null)}
-      </div>
-    </label>
+    </Box>
   )
 }
 
