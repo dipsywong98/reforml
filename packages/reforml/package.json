@@ -1,6 +1,6 @@
 {
   "name": "reforml",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "react form defined by yaml",
   "author": "dipsywong98",
   "license": "MIT",
@@ -51,6 +51,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {}
+  ]
 }
