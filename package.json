@@ -13,7 +13,7 @@
     "test:watch": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "run-s build",
-    "deploy": "ghpages -d build"
+    "deploy": "ghpages -d ./build/"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
