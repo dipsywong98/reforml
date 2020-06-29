@@ -38,6 +38,18 @@ export const ListInputDecoration: FieldDecorationComponent = ({ label, helperTex
 )
 ListInputDecoration.propTypes = FieldDecorationPropTypes
 
+export const ObjectInputDecoration: FieldDecorationComponent = ({ label, helperText, children, ...props }) => (
+  <div className='object-input-decoration' {...props}>
+    {label !== undefined ? <div className='object-input-label'>
+      {label}
+    </div> : null}
+    <FieldDecoration helperText={helperText}>
+      {children}
+    </FieldDecoration>
+  </div>
+)
+ObjectInputDecoration.propTypes = FieldDecorationPropTypes
+
 export const ListInputCreateBox: FunctionComponent = (props) => <div className='list-input-create-box' {...props}/>
 
 export const Flex: FunctionComponent<{className?: string}> = ({ className = '', ...props }) => <div className={`flex ${className}`} {...props}/>
@@ -63,6 +75,7 @@ export interface BaseComponents {
   LabelText: FunctionComponent
   FieldWrapper: FunctionComponent
   ListInputDecoration: FieldDecorationComponent
+  ObjectInputDecoration: FieldDecorationComponent
   ListInputCreateBox: FunctionComponent
   FieldDecoration: FieldDecorationComponent
   Flex: FunctionComponent<{className?: string}>

@@ -4,12 +4,14 @@ import { BasicField, BasicFieldPropTypes, CommonFieldComponentProps } from './ba
 import { BoolField } from './bool'
 import { MultiSelectField, MultiSelectValue } from './multiSelect'
 import { ListField } from './list'
+import { ObjectField } from './object'
+import { FormValue } from '../FormValue'
 
 /**
  * Definition of any Field in yaml
  * Update this when new field is added
  */
-export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>> | ListField<T>
+export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>> | ListField<T> | ObjectField<FormValue>
 
 /**
  * Definition of field dictionary

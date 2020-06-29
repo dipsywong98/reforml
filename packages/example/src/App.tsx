@@ -73,6 +73,16 @@ const App: FunctionComponent = () => {
       inlineDelete: true,
       placeholder: 'new2',
       editable: false
+    },
+    object: {
+      type: 'object',
+      label: 'hi',
+      fields: {
+        f1: {
+          label: 'f1',
+          type: 'text'
+        }
+      }
     }
   }
   return (

@@ -77,11 +77,11 @@
     border-color: #dc3545;
   }
 
-  .list-input-decoration {
+  .list-input-decoration, .object-input-decoration {
     border: 1px #ced4da solid;
     border-radius: .25rem;
 
-    .list-input-label {
+    .list-input-label, .object-input-label {
       padding: .375rem .75rem;
       line-height: 1.5;
       border-bottom: 1px #ced4da solid;
@@ -92,7 +92,7 @@
       padding: 0.5rem 0.3rem;
     }
 
-    .list-input-item-box {
+    .list-input-item-box, .object-item-box {
       border-bottom: 1px #ced4da solid;
       padding: 0.3rem;
     }
