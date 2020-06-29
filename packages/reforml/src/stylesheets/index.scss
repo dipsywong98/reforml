@@ -1,5 +1,6 @@
 .reforml-form-group {
-  margin-bottom: 1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 
   .flex {
     display: flex;
@@ -19,7 +20,8 @@
 
   .form-text {
     display: block;
-    margin-top: .25rem;
+    margin-top: .1rem;
+    margin-bottom: .1rem;
   }
 
   .small, small {

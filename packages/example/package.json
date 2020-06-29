@@ -4,13 +4,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "eslint src/**/*.*",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test:unit": "cross-env CI=1 react-app-rewired test --env=jsdom",
+    "test:watch": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -18,9 +18,11 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^25.1.4",
+    "@types/js-yaml": "^3.12.5",
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
+    "js-yaml": "^3.14.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
@@ -30,7 +32,10 @@
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
     "cross-env": "^7.0.2",
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "js-yaml-loader": "^1.2.2",
+    "react-app-rewire-yaml": "^1.1.0",
+    "react-app-rewired": "^2.1.6"
   },
   "eslintConfig": {
     "extends": "react-app"
