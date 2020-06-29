@@ -3,17 +3,18 @@ import { BasicField, CommonFieldComponentProps } from './basic'
 import PropTypes from 'prop-types'
 import { Field, FieldPropTypes } from './index'
 
-export interface ListField<T extends unknown[]> extends BasicField<T> {
-  of?: string | Field<unknown>
+export interface ListField<T> extends BasicField<T[]> {
+  of?: string | Field<T>
+  inlineDelete?: boolean
   deletable?: boolean
   editable?: boolean
   creatable?: boolean
-  defaultNewVal?: unknown
+  defaultNewVal?: T
   createLabel?: string
 }
 
-export type ListFieldComponentProps<T extends unknown[]> = CommonFieldComponentProps<T> & ListField<T>
-export type ListFieldComponent<T extends unknown[]> = FunctionComponent<ListFieldComponentProps<T>>
+export type ListFieldComponentProps<T> = CommonFieldComponentProps<T[]> & ListField<T>
+export type ListFieldComponent<T> = FunctionComponent<ListFieldComponentProps<T>>
 
 export const ListFieldPropTypes = {
   of: PropTypes.oneOfType([PropTypes.string, PropTypes.shape(FieldPropTypes)]),
@@ -23,5 +24,5 @@ export const ListFieldPropTypes = {
   defaultNewVal: PropTypes.any,
   createLabel: PropTypes.string,
   createPlaceholder: PropTypes.string,
-  hi: PropTypes.bool
+  inlineDelete: PropTypes.bool
 }

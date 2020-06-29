@@ -9,7 +9,7 @@ import { ListField } from './list'
  * Definition of any Field in yaml
  * Update this when new field is added
  */
-export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>> | ListField<T[]>
+export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>> | ListField<T>
 
 /**
  * Definition of field dictionary

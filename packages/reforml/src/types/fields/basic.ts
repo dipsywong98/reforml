@@ -11,6 +11,7 @@ export interface BasicField<T> {
   helperText?: string
   placeholder?: string
   createLabel?: string
+  inlineDelete?: boolean
 }
 
 export interface CommonFieldComponentProps<T> {

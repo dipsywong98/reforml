@@ -54,11 +54,25 @@ const App: FunctionComponent = () => {
         type: 'list',
         of: 'text',
         defaultNewVal: '',
+        inlineDelete: true,
         placeholder: 'new2'
       },
       creatable: true,
       editable: true,
       placeholder: 'new'
+    },
+    text_list: {
+      type: 'text_list',
+      of: 'text',
+      deletable: false
+    },
+    text_ll: {
+      type: 'list',
+      of: 'text',
+      defaultNewVal: '',
+      inlineDelete: true,
+      placeholder: 'new2',
+      editable: false
     }
   }
   return (
