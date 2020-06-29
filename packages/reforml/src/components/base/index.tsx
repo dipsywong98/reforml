@@ -5,6 +5,9 @@ import { FieldDecoration, FieldDecorationComponent, FieldDecorationPropTypes } f
 import PropTypes from 'prop-types'
 
 export const BaseInput: FunctionComponent = (props) => <input className='form-control' {...props}/>
+BaseInput.defaultProps = {
+  value: ''
+}
 
 export const BaseSelect: BaseSelectComponent<string | number> = ({ options, ...props }) => (
   <select className='form-control' {...props}>

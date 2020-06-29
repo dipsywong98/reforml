@@ -1,11 +1,11 @@
-import { BaseForm } from './BaseForm'
+import { BaseForm, FormChangeHandler } from './BaseForm'
 import { render } from 'react-dom'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
 import { FieldComponent, FieldComponents, FieldPropTypes, Fields, FormValue } from '../../types'
 import { container } from '../../utils/testHelper'
 import { DefaultFieldComponents } from '../fields'
-import { fireEvent } from '@testing-library/react'
+import { fireEvent, screen, render as Render } from '@testing-library/react'
 import { ReformlProvider } from '../ReformlProvider'
 
 describe('BaseForm', () => {
@@ -90,5 +90,34 @@ describe('BaseForm', () => {
     }
     const input2 = container?.querySelector('input[name="f2"]')
     expect(input2).toBeTruthy()
+  })
+
+  it('can reduce fields', () => {
+    const fields: Fields = {
+      myField: {
+        type: 'text'
+      }
+    }
+    let value = {}
+    const onChange: FormChangeHandler<FormValue & {myField?: string}> = (v, { reduceFields }) => {
+      reduceFields((fields) => {
+        fields.myField.label = `label ${v.myField !== undefined ? v.myField : v.myField}`
+        return fields
+      })
+      value = v
+    }
+    const mockFn = jest.fn(onChange)
+    const { rerender } = Render(<BaseForm fields={fields} onChange={mockFn} value={value}/>)
+    expect(mockFn).not.toHaveBeenCalled()
+    expect(BaseForm).toBeTruthy()
+
+    const input = screen.getByDisplayValue('')
+    expect(input).toBeTruthy()
+    fireEvent.change(input, { target: { value: 'new value' } })
+    expect(value).toEqual({
+      myField: 'new value'
+    })
+    rerender(<BaseForm fields={fields} onChange={mockFn} value={value}/>)
+    expect(screen.getByText('label new value'))
   })
 })

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react'
 import 'reforml/dist/index.css'
 
-import { BaseForm, Fields } from 'reforml'
+import { FormSettings, FormChangeHandler, FormValue, BaseForm, Fields } from 'reforml'
 
 const App: FunctionComponent = () => {
   const [value, setValue] = useState({})
@@ -83,7 +83,19 @@ const App: FunctionComponent = () => {
           type: 'text'
         }
       }
+    },
+    copy: {
+      type: 'text'
     }
+  }
+  const handleChange: FormChangeHandler<FormValue> = (v: FormValue, { reduceFields }: FormSettings) => {
+    reduceFields((fields: Fields): Fields => {
+      if ('copy' in v) {
+        fields.copy.label = v.copy as string
+      }
+      return fields
+    })
+    setValue(v)
   }
   return (
     <div>
@@ -92,7 +104,7 @@ const App: FunctionComponent = () => {
           {JSON.stringify(value, null, 2)}
         </pre>
       </code>
-      <BaseForm onChange={setValue} fields={fields} value={value}/>
+      <BaseForm onChange={handleChange} fields={fields} value={value}/>
     </div>
   )
 }

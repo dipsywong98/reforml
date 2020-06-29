@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { FieldComponent, FieldComponents, Fields, FormValue } from '../../types'
 import { useFieldComponents } from '../FieldComponentsContext'
@@ -13,15 +13,23 @@ export const BaseFormPropTypes = {
   value: PropTypes.object
 }
 
+export type ReduceFields = (reducer: (currentFields: Fields) => Fields) => void
+
+export interface FormSettings {
+  reduceFields: ReduceFields
+}
+
+export type FormChangeHandler<T extends FormValue> = (value: T, settings: FormSettings) => unknown
+
 export interface BaseFormProps<T extends FormValue> {
-  onChange: (value: T) => unknown
+  onChange: FormChangeHandler<T>
   fields: Fields
   value: T
 }
 
 export function BaseForm<T extends FormValue> ({
   onChange,
-  fields,
+  fields: propFields,
   value
 }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
   const Components: FieldComponents = useFieldComponents()
@@ -29,16 +37,21 @@ export function BaseForm<T extends FormValue> ({
   let flag = false
   if (!appliedDefault.current) {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    flag = mergeDefaultValue(fields, value)
+    flag = mergeDefaultValue(propFields, value)
     appliedDefault.current = true
+  }
+  const [fields, setFields] = useState(propFields)
+  const reduceFields: ReduceFields = reducer => setFields(reducer(fields))
+  const changeHandler = (value: T): void => {
+    onChange(value, { reduceFields })
   }
   useEffect(() => {
     if (flag) {
-      onChange({ ...value })
+      changeHandler({ ...value })
     }
   }, [flag])
   const handleChange = (fieldName: string, fieldValue: unknown): void => {
-    onChange({ ...value, [fieldName]: fieldValue })
+    changeHandler({ ...value, [fieldName]: fieldValue })
   }
   const { FieldWrapper } = useBaseComponents()
   return (
