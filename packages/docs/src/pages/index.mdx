@@ -1,0 +1,55 @@
+import { Box, Flex, Button } from "rebass";
+import { Banner, NavGrid, Container, Grid, LogoGrid } from "..";
+import Logo from "../components/Logo";
+
+<Banner>
+<Box mt={5} />
+<LogoGrid>
+<Logo text='' size={192} />
+<div>
+
+# Reforml
+
+## Simple yet flexible react form defined by yaml
+
+<Flex alignItems='baseline'>
+<Box>
+<Button as='a' href='/getting-started'>Getting Started</Button>
+</Box>
+<Box ml={4} sx={{w:'100%', pre:{w:'100%'}}}>
+
+```sh
+npm i reforml
+```
+
+</Box>
+<Box/>
+</Flex>
+</div>
+</LogoGrid>
+<Box my='auto' />
+<Box>
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  return (
+    <div>
+      <BaseForm fields={{
+        myField: {
+          type: 'text',
+          label: 'my first reforml field'
+        }
+      }} value={value} onChange={setValue}/>
+      {value.myField}
+    </div>
+  )
+}
+```
+</Box>
+</Banner>
+
+<!--
+<Container py={5}>
+</Container>
+-->

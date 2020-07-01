@@ -48,8 +48,8 @@
     "test:lint": "eslint packages/*/src/**/*.*",
     "test:unit": "cd packages/reforml && yarn test:unit",
     "test:watch": "cd packages/reforml && yarn test:watch",
-    "predeploy": "cd packages/reforml && yarn predeploy",
-    "deploy": "cd packages/reforml && yarn deploy"
+    "predeploy": "cd packages/example && yarn predeploy",
+    "deploy": "cd packages/example && yarn deploy"
   },
   "dependencies": {
     "ts-jest": "^26.1.1"
