@@ -14,7 +14,7 @@
   "scripts": {
     "build": "run-p build:**",
     "build:js": "microbundle-crl --no-compress --format modern,cjs",
-    "build:css": "node-sass --output-style expanded src/stylesheets/index.scss > dist/reforml.css",
+    "build:css": "node-sass --output-style expanded src/stylesheets/index.scss > dist/index.css",
     "watch:js": "microbundle-crl watch --no-compress --format modern,cjs",
     "watch:css": "node-sass --watch --output-style expanded src/stylesheets/index.scss -o dist/",
     "start": "run-p watch:**",

@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@reforml/docs",
-  "version": "4.0.7",
+  "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {

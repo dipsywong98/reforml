@@ -1,5 +1,5 @@
 const remarkPlugins = [
-  require('remark-slug'),
+  require('remark-slug')
 ]
 
 module.exports = {
@@ -8,12 +8,11 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: ['.mdx', '.md'],
-        remarkPlugins,
+        remarkPlugins
       }
     },
     'gatsby-plugin-catch-links',
     'gatsby-plugin-theme-ui',
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-typescript'
-  ],
+    'gatsby-plugin-react-helmet'
+  ]
 }

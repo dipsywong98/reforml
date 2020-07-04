@@ -25,15 +25,15 @@ export const Sidebar = props =>
         props.setMenu(true)
       }}
       style={{
-        transform: props.open ? 'translateX(0)' : 'translateX(-100%)',
+        transform: props.open ? 'translateX(0)' : 'translateX(-100%)'
       }}
       sx={{
-        position: [ 'fixed', 'sticky' ],
+        position: ['fixed', 'sticky'],
         zIndex: 100,
         top: 0,
         left: 0,
         bottom: [0, 'auto'],
-        width: [ 256, 256, 320 ],
+        width: [256, 256, 320],
         minWidth: 0,
         maxHeight: '100vh',
         overflowY: 'auto',
@@ -45,23 +45,24 @@ export const Sidebar = props =>
         transform: [, 'none !important'],
         ul: {
           listStyle: 'none',
-          padding: 0,
+          padding: 0
         },
         a: {
-          variant: 'links.nav',
+          variant: 'links.nav'
         },
         'li > ul > li > a': {
-          pl: '24px',
+          pl: '24px'
         },
         'li > ul > li > ul > li > a': {
-          pl: '36px',
+          pl: '36px'
         },
         'li > ul > li > ul > li > ul > li > a': {
-          pl: '48px',
+          pl: '48px'
         },
         backgroundColor: 'bgs.1',
         gridArea: 'sidebar'
-      }}>
+      }}
+    >
       <Nav />
     </Box>
     <Box
@@ -71,10 +72,11 @@ export const Sidebar = props =>
         maxWidth: 768,
         minHeight: 'calc(100vh - 64px)',
         mr: 'auto',
-        px: [ 3, 4 ],
+        px: [3, 4],
         pb: 5,
         gridArea: 'main'
-      }}>
+      }}
+    >
       {props.children}
       <Nav
         pathname={props.location.pathname}
