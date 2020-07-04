@@ -79,7 +79,6 @@ export function ListInputBuilder <T> ({
       creatable = true,
       editable = true,
       helperText,
-      type,
       label,
       of,
       value = [],
@@ -89,9 +88,9 @@ export function ListInputBuilder <T> ({
       placeholder,
       inlineDelete
     } = props
-    if (defaultNewVal === undefined) {
-      throw new MissingAttributeError('defaultNewVal', name, type)
-    }
+    // if (defaultNewVal === undefined) {
+    //   throw new MissingAttributeError('defaultNewVal', name, type)
+    // }
     const handleEdit = (index: number) => (v: T) => {
       if (value !== undefined && editable) {
         value[index] = v
@@ -115,7 +114,7 @@ export function ListInputBuilder <T> ({
     }
     return <DecorationComponent label={label} helperText={helperText}>
       {
-        [...value, defaultNewVal].map((v: T, index) => (
+        [...value, defaultNewVal].map((v: T|undefined, index) => (
           index !== value.length
             ? (
               <InputComponent

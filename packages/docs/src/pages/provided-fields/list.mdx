@@ -1,0 +1,49 @@
+export const title = 'list - Fields'
+
+# List
+
+Field that can manage list of value
+
+## Schema
+
+```yml
+<fieldName in value>:
+  type: checkbox_group
+  label: string? # fieldName to display
+  defaultVal: any? # default value
+  helperText: string? # text to help user to input
+  disabled: boolean? # disable the input, default false
+
+  of?: string | Field<any> # subfield definition to be used for the list
+  inlineDelete?: boolean # whether the delete button is inline with each subfield
+  deletable?: boolean    # user can delete from the list, default true
+  editable?: boolean     # user can edit existing item in the list, default true
+  creatable?: boolean    # user can add new item to the list, default true
+  defaultNewVal?: any    # default value in new item input
+  placeholder?: string   # placeholder for new item input
+```
+
+## Example - list of text
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: list
+    of: text
+    label: my field
+    helperText: help
+    inlineDelete: true
+    defaultNewVal: ''
+    placeholder: New
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```

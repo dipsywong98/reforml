@@ -1,0 +1,71 @@
+export const title = 'custom - Fields'
+
+# Custom Fields
+
+You can always add any new field to reforml and freely use the attributes of new components
+
+## Example - integrate the popular react-datepicker
+
+First you need to install react datepicker
+
+```sh
+npm i react-datepicker
+npm i react-datepicker @types/react-datepicker # for TypeScript
+```
+
+Then you need to handle how to display the label, helperText, value, onChange on your own.
+
+To minimize redundancy of your code you may instead make a higher order component that wraps each of
+your custom FieldComponent to display the label and helperText in the same format.
+
+Notice that react-datepicker uses selected to accept value, so we need to specifically assign value to its selected props.
+
+Since input components may accept `value => void` or `event => void` as onChange handler, reforml provides a `generalizeOptionalValueCallback` helper function,
+that help you to convert onChange props supplied to your component, which is a nullable `value => void` function, into whatever handler that the input component accepts.
+If the component gives the value, it will just call `props.onChange(value)`; if it is an event, it will call `props.onChange(event.target.value)`
+
+`...props` basically passes rest of the settings to the `ReactDatePicker`, so you can enjoy the different props that the datepicker provides
+
+(TypeScript only) `FieldComponent<Date>` defines that this component handles value with type Date, as react-timepicker required.
+
+```tsx
+import React from 'react'
+import ReactDatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css"
+import { FieldComponent, generalizeOptionalValueCallback } from 'reforml'
+
+const DatePicker: FieldComponent<Date> = ({label, value, helperText, onChange, ...props}) => {
+  return (
+    <div>
+      <div className='label'>{label}</div>
+      <ReactDatePicker selected={value} onChange={generalizeOptionalValueCallback(onChange)} {...props}/>
+      <div>
+        <small className='form-text text-muted'>{helperText}</small>
+      </div>
+    </div>
+  )
+}
+
+export default DatePicker
+```
+
+```tsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: date
+    label: my field
+    helperText: help
+    defaultVal: ${Date.now()}
+    showTimeSelect: true
+  `), [])
+  return (
+    <ReformlProvider fieldComponents={{ date: DatePicker }}>
+      <BaseForm fields={fields} onChange={setValue} value={value}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </ReformlProvider>
+  )
+}
+```

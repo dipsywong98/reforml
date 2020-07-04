@@ -39,6 +39,7 @@
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "cross-env": "^7.0.2",
     "microbundle-crl": "^0.13.10",
     "node-sass": "^4.14.1",

@@ -21,7 +21,7 @@ export const wrapper = ({
     <>
       {title && (
         <Helmet>
-          <title>{title} | Rebass</title>
+          <title>{title} | Reforml</title>
         </Helmet>
       )}
       {children}

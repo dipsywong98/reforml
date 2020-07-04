@@ -1,0 +1,37 @@
+# Reduce Fields
+
+When the form value changed, you can alter the fields accordingly using the reduceFields function that comes along with the parameters in the onChangeHandler of form,
+where reduceField is a function that accepts a closure that map old fields into new fields
+
+## Example - copy the text field value to label
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const handleChange = (newValue, {reduceFields}) => {
+    reduceFields((oldFields) => {
+      if(newValue.copyField.length) {
+        oldFields.copyField.label = newValue.copyField
+      } else {
+        oldFields.copyField.label = 'Input some value'
+      }
+      return oldFields
+    })
+    setValue(newValue)
+  }
+  const fields = useMemo(() => jsyaml.load(`
+  copyField:
+    type: text
+    label: Input some value
+    helperText: this will copy the value to label
+    placeholder: label value
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={handleChange}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```

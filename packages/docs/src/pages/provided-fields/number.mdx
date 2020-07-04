@@ -1,0 +1,78 @@
+export const title = 'number - Fields'
+
+# Number
+
+Input that accepts only number, and cast to number automatically
+
+## Schema
+
+```yml
+<fieldName in value>:
+  type: number
+  label: string? # fieldName to display
+  defaultVal: number? # default value
+  helperText: string? # text to help user to input
+  disabled: boolean? # disable the input, default false
+```
+
+## Example
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: number
+    label: my field
+    helperText: help
+    defaultVal: 123
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Use Your own
+
+```tsx
+import { FieldComponent, FieldPropTypes, ReformlProvider, BaseForm } from 'reforml'
+import React, { FunctionComponent, useState } from 'react'
+import PropTypes from 'prop-types'
+
+const MyNumber: FieldComponent<string> = ({
+  helperText,
+  onChange,
+  value,
+  label,
+  defaultVal,
+  ...props
+}) => {
+  return (
+    <div>
+      <div>{label}: <input {...props} onChange={onChange} value={value}/></div>
+      <div>{helperText}</div>
+    </div>
+  )
+}
+
+MyNumber.propTypes = {
+  ...FieldPropTypes,
+  value: PropTypes.string
+}
+
+const TextPage: FunctionComponent = () => {
+  const [value, setValue] = useState({})
+  return (
+    <ReformlProvider fieldComponents={{ text: MyNumber }}>
+      <BaseForm fields={{ myField: { type: 'number', label: 'label', helperText: 'helper' } }} onChange={setValue} value={value}/>
+    </ReformlProvider>
+  )
+}
+
+export default TextPage
+```

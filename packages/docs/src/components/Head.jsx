@@ -4,6 +4,7 @@ import pkg from 'reforml/package.json'
 
 const Head = props => {
   const title = [props.title, 'Reforml'].filter(Boolean).join(' | ')
+  console.log(title)
 
   return (
     <Helmet

@@ -5,13 +5,14 @@ export default {
     color: 'primary',
     transition: 'color .2s ease-out',
     ':hover,:focus': {
-      color: 'secondary'
+      color: 'blue.0'
     }
   },
   inlineCode: {
     fontFamily: 'monospace',
     fontSize: '93.75%',
-    color: 'secondary'
+    color: 'code.keyword',
+    backgroundColor: 'bgs.2'
   },
   code,
   pre: {

@@ -69,8 +69,7 @@ describe('BaseForm', () => {
       </div>
     }
     MyText.propTypes = FieldPropTypes
-    const components: FieldComponents = {
-      ...DefaultFieldComponents,
+    const components: Partial<FieldComponents> = {
       text: MyText,
       oldText: DefaultFieldComponents.text
     }
@@ -101,7 +100,7 @@ describe('BaseForm', () => {
     let value = {}
     const onChange: FormChangeHandler<FormValue & {myField?: string}> = (v, { reduceFields }) => {
       reduceFields((fields) => {
-        fields.myField.label = `label ${v.myField !== undefined ? v.myField : v.myField}`
+        fields.myField.label = `label ${v.myField !== undefined ? v.myField : ''}`
         return fields
       })
       value = v

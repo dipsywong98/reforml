@@ -1,1 +1,126 @@
 # Getting Started
+
+## Install
+
+First install the core reforml library
+
+```sh
+npm i reforml
+```
+
+## Use Reforml in JSON Form
+
+```jsx
+import {BaseForm} from 'reforml'  // simplest form element
+import 'reforml/dist/index.css'   // default styling
+```
+
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: text
+    label: my first reforml field
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Use Reforml with YAML string
+
+Just install some YAML parser such as `js-yaml`. You can install that by
+
+```sh
+npm i js-yaml
+```
+
+and then
+
+```js
+  import {BaseForm} from 'reforml'  // simplest form element
+  import 'reforml/dist/index.css'   // default styling
+  import jsyaml from 'js-yaml'      // yaml parser
+```
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: text
+    label: my second reforml field
+    helperText: Use the react hook "useMemo" so it only parse the yaml once
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Use YAML Webpack loader
+
+Install a yaml webpack loader, such as `js-yaml-loader`
+
+```sh
+npm i -D js-yaml-loader
+```
+
+In your webpack config,
+
+```js
+// webpack.config.js
+module: {
+  rules: [{
+    test: /\.ya?ml$/,
+    use: 'js-yaml-loader',
+  }]
+}
+```
+
+Or if you are using Create React App that the webpack config is encapsulated, you can
+
+```sh
+npm i -D react-app-rewired react-app-rewire-yaml
+```
+then in `package.json`, change the `"start": "react-script start"` to `"start": "react-app-rewired start"`.
+
+At root create a new file `config-overrides.js`
+```js
+const rewireYAML = require('react-app-rewire-yaml');
+module.exports = function override(config, env) {
+  if (!config.plugins) {
+    config.plugins = [];
+  }
+  config = rewireYAML(config, env)
+  return config
+}
+```
+
+Then you can simply import the yaml file
+
+```jsx
+import fields from './my-fields.yaml'
+```
+
+If you are using TypeScript you may need a declaration file `./my-fields.yaml.d.ts`
+```ts
+import { Fields } from 'reforml'
+
+declare module '**/*.reforml.yaml' {
+  const fields: Fields
+  export default fields
+}
+```
+

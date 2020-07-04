@@ -2,11 +2,10 @@ import { FunctionComponent } from 'react'
 import { CommonFieldComponentProps } from './basic'
 import PropTypes from 'prop-types'
 import { OptionsField, OptionsFieldPropTypes } from './options'
-import { BoolField } from './bool'
 
 export type MultiSelectOutput = 'set' | 'array' | 'object'
 
-export interface MultiSelectField<T extends MultiSelectValue<unknown>> extends OptionsField<T>, BoolField<T> {
+export interface MultiSelectField<T extends MultiSelectValue<unknown>> extends OptionsField<T> {
   output?: MultiSelectOutput
 }
 

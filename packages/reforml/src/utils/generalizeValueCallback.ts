@@ -13,3 +13,8 @@ export const generalizeValueCallback = <T> (valueCallback: (value: T) => unknown
     valueCallback(param)
   }
 }
+
+export const generalizeOptionalValueCallback = <T> (valueCallback?: (value: T) => unknown): ValueEventCallback<T> | undefined => {
+  if (valueCallback === undefined) return undefined
+  return generalizeValueCallback(valueCallback)
+}

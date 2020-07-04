@@ -32,5 +32,8 @@ export const FieldPropTypes = {
 }
 
 export * from './basic'
-export * from './options'
 export * from './multiSelect'
+export * from './bool'
+export * from './list'
+export * from './object'
+export * from './options'

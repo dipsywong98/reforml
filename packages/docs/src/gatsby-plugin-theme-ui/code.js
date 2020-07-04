@@ -1,5 +1,5 @@
 export default {
-  maxWidth:'100%',
+  maxWidth: '100%',
   overflow: 'auto',
   fontFamily: 'monospace',
   fontSize: 'inherit',

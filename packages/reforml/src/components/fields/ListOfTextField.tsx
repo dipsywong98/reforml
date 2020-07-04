@@ -3,9 +3,8 @@ import { FieldPropTypes } from '../../types/fields'
 import { ListInputBuilder, ListInputComponent } from './ListInputBuilder'
 import { MissingAttributeError } from '../../errors'
 import { useBaseComponents } from '../BaseComponentsContext'
-import { generalizeValueCallback } from '../../utils'
+import { generalizeOptionalValueCallback } from '../../utils'
 import React from 'react'
-import { ValueEventCallback } from '../../types'
 import { TextInput } from './TextInput'
 
 const InputComponent: ListInputComponent<string> = ({
@@ -21,7 +20,7 @@ const InputComponent: ListInputComponent<string> = ({
         <TextInput
           {...props}
           value={value}
-          onChange={onChange !== undefined ? generalizeValueCallback(onChange) as ValueEventCallback<unknown> : undefined}
+          onChange={generalizeOptionalValueCallback(onChange)}
         />
       </Box>
       <Box>

@@ -9,8 +9,8 @@ const propTypes = {
   ...FieldPropTypes
 }
 
-export const Select: OptionsFieldComponent<string | number> = ({ helperText, label, options, value, onChange, valueKey, labelKey, defaultVal, ...props }) => {
-  const valueLabel = useProcessOptionsMemo<string | number>(options, { labelKey, valueKey })
+export const Select: OptionsFieldComponent<unknown> = ({ helperText, label, options, value, onChange, valueKey, labelKey, defaultVal, ...props }) => {
+  const valueLabel = useProcessOptionsMemo<unknown>(options, { labelKey, valueKey })
 
   const { BaseSelect } = useBaseComponents()
   return (

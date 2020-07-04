@@ -7,7 +7,7 @@ import { FieldComponent, MultiSelectFieldComponent, MultiSelectValue, OptionsFie
 export interface FieldComponents {
   text: FieldComponent<string>
   number: FieldComponent<number>
-  select: OptionsFieldComponent<number | string>
+  select: OptionsFieldComponent<unknown>
   checkbox: FieldComponent<unknown>
   checkbox_group: MultiSelectFieldComponent<MultiSelectValue<unknown>>
   [type: string]: FunctionComponent<unknown> | undefined

@@ -1,0 +1,42 @@
+export const title = 'object - Fields'
+
+# Object
+
+A field that can edit a set of sub-field
+
+## Schema
+
+```yml
+<fieldName in value>:
+  type: object
+  label: string? # fieldName to display
+  defaultVal: any? # default value
+  helperText: string? # text to help user to input
+  disabled: boolean? # disable the input, default false
+  fields: Fields
+```
+
+## Example
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: object
+    label: my field
+    helperText: help
+    fields:
+      foo:
+        type: text
+        label: Foo
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```

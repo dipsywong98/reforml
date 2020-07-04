@@ -1,0 +1,180 @@
+export const title = 'checkbox_group - Fields'
+
+# Checkbox Group
+
+A multiselect field
+
+## Schema
+
+```yml
+<fieldName in value>:
+  type: checkbox_group
+  label: string? # fieldName to display
+  defaultVal: any? # default value
+  helperText: string? # text to help user to input
+  disabled: boolean? # disable the input, default false
+  options: Options # options can be a list of value, label to value map, or list of any object
+  # the path or key name to get option value inside an option object
+  valueKey: DigKey?
+  # the path or key name to get label to display inside an option object
+  labelKey: DigKey?
+
+  output: MultiSelectOutput # it can be array' or 'object'
+```
+
+## Example - by default checkbox_group outputs array
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: checkbox_group
+    label: my field
+    helperText: help
+    options: ['option1','option2', 'option3']
+    defaultVal: ['option2']
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Example - return object
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: checkbox_group
+    label: my field
+    helperText: help
+    options: ['option1','option2', 'option3']
+    defaultVal:
+      option2: true
+    output: object
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Example - specify additional properties for each option
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: checkbox_group
+    label: my field
+    helperText: help
+    options:
+      - value: value1
+        label: label1
+        helperText: helper1
+      - value2
+      - value: value3
+        label: label3
+        helperText: helper3
+    defaultVal:
+      value2: true
+    output: object
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+
+## Use Your own
+
+Use `const Checkbox = useFieldComponents().checkbox` hook to retrieve the checkbox component
+
+Use `const valueLabel = useProcessOptionsMemo<unknown>(options, { labelKey, valueKey })` hook to process the options definition into array of value label pair (see [select page]('./fields/select#Use Your own') for more)
+
+Use `const [flags, setFlag] = useProcessMultiSelectMemo(onChange, value, output)` hook to process the output definition and field value and onChange props into flags set and setFlag higher order function.
+`flags` is a `Set` that holds all the selected value, where `setFlag(value)` returns a function that toggle the existence of `value` in set `flags`,
+that is, if value was not in flags, `setFlag(value)` is a function that will insert value to flags;
+if value was not in flags, `setFlag(value)` is a function that will remove value from flags
+
+
+```tsx
+import {
+  Fields,
+  FieldPropTypes,
+  ReformlProvider,
+  BaseForm,
+  MultiSelectFieldComponent,
+  MultiSelectValue,
+  useFieldComponents, useProcessMultiSelectMemo,
+  useProcessOptionsMemo
+} from 'reforml'
+import React, { FunctionComponent, useState } from 'react'
+import PropTypes from 'prop-types'
+import 'reforml/dist/index.css'
+
+const MyCheckboxGroup: MultiSelectFieldComponent<MultiSelectValue<unknown>> = ({
+  helperText,
+  onChange,
+  value,
+  label,
+  options,
+  valueKey,
+  labelKey,
+  output
+}) => {
+  const Checkbox = useFieldComponents().checkbox
+  const valueLabel = useProcessOptionsMemo<unknown>(options, { labelKey, valueKey })
+  const [flags, setFlag] = useProcessMultiSelectMemo(onChange, value, output)
+  return (
+    <div>
+      <div>{label}</div>
+      <div>{helperText}</div>
+      {valueLabel.map(({ value, label, ...otherProps }) => (
+        <Checkbox key={label} {...otherProps} label={label} value={flags.has(value)} onChange={setFlag(value)}/>
+      ))}
+    </div>
+  )
+}
+
+MyCheckboxGroup.propTypes = {
+  ...FieldPropTypes,
+  value: PropTypes.any
+}
+
+const TextPage: FunctionComponent = () => {
+  const [value, setValue] = useState({})
+  const fields: Fields = {
+    myField: {
+      type: 'checkbox_group',
+      label: 'some label',
+      helperText: 'some helper',
+      options: ['option1', 'option2', 'option3']
+    }
+  }
+  return (
+    <ReformlProvider fieldComponents={{ checkbox_group: MyCheckboxGroup }}>
+      <BaseForm fields={fields} onChange={setValue} value={value}/>
+    </ReformlProvider>
+  )
+}
+
+export default TextPage
+```

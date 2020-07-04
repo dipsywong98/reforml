@@ -16,9 +16,9 @@ export type Option<T> = {
   [key: string]: unknown | T
 } | T
 
-export type Options<T> = {[label: string]: T} | Array<Option<T>>
+export type Options<T> = { [label: string]: T } | Array<Option<T>>
 
-export interface OptionsField<T> extends BasicField<T>{
+export interface OptionsField<T> extends BasicField<T> {
   options?: Options<T>
   valueKey?: DigKey
   labelKey?: DigKey
@@ -35,7 +35,8 @@ export const OptionsFieldPropTypes = {
 }
 
 export const BaseSelectPropTypes = {
+  placeholder: PropTypes.string,
   options: PropTypes.array.isRequired
 }
 
-export type BaseSelectComponent<T> = FunctionComponent<CommonFieldComponentProps<T> & { options: Array<{ label: string, value: T }> }>
+export type BaseSelectComponent<T> = FunctionComponent<CommonFieldComponentProps<T> & { options: Array<{ label: string, value: T }>, placeholder?: string }>

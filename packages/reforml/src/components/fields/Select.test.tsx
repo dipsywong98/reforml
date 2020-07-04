@@ -38,10 +38,10 @@ describe('Select', () => {
     expect(mockFn).not.toHaveBeenCalled()
     const select = container?.querySelector('select[name="myField"]')
     expect(select).toBeTruthy()
-    expect(select?.childElementCount).toEqual(3)
+    expect(select?.childElementCount).toEqual(4)
     if (select !== null && select !== undefined) {
       act(() => {
-        fireEvent.change(select, { target: { value: 'c' } })
+        fireEvent.change(select, { target: { value: '2' } })
       })
       expect(value.myField).toEqual('c')
     }

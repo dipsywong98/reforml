@@ -1,0 +1,231 @@
+export const title = 'select - Fields'
+
+# Select
+
+Select one value from list of options, where options can be a list of value, label to value map, or list of any object
+
+## Schema
+
+```yml
+<fieldName in value>:
+  type: select
+  label: string? # fieldName to display
+  defaultVal: any? # default value
+  helperText: string? # text to help user to input
+  disabled: boolean? # disable the input, default false
+  options: Options # options can be a list of value, label to value map, or list of any object
+  # the path or key name to get option value inside an option object
+  valueKey: DigKey?
+  # the path or key name to get label to display inside an option object
+  labelKey: DigKey?
+```
+
+## Example - list of value
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: select
+    label: my field
+    helperText: help
+    placeholder: Please select
+    options:
+      - value1
+      - value2
+      - value3
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Example - label to value map
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: select
+    label: my field
+    helperText: help
+    placeholder: Please select
+    options:
+      label1: value1
+      label2: value2
+      label3: value3
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+
+## Example - list of object
+
+If you did not specify `valueKey` or `labelKey`, reforml will first try to search for `value` key or `label` key in the option.
+If reforml cannot find the specific value, it will just use the object as the value, while stringify the object as the label
+
+### Specify a value and a label in each option
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: select
+    label: my field
+    helperText: help
+    placeholder: Please select
+    options:
+      - value: value1
+        label: label1
+      - value: value2
+        label: label2
+      - value: value3
+        label: label3
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+### Specify valueKey and labelKey to search inside each option
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: select
+    label: my field
+    helperText: help
+    placeholder: Please select
+    options:
+      - key1: value1
+        key2:
+          key3: label1
+      - key1: value2
+        key2:
+          key3: label2
+      - key1: value3
+        key2:
+          key3: label3
+    valueKey: key1
+    labelKey:
+      - key2
+      - key3
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Use Your own
+
+Use `useProcessOptionsMemo<unknown>(options, { labelKey, valueKey })` hook to process the options into array of value label pairs, e.g.
+```js
+// input
+useProcessOptionsMemo({label1: 'value1', label2: 'value2'})
+// will give
+[{
+  value: 'value1',
+  label: 'label1'
+},{
+  value: 'value2',
+  label: 'label2'
+}]
+```
+
+```tsx
+import {
+  Fields,
+  OptionsFieldComponent,
+  FieldPropTypes,
+  ReformlProvider,
+  BaseForm,
+  useProcessOptionsMemo
+} from 'reforml'
+import React, { FunctionComponent, useState } from 'react'
+import PropTypes from 'prop-types'
+
+const MySelect: OptionsFieldComponent<unknown> = ({
+  helperText,
+  onChange,
+  value,
+  label,
+  defaultVal,
+  options,
+  labelKey,
+  valueKey,
+  ...props
+}) => {
+  const valueLabel = useProcessOptionsMemo<unknown>(options, { labelKey, valueKey })
+  const handleChange = ({ target: { value } }: { target: { value: string } }): void => {
+    onChange?.(valueLabel[Number.parseInt(value)]?.value)
+  }
+  return (
+    <div>
+      <div>{label}:
+        <select className='form-control' onChange={handleChange} {...props}>
+          <option value="" selected={value === undefined}>{props.placeholder}</option>
+          {valueLabel.map(({ label }, index) => (
+            <option key={label} value={index} selected={value === valueLabel[index].value}>{label}</option>
+          ))}
+        </select>
+      </div>
+      <div>{helperText}</div>
+    </div>
+  )
+}
+
+MySelect.propTypes = {
+  ...FieldPropTypes,
+  value: PropTypes.string
+}
+
+const TextPage: FunctionComponent = () => {
+  const [value, setValue] = useState({})
+  console.log(value)
+  const fields: Fields = {
+    myField: {
+      type: 'select',
+      options: [{
+        key1: 'value1',
+        key2: {
+          key3: 'label1'
+        }
+      }]
+    }
+  }
+  return (
+    <ReformlProvider fieldComponents={{ select: MySelect }}>
+      <BaseForm fields={fields} onChange={setValue} value={value}/>
+    </ReformlProvider>
+  )
+}
+
+export default TextPage
+```

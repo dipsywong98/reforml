@@ -1,0 +1,159 @@
+export const title = 'checkbox - Fields'
+
+# Checkbox
+
+Field that can give true false value
+
+## Schema
+
+```yml
+<fieldName in value>:
+  type: checkbox
+  label: string? # fieldName to display
+  defaultVal: any? # default value
+  helperText: string? # text to help user to input
+  disabled: boolean? # disable the input, default false
+  trueValue: any? # custom true value, default boolean true
+  falseValue: any? # custom false value , default undefined
+```
+
+## Example - simplest boolean output
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: checkbox
+    label: my field
+    helperText: help
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Example - custom true false value
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: checkbox
+    label: my field
+    helperText: help
+    defaultVal: this is false
+    trueValue: this is true
+    falseValue: this is false
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+
+## Use Your own
+
+Use `const [flag, handleChange] = useProcessBool(value, onChange, { trueValue, falseValue })` hook to process the values, onChange
+and supply the resultant flag and handler to your input tag
+
+```js
+// input
+useProcessOptionsMemo({label1: 'value1', label2: 'value2'})
+// will give
+[{
+  value: 'value1',
+  label: 'label1'
+},{
+  value: 'value2',
+  label: 'label2'
+}]
+```
+
+```tsx
+import {
+  Fields,
+  FieldPropTypes,
+  ReformlProvider,
+  BaseForm,
+  useProcessBool,
+  BoolFieldComponent
+} from 'reforml'
+import React, { FunctionComponent, useState } from 'react'
+import PropTypes from 'prop-types'
+
+const MyCheckbox: BoolFieldComponent<unknown> = ({
+  helperText,
+  onChange,
+  value,
+  label,
+  defaultVal,
+  trueValue,
+  falseValue,
+  ...props
+}) => {
+  const [flag, handleChange] = useProcessBool(value, onChange, { trueValue, falseValue })
+  return (
+    <div>
+      <label>
+        <div style={{ display: 'flex' }}>
+          <div>
+            <input
+              className='form-check-input'
+              type='checkbox'
+              onChange={handleChange}
+              checked={flag}
+              {...props}
+            />
+          </div>
+          <div>
+            <div>
+              {label}
+            </div>
+            <div>
+              {(helperText !== undefined ? <div>{helperText}</div> : null)}
+            </div>
+          </div>
+        </div>
+      </label>
+    </div>
+  )
+}
+
+MyCheckbox.propTypes = {
+  ...FieldPropTypes,
+  value: PropTypes.string
+}
+
+const TextPage: FunctionComponent = () => {
+  const [value, setValue] = useState({})
+  console.log(value)
+  const fields: Fields = {
+    myField: {
+      type: 'checkbox',
+      label: 'some label',
+      helperText: 'some helper',
+      trueValue: 'some true',
+      falseValue: 'some false'
+    }
+  }
+  return (
+    <ReformlProvider fieldComponents={{ checkbox: MyCheckbox }}>
+      <BaseForm fields={fields} onChange={setValue} value={value}/>
+    </ReformlProvider>
+  )
+}
+
+export default TextPage
+```

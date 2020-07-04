@@ -1,0 +1,20 @@
+# Styling
+
+You can change the style easily by overriding the css or supply your own base components, or just override all the field components
+
+```jsx
+import './your-own.css'
+import './TextInput'
+
+
+const fields = {
+  text: TextInput,
+  // ... other components
+}
+
+export const App = () => {
+  return <ReformlProvider fieldComponents={fields}>
+  {/* All reforml forms in this will use your custom components */}
+  </ReformlProvider>
+}
+```

@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 import { BasicField, CommonFieldComponentProps } from './basic'
 import PropTypes from 'prop-types'
-import { Field, FieldPropTypes } from './index'
+import { Field } from './index'
 
 export interface ListField<T> extends BasicField<T[]> {
   of?: string | Field<T>
@@ -17,7 +17,7 @@ export type ListFieldComponentProps<T> = CommonFieldComponentProps<T[]> & ListFi
 export type ListFieldComponent<T> = FunctionComponent<ListFieldComponentProps<T>>
 
 export const ListFieldPropTypes = {
-  of: PropTypes.oneOfType([PropTypes.string, PropTypes.shape(FieldPropTypes)]),
+  of: PropTypes.any,
   deletable: PropTypes.bool,
   editable: PropTypes.bool,
   creatable: PropTypes.bool,

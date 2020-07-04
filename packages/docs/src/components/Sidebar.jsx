@@ -76,11 +76,11 @@ export const Sidebar = props =>
         gridArea: 'main'
       }}>
       {props.children}
-      {/*<Nav*/}
-      {/*  pathname={props.location.pathname}*/}
-      {/*  components={{*/}
-      {/*    wrapper: Pagination*/}
-      {/*  }}*/}
-      {/*/>*/}
+      <Nav
+        pathname={props.location.pathname}
+        components={{
+          wrapper: Pagination
+        }}
+      />
     </Box>
   </Flex>

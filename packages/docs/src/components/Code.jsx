@@ -3,15 +3,19 @@ import {
   LiveProvider,
   LivePreview,
   LiveEditor,
-  LiveError,
+  LiveError
 } from '@jxnblk/react-live'
 import { ThemeProvider } from 'theme-ui'
 import * as Rebass from 'rebass'
 import * as RebassForms from '@rebass/forms'
 import * as RebassLayout from '@rebass/layout'
+import Prism from '@theme-ui/prism'
 import { Flex, Box } from 'rebass'
 import { countries } from 'countries-list'
 import * as Reforml from 'reforml'
+import jsyaml from 'js-yaml'
+import DatePicker from './DatePicker'
+import 'reforml/dist/index.css'
 
 const scope = {
   ...Rebass,
@@ -20,9 +24,11 @@ const scope = {
   ...Reforml,
   ...React,
   ThemeProvider,
+  jsyaml,
+  DatePicker,
   props: {
     image: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=2048&q=20',
-    countries,
+    countries
   }
 }
 
@@ -44,7 +50,7 @@ const Preview = ({ fullwidth, ...props }) =>
     as={LivePreview}
     {...props}
     sx={{
-      p: fullwidth ? 0 : 3,
+      p: fullwidth ? 0 : 3
     }}
   />
 
@@ -56,7 +62,7 @@ const Editor = props =>
       variant: 'styles.pre',
       outline: 'none',
       borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
+      borderTopRightRadius: 0
     }}
   />
 
@@ -70,7 +76,7 @@ const Err = props =>
       p: 3,
       overflowX: 'auto',
       color: 'white',
-      bg: 'red',
+      bg: 'red'
     }}
   />
 
@@ -87,7 +93,7 @@ const Code = ({
         {...props}
         code={code}
         scope={scope}>
-        <Preview fullwidth />
+        <Preview fullwidth/>
       </LiveProvider>
     )
   }
@@ -95,25 +101,26 @@ const Code = ({
   if (props.live) {
     const code = props.children
     return (
-      <Box
-        sx={{
-          mb: 4,
-          border: t => `1px solid ${t.colors.muted}`,
-          borderRadius: 2,
-        }}>
-        <LiveProvider
-          {...props}
-          code={code}
-          scope={scope}>
-          <Preview />
+      <LiveProvider
+        {...props}
+        code={code}
+        scope={scope}>
+        <Flex
+          sx={{
+            mb: 4,
+            border: t => `1px solid ${t.colors.muted}`,
+            borderRadius: 2,
+            flexDirection: ['column',null,'row']
+          }}>
           <Box
             sx={{
-              position: 'relative',
+              flex: 1,
+              position: 'relative'
             }}>
             <Editor
               className={className}
             />
-            <Err />
+            <Err/>
             <Box
               sx={{
                 position: 'absolute',
@@ -124,18 +131,22 @@ const Code = ({
                 variant: 'text.caps',
                 fontSize: 0,
                 fontWeight: 'bold',
-                color: 'accent',
+                color: 'accent'
               }}>
               Live Demo
             </Box>
           </Box>
-        </LiveProvider>
-      </Box>
+          <Box as={Preview} sx={{flex: 1}}/>
+        </Flex>
+      </LiveProvider>
     )
   }
 
   return (
-    <Box as='code' sx={{ variant: 'styles.pre' }} {...props} className={className} />
+    <Prism
+      {...props}
+      className={className}
+    />
   )
 }
 export default Code

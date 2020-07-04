@@ -3,7 +3,7 @@ import { Banner, NavGrid, Container, Grid, LogoGrid } from "..";
 import Logo from "../components/Logo";
 
 <Banner>
-<Box mt={5} />
+<Box mt='auto' />
 <LogoGrid>
 <Logo text='' size={192} />
 <div>
@@ -12,11 +12,11 @@ import Logo from "../components/Logo";
 
 ## Simple yet flexible react form defined by yaml
 
-<Flex alignItems='baseline'>
-<Box>
+<Flex alignItems='baseline' sx={{flexWrap: 'wrap'}}>
+<Box mr={4} mb={3}>
 <Button as='a' href='/getting-started'>Getting Started</Button>
 </Box>
-<Box ml={4} sx={{w:'100%', pre:{w:'100%'}}}>
+<Box sx={{w:'100%', pre:{w:'100%'}}} mb={3}>
 
 ```sh
 npm i reforml
@@ -27,20 +27,20 @@ npm i reforml
 </Flex>
 </div>
 </LogoGrid>
-<Box my='auto' />
+<Box my='auto' sx={{minHeight: '16px'}}/>
 <Box>
 
 ```jsx live=true
 () => {
   const [value, setValue] = useState({})
+  const fields = useMemo(() => jsyaml.load(`
+  myField:
+    type: text
+    label: my first reforml field
+  `), [])
   return (
     <div>
-      <BaseForm fields={{
-        myField: {
-          type: 'text',
-          label: 'my first reforml field'
-        }
-      }} value={value} onChange={setValue}/>
+      <BaseForm fields={fields} value={value} onChange={setValue}/>
       {value.myField}
     </div>
   )
