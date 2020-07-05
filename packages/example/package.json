@@ -11,9 +11,7 @@
     "test:lint": "eslint src/**/*.*",
     "test:unit": "cross-env CI=1 react-app-rewired test --env=jsdom",
     "test:watch": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject",
-    "predeploy": "run-s build",
-    "deploy": "ghpages -d ./build/"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -35,7 +33,6 @@
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
     "cross-env": "^7.0.2",
     "gh-pages": "^2.2.0",
-    "ghpages": "^0.0.10",
     "js-yaml-loader": "^1.2.2",
     "react-app-rewire-yaml": "^1.1.0",
     "react-app-rewired": "^2.1.6"

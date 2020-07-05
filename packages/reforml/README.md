@@ -7,21 +7,28 @@
 ## Install
 
 ```bash
-npm install --save reforml
+npm i reforml
 ```
 
 ## Usage
 
-```tsx
-import React, { Component } from 'react'
+https://dipsywong98.github.io/reforml/
 
-import MyComponent from 'reforml'
-import 'reforml/dist/index.css'
+```jsx
+import {BaseForm} from 'reforml'
+import React, {useState, useMemo} from 'react'
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+export default () => {
+  const [value, setValue] = useState({})
+  const fields = useMemo(() => ({
+    myField: {
+      type: 'text',
+      label: 'my field'
+    }
+  }), [])
+  return (
+    <BaseForm fields={fields} value={value} onChange={setValue}/>
+  )
 }
 ```
 

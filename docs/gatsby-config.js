@@ -3,6 +3,7 @@ const remarkPlugins = [
 ]
 
 module.exports = {
+  pathPrefix: '/reforml',
   plugins: [
     {
       resolve: 'gatsby-plugin-mdx',

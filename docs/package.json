@@ -1,15 +1,18 @@
 {
   "private": true,
   "name": "@reforml/docs",
+  "homepage": "https://dipsywong98.github.io/reforml",
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "gatsby develop",
     "clean": "gatsby clean",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "icon": "npx repng src/components/Icon.jsx -d static -f icon.png -w 512 -h 512"
+    "build": "gatsby build --prefix-paths",
+    "serve": "gatsby serve --prefix-paths",
+    "icon": "npx repng src/components/Icon.jsx -d static -f icon.png -w 512 -h 512",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d public"
   },
   "dependencies": {
     "@jxnblk/react-live": "^2.1.2-1",

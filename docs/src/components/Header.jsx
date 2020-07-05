@@ -3,8 +3,9 @@ import {
   Flex,
   Box,
   Link,
-  Button,
+  Button
 } from 'rebass'
+import { Link as GatsbyLink } from 'gatsby'
 import { useColorMode } from 'theme-ui'
 
 const modes = [
@@ -15,16 +16,17 @@ const modes = [
 const Burger = ({ size = 24 }) => (
   <Box
     as='svg'
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns='http://www.w3.org/2000/svg'
     width={size}
     height={size}
-    fill="currentcolor"
-    viewBox="0 0 24 24"
+    fill='currentcolor'
+    viewBox='0 0 24 24'
     sx={{
       display: 'block',
-      margin: 0,
-    }}>
-    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+      margin: 0
+    }}
+  >
+    <path d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' />
   </Box>
 )
 
@@ -35,8 +37,9 @@ const Dot = props =>
     height='24'
     fill='currentcolor'
     style={{
-      display: 'block',
-    }}>
+      display: 'block'
+    }}
+  >
     <circle
       cx='16'
       cy='16'
@@ -58,7 +61,7 @@ const Header = ({
   nav,
   menu,
   setMenu,
-  fullwidth,
+  fullwidth
 }) => {
   const [mode, setMode] = useColorMode()
 
@@ -74,7 +77,8 @@ const Header = ({
       py={2}
       height={64}
       bg='bgs.2'
-      alignItems='center'>
+      alignItems='center'
+    >
       {!fullwidth && (
         <Button
           title='Toggle Menu'
@@ -82,7 +86,7 @@ const Header = ({
           sx={{
             width: 32,
             height: 32,
-            p: 1,
+            p: 1
           }}
           variant='transparent'
           onClick={e => {
@@ -90,16 +94,18 @@ const Header = ({
             if (menu || !nav.current) return
             const navlink = nav.current.querySelector('a')
             navlink.focus()
-          }}>
-          <Burger/>
+          }}
+        >
+          <Burger />
         </Button>
       )}
-      <Link variant='nav' href='/'>Reforml</Link>
-      <Box mx='auto'/>
+      <Link variant='nav' as={GatsbyLink} to='/'>Reforml</Link>
+      <Box mx='auto' />
       <Link
         mr={2}
         variant='nav'
-        href='https://github.com/dipsywong98/reforml'>
+        href='https://github.com/dipsywong98/reforml'
+      >
         GitHub
       </Link>
       <Button
@@ -109,10 +115,11 @@ const Header = ({
           width: 32,
           height: 32,
           p: 1,
-          borderRadius: 99999,
+          borderRadius: 99999
         }}
-        onClick={cycleMode}>
-        <Dot/>
+        onClick={cycleMode}
+      >
+        <Dot />
       </Button>
     </Flex>
   )

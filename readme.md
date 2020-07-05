@@ -7,12 +7,21 @@
 ## Install
 
 ```bash
-npm install --save reforml
+npm i reforml
 ```
 
 ## Usage
 
-TBA
+https://dipsywong98.github.io/reforml/
+
+## Development
+
+```shell script
+yarn # install dependencies to all packages
+yarn start # start the build watcher for reforml
+yarn example # start the example
+yarn docs # start the development server of documentation
+```
 
 ## License
 

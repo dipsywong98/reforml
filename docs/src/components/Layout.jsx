@@ -3,12 +3,11 @@ import Head from './Head'
 import Header from './Header'
 import Footer from './Footer'
 import { Sidebar } from './Sidebar'
-import {Box} from 'rebass'
-
+import { Box } from 'rebass'
 
 const Layout = (props) => {
-  const fullwidth = props.location.pathname === '/'
-  const [ menu, setMenu ] = useState(false)
+  const fullwidth = props.location.pathname === '/' || props.location.pathname === '/reforml/'
+  const [menu, setMenu] = useState(false)
   const nav = useRef(null)
 
   return (
@@ -24,8 +23,9 @@ const Layout = (props) => {
       left: 0,
       bottom: 0,
       right: 0
-    }}>
-      <Box sx={{gridArea: 'head'}}>
+    }}
+    >
+      <Box sx={{ gridArea: 'head' }}>
         <Head {...props} />
         <Header
           fullwidth={fullwidth}
@@ -34,13 +34,14 @@ const Layout = (props) => {
           nav={nav}
         />
       </Box>
-      <Box sx={{gridArea: 'content', overflowY: 'auto'}}>
+      <Box sx={{ gridArea: 'content', overflowY: 'auto' }}>
         {!fullwidth ? (
           <Sidebar
             {...props}
             nav={nav}
             open={menu}
-            setMenu={setMenu}>
+            setMenu={setMenu}
+          >
             <main id='content'>
               {props.children}
             </main>
