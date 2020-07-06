@@ -13,7 +13,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  yarn_install:
+  test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -35,11 +35,7 @@ jobs:
         run: yarn test:coverage
 
       - name: upload coverage
-        uses: codacy/codacy-coverage-reporter-action@master
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: packages/reforml/coverage/clover.xml
-      - uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           file: packages/reforml/coverage/clover.xml # optional
