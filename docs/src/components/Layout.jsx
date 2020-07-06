@@ -17,7 +17,7 @@ const Layout = (props) => {
       "head"
       "content"
       `,
-      gridTemplateRows: '0fr 1fr',
+      gridTemplateRows: 'auto 1fr',
       position: 'fixed',
       top: 0,
       left: 0,
