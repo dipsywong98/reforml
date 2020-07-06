@@ -25,14 +25,14 @@ jobs:
     - name: install dependencies
       run: yarn install --frozen-lockfile
     
-    - name: lint
-      run: yarn lint
+    - name: test with lint
+      run: yarn test:lint
     
-    - name: build
-      run: yarn workspace reforml test:build
+    - name: test with build
+      run: yarn test:build
 
     - name: test with coverage
-      run: yarn workspace reforml test:coverage
+      run: yarn test:coverage
     
     - name: upload coverage
       uses: codacy/codacy-coverage-reporter-action@master
