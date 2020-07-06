@@ -14,17 +14,20 @@
   "scripts": {
     "build": "run-p build:**",
     "build:js": "microbundle-crl --no-compress --format modern,cjs",
-    "build:css": "node-sass --output-style expanded src/stylesheets/index.scss > dist/index.css",
+    "build:css": "node-sass --output-style expanded src/stylesheets/index.scss -o dist/",
     "watch:js": "microbundle-crl watch --no-compress --format modern,cjs",
     "watch:css": "node-sass --watch --output-style expanded src/stylesheets/index.scss -o dist/",
     "start": "run-p watch:**",
     "watch": "run-p watch:**",
-    "prepare": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
+    "prepublishOnly": "run-s build",
+    "test": "run-s test:unit test:eslint test:build",
     "test:build": "run-s build",
-    "test:lint": "eslint src/**/*.*",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "test:lint": "run-p test:eslint test:sass-lint",
+    "test:eslint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "test:sass-lint": "sass-lint --config .sass-lint.yml 'src/stylesheets/*.scss'",
+    "test:unit": "cross-env CI=1 SKIP_PREFLIGHT_CHECK=true react-scripts test --env=jsdom",
+    "test:coverage": "cross-env CI=1 SKIP_PREFLIGHT_CHECK=true react-scripts test --env=jsdom --coverage",
+    "test:watch": "cross-env SKIP_PREFLIGHT_CHECK=true react-scripts test --env=jsdom",
     "predeploy": "cd ../example && yarn install && yarn run build"
   },
   "peerDependencies": {
@@ -32,7 +35,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^10.4.4",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^25.1.4",
     "@types/node": "^12.12.38",
@@ -61,6 +64,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
+    "sass-lint": "^1.13.1",
     "typescript": "^3.9.5"
   },
   "files": [

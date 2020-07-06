@@ -9,15 +9,15 @@ BaseInput.defaultProps = {
   value: ''
 }
 
-export const BaseSelect: BaseSelectComponent<unknown> = ({ value, options, onChange, ...props }) => {
+export const BaseSelect: BaseSelectComponent<unknown> = ({ value = '', options, onChange, ...props }) => {
   const handleChange = ({ target: { value } }: { target: { value: string } }): void => {
     onChange?.(options[Number.parseInt(value)]?.value)
   }
   return (
     <select className='form-control' onChange={handleChange} {...props}>
-      <option value="" selected={value === undefined}>{props.placeholder}</option>
+      <option value="">{props.placeholder}</option>
       {options.map(({ label }, index) => (
-        <option key={label} value={index} selected={value === options[index].value}>{label}</option>
+        <option key={label} value={index}>{label}</option>
       ))}
     </select>
   )
