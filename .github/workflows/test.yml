@@ -39,6 +39,12 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: packages/reforml/coverage/
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          file: packages/reforml/coverage/clover.xml # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
 
       - name: docs build
         run: yarn docs:build
