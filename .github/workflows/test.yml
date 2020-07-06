@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: coverage
+name: test
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -22,7 +22,20 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
     
-    - name: Jest Annotations & Coverage
-      uses: mattallty/jest-github-action@v1.0.3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: install dependencies
+      run: yarn install --frozen-lockfile
+    
+    - name: lint
+      run: yarn lint
+    
+    - name: build
+      run: yarn workspace reforml test:build
+
+    - name: test with coverage
+      run: cd packages/reforml && react-scripts test --env=jsdom --coverage
+    
+    - name: upload coverage
+      uses: codacy/codacy-coverage-reporter-action@master
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      
