@@ -12,7 +12,7 @@
     "build": "cd packages/reforml && yarn build",
     "watch": "cd packages/reforml && yarn start",
     "example": "cd packages/example && yarn start",
-    "prepare": "cd packages/reforml && yarn prepare",
+    "prepublishOnly": "cd packages/reforml && yarn prepublishOnly",
     "test": "cd packages/reforml && yarn test",
     "test:build": "cd packages/reforml && yarn test:build",
     "test:lint": "eslint packages/*/src/**/*.*",
@@ -23,9 +23,9 @@
     "docs:deploy": "yarn workspace @reforml/docs deploy",
     "docs:dev": "yarn workspace @reforml/docs start",
     "docs:clean": "yarn workspace @reforml/docs clean",
-    "docs:build":"yarn workspace @reforml/docs build",
+    "docs:build": "yarn workspace @reforml/docs build",
     "docs:serve": "yarn workspace @reforml/docs serve",
-    "docs:icon":"yarn workspace @reforml/docs icon"
+    "docs:icon": "yarn workspace @reforml/docs icon"
   },
   "dependencies": {
     "ts-jest": "^26.1.1"

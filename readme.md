@@ -2,7 +2,11 @@
 
 > react form defined by yaml
 
-[![NPM](https://img.shields.io/npm/v/reforml.svg)](https://www.npmjs.com/package/reforml) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/reforml.svg)](https://www.npmjs.com/package/reforml) 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+![size](https://img.shields.io/bundlephobia/minzip/reforml)
+![coverage](https://img.shields.io/codecov/c/github/dipsywong98/reforml)
+![dependencies](https://img.shields.io/david/dipsywong98/reforml)
 
 ## Install
 

@@ -32,7 +32,7 @@ jobs:
       run: yarn workspace reforml test:build
 
     - name: test with coverage
-      run: cd packages/reforml && react-scripts test --env=jsdom --coverage
+      run: yarn workspace reforml test:coverage
     
     - name: upload coverage
       uses: codacy/codacy-coverage-reporter-action@master
