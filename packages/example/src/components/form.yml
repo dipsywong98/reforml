@@ -37,6 +37,7 @@ check_group2:
   output: object
 text_ll:
   label: this is a list of text
+  helperText: this is a text list field
   type: list
   of: text
   defaultNewVal: ''
@@ -45,6 +46,7 @@ text_ll:
 object:
   type: object
   label: Object Field
+  helperText: this is an object field
   fields:
     field1:
       label: 'f1'

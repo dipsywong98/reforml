@@ -5,17 +5,17 @@ import { ObjectFieldComponent, ObjectFieldPropTypes } from '../../types/fields/o
 import { BaseForm } from '../forms'
 import { generalizeValueCallback } from '../../utils'
 import { MissingAttributeError } from '../../errors'
+import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
 
-export const ObjectInput: ObjectFieldComponent<FormValue> = ({
-  helperText,
-  onChange,
-  value,
-  label,
-  fields,
-  defaultVal,
-  name,
-  type
-}) => {
+export const ObjectInput: ObjectFieldComponent<FormValue> = (props) => {
+  const {
+    onChange,
+    value,
+    fields,
+    defaultVal,
+    name,
+    type
+  } = props
   if (onChange === undefined) {
     throw new Error('onChange is required')
   }
@@ -23,8 +23,9 @@ export const ObjectInput: ObjectFieldComponent<FormValue> = ({
     throw new MissingAttributeError('fields', name, type)
   }
   const { ObjectInputDecoration, Box } = useBaseComponents()
+  const [decorationProps] = partitionDecorationProps(props)
   return (
-    <ObjectInputDecoration label={label} helperText={helperText}>
+    <ObjectInputDecoration {...decorationProps}>
       <Box className='object-item-box'>
         <BaseForm onChange={generalizeValueCallback(onChange)} fields={fields} value={value === undefined ? defaultVal === undefined ? {} : defaultVal : value}/>
       </Box>

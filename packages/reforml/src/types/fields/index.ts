@@ -11,7 +11,14 @@ import { FormValue } from '../FormValue'
  * Definition of any Field in yaml
  * Update this when new field is added
  */
-export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>> | ListField<T> | ObjectField<FormValue>
+export type Field<T> = (
+  BasicField<T>
+  | OptionsField<T>
+  | BoolField<T>
+  | MultiSelectField<MultiSelectValue<T>>
+  | ListField<T>
+  | ObjectField<FormValue>
+)
 
 /**
  * Definition of field dictionary

@@ -3,19 +3,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { FieldDecoration } from '../base/FieldDecoration'
+import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
 
-export const TextInput: FieldComponent<string> = ({
-  helperText,
-  onChange,
-  value,
-  label,
-  defaultVal,
-  ...props
-}) => {
+export const TextInput: FieldComponent<string> = (props) => {
+  const {
+    helperText,
+    onChange,
+    value,
+    label,
+    defaultVal,
+    ...otherProps
+  } = props
   const { BaseInput } = useBaseComponents()
+  const [decorationProps] = partitionDecorationProps(props)
+
   return (
-    <FieldDecoration label={label} helperText={helperText}>
-      <BaseInput {...props} onChange={onChange} value={value}/>
+    <FieldDecoration {...decorationProps}>
+      <BaseInput {...otherProps} onChange={onChange} value={value}/>
     </FieldDecoration>
   )
 }

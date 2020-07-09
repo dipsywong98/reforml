@@ -6,6 +6,8 @@ import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { useFieldComponents } from '../FieldComponentsContext'
 import { getComponent } from '../../utils'
+import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
+import { FieldDecorationComponent } from '../base/FieldDecoration'
 
 export type ListInputComponentProps<T> = CommonFieldComponentProps<T> & Field<T> & {
   onDelete?: () => unknown
@@ -20,13 +22,11 @@ export type ListInputComponentProps<T> = CommonFieldComponentProps<T> & Field<T>
 
 export type ListInputComponent<T> = FunctionComponent<ListInputComponentProps<T>>
 
-export type ListDecorationComponentProps<T > = Field<T>
-
-export type ListDecorationComponent<T> = FunctionComponent<ListDecorationComponentProps<T>>
+export type ListDecorationComponent = FieldDecorationComponent
 
 export interface ListInputBuilderOptions<T> {
   InputComponent?: ListInputComponent<T>
-  DecorationComponent?: ListDecorationComponent<T>
+  DecorationComponent?: ListDecorationComponent
   defaultProps?: Record<string, unknown>
 }
 
@@ -62,14 +62,14 @@ DefaultInputComponent.propTypes = {
   ...FieldPropTypes
 }
 
-const DefaultDecorationComponent: ListDecorationComponent<unknown> = (props) => {
+const DefaultDecorationComponent: ListDecorationComponent = (props) => {
   const { ListInputDecoration } = useBaseComponents()
   return <ListInputDecoration {...props} />
 }
 
 export function ListInputBuilder <T> ({
   InputComponent = DefaultInputComponent as ListInputComponent<T>,
-  DecorationComponent = DefaultDecorationComponent as ListDecorationComponent<T>,
+  DecorationComponent = DefaultDecorationComponent,
   defaultProps
 }: ListInputBuilderOptions<T> = {}): ListFieldComponent<T> {
   const ListInput: ListFieldComponent<T> = (props) => {
@@ -78,8 +78,6 @@ export function ListInputBuilder <T> ({
       deletable = true,
       creatable = true,
       editable = true,
-      helperText,
-      label,
       of,
       value = [],
       name,
@@ -88,9 +86,7 @@ export function ListInputBuilder <T> ({
       placeholder,
       inlineDelete
     } = props
-    // if (defaultNewVal === undefined) {
-    //   throw new MissingAttributeError('defaultNewVal', name, type)
-    // }
+
     const handleEdit = (index: number) => (v: T) => {
       if (value !== undefined && editable) {
         value[index] = v
@@ -112,7 +108,8 @@ export function ListInputBuilder <T> ({
         }
       }
     }
-    return <DecorationComponent label={label} helperText={helperText}>
+    const [decorationProps] = partitionDecorationProps(props)
+    return <DecorationComponent {...decorationProps}>
       {
         [...value, defaultNewVal].map((v: T|undefined, index) => (
           index !== value.length

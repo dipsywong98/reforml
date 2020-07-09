@@ -98,7 +98,7 @@ describe('BaseForm', () => {
       }
     }
     let value = {}
-    const onChange: FormChangeHandler<FormValue & {myField?: string}> = (v, { reduceFields }) => {
+    const onChange: FormChangeHandler<FormValue & { myField?: string }> = (v, { reduceFields }) => {
       reduceFields((fields) => {
         fields.myField.label = `label ${v.myField !== undefined ? v.myField : ''}`
         return fields
@@ -119,4 +119,66 @@ describe('BaseForm', () => {
     rerender(<BaseForm fields={fields} onChange={mockFn} value={value}/>)
     expect(screen.getByText('label new value'))
   })
+  //
+  // it('can validate required fields', async (done) => {
+  //   const fields: Fields = {
+  //     myField: {
+  //       type: 'text',
+  //       required: true
+  //     }
+  //   }
+  //   let value = {}
+  //   const onChange: FormChangeHandler<FormValue & { myField?: string }> = (v, { validate }) => {
+  //     const validationErrors = validate(v)
+  //     expect(validationErrors).toEqual({
+  //       myField: ['required']
+  //     })
+  //     done()
+  //     value = v
+  //   }
+  //   const mockFn = jest.fn(onChange)
+  //   const { rerender } = Render(<BaseForm fields={fields} onChange={mockFn} value={value}/>)
+  //   expect(mockFn).not.toHaveBeenCalled()
+  //   expect(BaseForm).toBeTruthy()
+  //
+  //   const input = screen.getByDisplayValue('')
+  //   expect(input).toBeTruthy()
+  //   fireEvent.change(input, { target: { value: '' } })
+  //   expect(value).toEqual({
+  //     myField: 'new value'
+  //   })
+  //   rerender(<BaseForm fields={fields} onChange={mockFn} value={value}/>)
+  //   expect(screen.getByText('label new value'))
+  // })
+  //
+  // it('can get touched fields', async (done) => {
+  //   const fields: Fields = {
+  //     myField: {
+  //       type: 'text',
+  //       required: true
+  //     }
+  //   }
+  //   let value = {}
+  //   const onChange: FormChangeHandler<FormValue & { myField?: string }> = (v, { validate }) => {
+  //     const validationErrors = validate(v)
+  //     expect(validationErrors).toEqual({
+  //       myField: ['required']
+  //     })
+  //     done()
+  //     value = v
+  //   }
+  //   const mockFn = jest.fn(onChange)
+  //   const { rerender } = Render(<BaseForm fields={fields} onChange={mockFn} value={value}/>)
+  //   expect(mockFn).not.toHaveBeenCalled()
+  //   expect(BaseForm).toBeTruthy()
+  //
+  //   const input = screen.getByDisplayValue('')
+  //   expect(input).toBeTruthy()
+  //   fireEvent.change(input, { target: { value: '' } })
+  //   expect(value).toEqual({
+  //     myField: 'new value'
+  //   })
+  //   rerender(<BaseForm fields={fields} onChange={mockFn} value={value}/>)
+  //   expect(screen.getByText('label new value'))
+  // })
 })

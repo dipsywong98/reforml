@@ -12,6 +12,9 @@ export interface BasicField<T> {
   placeholder?: string
   createLabel?: string
   inlineDelete?: boolean
+  required?: boolean
+  [key: string]: unknown | undefined
+  [key: number]: unknown | undefined
 }
 
 export interface CommonFieldComponentProps<T> {
