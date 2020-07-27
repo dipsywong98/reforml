@@ -1,6 +1,5 @@
 import { FunctionComponent } from 'react'
 import PropTypes from 'prop-types'
-import { FieldComponentProps } from './index'
 import { ValueEventCallback } from '../ValueEventCallback'
 
 export interface BasicField<T> {
@@ -25,7 +24,7 @@ export interface CommonFieldComponentProps<T> {
 
 export type BasicFieldComponentProps<T> = CommonFieldComponentProps<T> & BasicField<T>
 
-export type BasicFieldComponent<T> = FunctionComponent<FieldComponentProps<T>>
+export type BasicFieldComponent<T> = FunctionComponent<BasicFieldComponentProps<T>>
 
 /**
  * PropTypes of a field component

@@ -13,6 +13,10 @@ export interface ListField<T> extends BasicField<T[]> {
   createLabel?: string
 }
 
+export const isListField = <T>(field: Field<T>): field is ListField<T> => {
+  return field.of !== undefined
+}
+
 export type ListFieldComponentProps<T> = CommonFieldComponentProps<T[]> & ListField<T>
 export type ListFieldComponent<T> = FunctionComponent<ListFieldComponentProps<T>>
 

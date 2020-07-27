@@ -5,7 +5,6 @@ import { Select } from './Select'
 import { Checkbox } from './Checkbox'
 import { CheckboxGroup } from './CheckboxGroup'
 import { ListInput } from './ListInput'
-import { ListOfTextField } from './ListOfTextField'
 import { ObjectInput } from './ObjectInput'
 
 export const DefaultFieldComponents: FieldComponents = {
@@ -15,6 +14,5 @@ export const DefaultFieldComponents: FieldComponents = {
   checkbox: Checkbox,
   checkbox_group: CheckboxGroup,
   list: ListInput,
-  text_list: ListOfTextField,
   object: ObjectInput
 }

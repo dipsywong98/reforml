@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useState } from 'react'
 import 'reforml/dist/index.css'
-import { FormSettings, FormChangeHandler, FormValue, BaseForm, Fields } from 'reforml'
+import { FormSettings, FormChangeHandler, FormValue, BaseForm, Fields, useValidate } from 'reforml'
 import jsyaml from 'js-yaml'
 
 import fields from './form.yml'
 
 const Demo: FunctionComponent = () => {
   const [value, setValue] = useState({})
+  const validate = useValidate()
   const handleChange: FormChangeHandler<FormValue> = (v: FormValue, { reduceFields }: FormSettings) => {
     reduceFields((fields: Fields): Fields => {
       if ('copy' in v) {
@@ -14,6 +15,8 @@ const Demo: FunctionComponent = () => {
       }
       return fields
     })
+    console.log(validate)
+    console.log(validate())
     setValue(v)
   }
   return (
@@ -26,7 +29,7 @@ const Demo: FunctionComponent = () => {
         </code>
       </div>
       <div style={{ flex: 1 }}>
-        <BaseForm onChange={handleChange} fields={fields} value={value}/>
+        <BaseForm validate={validate} onChange={handleChange} fields={fields} value={value}/>
       </div>
       <div style={{ flex: 1 }}>
         <code>

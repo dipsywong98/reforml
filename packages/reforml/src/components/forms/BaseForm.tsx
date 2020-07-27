@@ -1,6 +1,13 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { FieldComponent, FieldComponents, Fields, FormValue } from '../../types'
+import {
+  FieldComponent,
+  FieldComponents,
+  Fields,
+  FormValue,
+  SetValidateErrorsGetter,
+  ValidateErrorsGetter
+} from '../../types'
 import { useFieldComponents } from '../FieldComponentsContext'
 import { mergeDefaultValue } from '../../utils/mergeDefaultValue'
 import { useBaseComponents } from '../BaseComponentsContext'
@@ -22,6 +29,7 @@ export interface FormSettings {
 export type FormChangeHandler<T extends FormValue> = (value: T, settings: FormSettings) => unknown
 
 export interface BaseFormProps<T extends FormValue> {
+  validate?: ValidateErrorsGetter|SetValidateErrorsGetter
   onChange: FormChangeHandler<T>
   fields: Fields
   value: T
@@ -30,7 +38,8 @@ export interface BaseFormProps<T extends FormValue> {
 export function BaseForm<T extends FormValue> ({
   onChange,
   fields: propFields,
-  value
+  value,
+  ...props
 }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
   const Components: FieldComponents = useFieldComponents()
   const appliedDefault = useRef<boolean>(false)
@@ -54,6 +63,16 @@ export function BaseForm<T extends FormValue> ({
     changeHandler({ ...value, [fieldName]: fieldValue })
   }
   const { FieldWrapper } = useBaseComponents()
+  const validate: ValidateErrorsGetter = () => {
+    if (value.myField !== undefined) {
+      return undefined
+    } else {
+      return {
+        myField: ['required']
+      }
+    }
+  }
+  props.validate?.(validate)
   return (
     // TODO: IDK how to remove this fragment without conflicting the type
     // eslint-disable-next-line react/jsx-no-useless-fragment

@@ -1,9 +1,9 @@
-import { FieldComponent, FieldPropTypes } from '../../types'
+import { BasicFieldComponent, FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { TextInput } from './TextInput'
 
-export const NumberInput: FieldComponent<number> = ({
+export const NumberInput: BasicFieldComponent<number> = ({
   onChange,
   value,
   defaultVal,

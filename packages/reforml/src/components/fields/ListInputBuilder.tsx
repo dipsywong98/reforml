@@ -119,7 +119,7 @@ export function ListInputBuilder <T> ({
                 name={name}
                 type={typeof of === 'string' ? of : undefined}
                 {...(typeof of !== 'string' ? of : {})}
-                of={of}
+                of={of as unknown as Field<unknown>|string}
                 value={v}
                 onChange={generalizeValueCallback(handleEdit(index))}
                 disabled={!editable}
@@ -137,7 +137,7 @@ export function ListInputBuilder <T> ({
                   name={name}
                   type={typeof of === 'string' ? of : undefined}
                   {...(typeof of !== 'string' ? of : {})}
-                  of={of}
+                  of={of as unknown as Field<unknown>|string}
                   label={createLabel}
                   placeholder={placeholder}
                   value={v}

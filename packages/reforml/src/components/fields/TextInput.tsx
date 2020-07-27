@@ -1,11 +1,11 @@
-import { FieldComponent, FieldPropTypes } from '../../types'
+import { BasicFieldComponent, FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { FieldDecoration } from '../base/FieldDecoration'
 import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
 
-export const TextInput: FieldComponent<string> = (props) => {
+export const TextInput: BasicFieldComponent<string> = (props) => {
   const {
     helperText,
     onChange,
