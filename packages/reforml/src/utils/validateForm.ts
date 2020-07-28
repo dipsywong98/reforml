@@ -1,6 +1,7 @@
 import { Fields, FormValue, ValidateErrors, isFormValue, isListField, Field } from '../types'
 import { FieldValidators, ValidatorDictionary } from '../types/Validator'
 import { validateField } from './validateField'
+import { isDefined } from './isDefined'
 
 export const validateForm = (formValue: FormValue, fields: Fields, validatorDictionary: ValidatorDictionary): ValidateErrors => {
   const errors: ValidateErrors = {}
@@ -12,7 +13,7 @@ export const validateForm = (formValue: FormValue, fields: Fields, validatorDict
       string,
       Field<unknown>
     ]) => {
-    if (fieldName in formValue) {
+    if (fieldName in formValue && isDefined(formValue[fieldName])) {
       const value: unknown = formValue[fieldName]
       const fieldErr = []
       if ('fields' in field) {

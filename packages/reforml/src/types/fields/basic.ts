@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react'
 import PropTypes from 'prop-types'
 import { ValueEventCallback } from '../ValueEventCallback'
+import { FieldValidateError } from '../ValidateErrors'
 
 export interface BasicField<T> {
   type?: string
@@ -20,6 +21,7 @@ export interface CommonFieldComponentProps<T> {
   onChange?: ValueEventCallback<T>
   value?: T
   name?: string
+  errors?: FieldValidateError
 }
 
 export type BasicFieldComponentProps<T> = CommonFieldComponentProps<T> & BasicField<T>

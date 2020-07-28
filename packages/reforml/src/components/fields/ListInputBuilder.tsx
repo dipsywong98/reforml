@@ -8,6 +8,7 @@ import { useFieldComponents } from '../FieldComponentsContext'
 import { getComponent } from '../../utils'
 import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
 import { FieldDecorationComponent } from '../base/FieldDecoration'
+import { FieldValidateError } from '../../types/ValidateErrors'
 
 export type ListInputComponentProps<T> = CommonFieldComponentProps<T> & Field<T> & {
   onDelete?: () => unknown
@@ -84,8 +85,19 @@ export function ListInputBuilder <T> ({
       defaultNewVal,
       createLabel,
       placeholder,
-      inlineDelete
+      inlineDelete,
+      errors
     } = props
+
+    let subErrors: FieldValidateError[] = value.map(() => undefined)
+    let rootErrors: FieldValidateError
+    if (errors !== undefined && errors !== null) {
+      const nestedErrors = errors?.filter(e => Array.isArray(e))
+      if (nestedErrors.length > 0 && Array.isArray(nestedErrors[0]) && nestedErrors[0] !== undefined) {
+        subErrors = nestedErrors[0]
+      }
+      rootErrors = errors?.filter(e => typeof e === 'string')
+    }
 
     const handleEdit = (index: number) => (v: T) => {
       if (value !== undefined && editable) {
@@ -109,7 +121,7 @@ export function ListInputBuilder <T> ({
       }
     }
     const [decorationProps] = partitionDecorationProps(props)
-    return <DecorationComponent {...decorationProps}>
+    return <DecorationComponent {...decorationProps} errors={rootErrors}>
       {
         [...value, defaultNewVal].map((v: T|undefined, index) => (
           index !== value.length
@@ -128,6 +140,7 @@ export function ListInputBuilder <T> ({
                 onDelete={handleDelete(index)}
                 isCreating={false}
                 inlineDelete={inlineDelete}
+                errors={subErrors[index]}
               />
             )
             : (

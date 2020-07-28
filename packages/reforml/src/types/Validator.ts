@@ -18,5 +18,5 @@ export type FieldValidator<T> = ValidatorSettings<T> | string
 export type FieldValidators<T> = Array<FieldValidator<T>>
 
 export interface ValidatorDictionary {
-  [validatorName: string]: Validator<never>
+  [validatorName: string]: Validator<never> | undefined
 }

@@ -43,6 +43,13 @@ describe('validateForm', () => {
       f1: ['isFoo', 'isEqual'],
       f2: ['required']
     })
+
+    expect(validateForm({
+      f2: ''
+    }, fields, validatorDictionary)).toEqual({
+      // f1: ['isFoo', 'isEqual'],
+      f2: ['required']
+    })
   })
 
   it('can validate list field', () => {
@@ -67,6 +74,8 @@ describe('validateForm', () => {
     }, fields, validatorDictionary)).toEqual(undefined)
 
     expect(validateForm({}, fields, validatorDictionary)).toEqual({ f1: ['required'] })
+    expect(validateForm({ f1: [] }, fields, validatorDictionary)).toEqual({ f1: ['required'] })
+
     expect(validateForm({ f1: ['Foo', 'bar'] }, fields, validatorDictionary)).toEqual({
       f1: [[undefined, ['isFoo', 'isEqual']], 'isLength']
     })
@@ -104,5 +113,6 @@ describe('validateForm', () => {
       }
     }, fields, validatorDictionary)).toEqual({ f1: [{ a: ['required'] }, 'noB'] })
     expect(validateForm({}, fields, validatorDictionary)).toEqual({ f1: ['required'] })
+    expect(validateForm({ f1: {} }, fields, validatorDictionary)).toEqual({ f1: ['required'] })
   })
 })

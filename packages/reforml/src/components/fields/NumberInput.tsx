@@ -9,11 +9,17 @@ export const NumberInput: BasicFieldComponent<number> = ({
   defaultVal,
   ...props
 }) => {
-  const handleChange = (value: string | {target: {value: string}}): void => {
+  const handleChange = (value: string | { target: { value: string } }): void => {
+    let str = ''
     if (typeof value === 'string') {
-      onChange?.(Number.parseFloat(value))
+      str = value
     } else if ('value' in value.target) {
-      onChange?.(Number.parseFloat(value.target.value))
+      str = value.target.value
+    }
+    if (str === '') {
+      onChange?.(null as unknown as number)
+    } else {
+      onChange?.(Number.parseFloat(str))
     }
   }
   return (

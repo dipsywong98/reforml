@@ -4,36 +4,32 @@ import PropTypes from 'prop-types'
 import { BoolFieldComponent } from '../../types/fields/bool'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { useProcessBool } from '../../hooks/useProcessBool'
+import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
 
-export const Checkbox: BoolFieldComponent<unknown> = ({
-  helperText,
-  onChange,
-  value,
-  label,
-  defaultVal,
-  trueValue,
-  falseValue,
-  ...props
-}) => {
+export const Checkbox: BoolFieldComponent<unknown> = (props) => {
+  const {
+    helperText,
+    onChange,
+    value,
+    label,
+    defaultVal,
+    trueValue,
+    falseValue,
+    ...otherProps
+  } = props
   const [flag, handleChange] = useProcessBool(value, onChange, { trueValue, falseValue })
-  const { LabelText, HelperText, BaseCheckbox, Flex, Box } = useBaseComponents()
+  const { Label, FieldDecoration, BaseCheckbox, Flex, Box } = useBaseComponents()
+  const [decorationProps] = partitionDecorationProps(props)
   return (
     <Box>
-      <LabelText>
+      <Label>
         <Flex>
           <Box>
-            <BaseCheckbox onChange={handleChange} checked={flag} {...props} />
+            <BaseCheckbox onChange={handleChange} checked={flag} {...otherProps} />
           </Box>
-          <Box>
-            <Box>
-              {label}
-            </Box>
-            <Box>
-              {(helperText !== undefined ? <HelperText>{helperText}</HelperText> : null)}
-            </Box>
-          </Box>
+          <FieldDecoration {...decorationProps} noLabel/>
         </Flex>
-      </LabelText>
+      </Label>
     </Box>
   )
 }

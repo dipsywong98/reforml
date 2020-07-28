@@ -4,7 +4,7 @@ export const generalizeValueCallback = <T> (valueCallback: (value: T) => unknown
   target: { value: T }
 })): void => {
   if (typeof param === 'object') {
-    if ('target' in param) {
+    if (param !== null && 'target' in param) {
       valueCallback(param.target.value)
     } else {
       valueCallback(param)

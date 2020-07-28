@@ -4,15 +4,15 @@ import {
   FieldComponent,
   FieldComponents,
   Fields,
-  FormValue,
-  SetValidateErrorsGetter,
-  ValidateErrorsGetter
+  FormValue, ValidateErrors
 } from '../../types'
 import { useFieldComponents } from '../FieldComponentsContext'
 import { mergeDefaultValue } from '../../utils/mergeDefaultValue'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { getComponent } from '../../utils/getComponent'
 import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
+import { useValidatorDictionary } from '../ValidatorDictionaryContext'
+import { validateForm } from '../../utils/validateForm'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -24,12 +24,12 @@ export type ReduceFields = (reducer: (currentFields: Fields) => Fields) => void
 
 export interface FormSettings {
   reduceFields: ReduceFields
+  validate: () => ValidateErrors
 }
 
 export type FormChangeHandler<T extends FormValue> = (value: T, settings: FormSettings) => unknown
 
 export interface BaseFormProps<T extends FormValue> {
-  validate?: ValidateErrorsGetter|SetValidateErrorsGetter
   onChange: FormChangeHandler<T>
   fields: Fields
   value: T
@@ -38,8 +38,7 @@ export interface BaseFormProps<T extends FormValue> {
 export function BaseForm<T extends FormValue> ({
   onChange,
   fields: propFields,
-  value,
-  ...props
+  value
 }: BaseFormProps<T>): ReactElement<BaseFormProps<T>> {
   const Components: FieldComponents = useFieldComponents()
   const appliedDefault = useRef<boolean>(false)
@@ -50,9 +49,16 @@ export function BaseForm<T extends FormValue> ({
     appliedDefault.current = true
   }
   const [fields, setFields] = useState(propFields)
+  const [validateErrors, setValidateErrors] = useState<ValidateErrors>(undefined)
+  const validatorDictionary = useValidatorDictionary()
+  const getValidate = (value: T) => (): ValidateErrors => {
+    const error = validateForm(value, fields, validatorDictionary)
+    setValidateErrors(error)
+    return error
+  }
   const reduceFields: ReduceFields = reducer => setFields(reducer(fields))
   const changeHandler = (value: T): void => {
-    onChange(value, { reduceFields })
+    onChange(value, { reduceFields, validate: getValidate(value) })
   }
   useEffect(() => {
     if (flag) {
@@ -63,23 +69,13 @@ export function BaseForm<T extends FormValue> ({
     changeHandler({ ...value, [fieldName]: fieldValue })
   }
   const { FieldWrapper } = useBaseComponents()
-  const validate: ValidateErrorsGetter = () => {
-    if (value.myField !== undefined) {
-      return undefined
-    } else {
-      return {
-        myField: ['required']
-      }
-    }
-  }
-  props.validate?.(validate)
   return (
     // TODO: IDK how to remove this fragment without conflicting the type
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <React.Fragment>
       {Object.entries(fields).map(([fieldName, field]) => {
         const Component: FieldComponent<unknown> = getComponent(Components, field, fieldName)
-
+        const errors = validateErrors?.[fieldName]
         const changeHandler = generalizeValueCallback((value) => handleChange(fieldName, value))
 
         return (
@@ -89,6 +85,7 @@ export function BaseForm<T extends FormValue> ({
               value={value[fieldName]}
               name={fieldName}
               onChange={changeHandler}
+              errors={errors}
             />
           </FieldWrapper>
         )

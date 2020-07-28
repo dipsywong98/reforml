@@ -2,11 +2,13 @@ myTextField:
   type: text
   label: a simple text field
   helperText: some helper text
+  required: true
 myNumberField:
   type: number
   label: a number field
   helperText: some helper text
   defaultVal: 123
+  required: true
 mySelectField:
   label: a select field
   type: select
@@ -15,16 +17,19 @@ mySelectField:
     label1: value1
     label2: value2
   defaultVal: value2
+  required: true
 check:
   type: checkbox
   label: check me!
   helperText: some helper text
   trueValue: 123
+  required: true
 check_group:
   type: checkbox_group
   label: checkbox group
   helperText: help
   options: ['1', '2', '3']
+  required: true
 check_group2:
   type: checkbox_group
   label: Checkbox Group 2
@@ -35,14 +40,21 @@ check_group2:
     - '2'
     - '3'
   output: object
+  required: true
 text_ll:
   label: this is a list of text
   helperText: this is a text list field
   type: list
-  of: text
+  of:
+    type: 'text'
+    validate:
+      - isFoo
+      - isEqual:
+          - Foo
   defaultNewVal: ''
   inlineDelete: true
   placeholder: new text
+  required: true
 object:
   type: object
   label: Object Field
@@ -51,6 +63,7 @@ object:
     field1:
       label: 'f1'
       type: 'text'
+  required: true
 copy:
   label: the label will be same as input content
   type: 'text'

@@ -1,6 +1,6 @@
 import { Fields, FormValue } from '../../types'
 import { act } from 'react-dom/test-utils'
-import { BaseForm } from '../..'
+import { BaseForm, FormChangeHandler } from '../..'
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 

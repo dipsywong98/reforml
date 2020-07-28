@@ -8,7 +8,6 @@ import { DefaultFieldComponents } from '../fields'
 import { fireEvent, screen, render as Render } from '@testing-library/react'
 import { ReformlProvider } from '../ReformlProvider'
 import { renderHook } from '@testing-library/react-hooks'
-import { useValidate } from '../../hooks/useValidate'
 
 describe('BaseForm', () => {
   it('generates no errors when no fields', () => {
@@ -122,46 +121,6 @@ describe('BaseForm', () => {
     expect(screen.getByText('label new value')).toBeTruthy()
   })
 
-  it('can validate required fields', () => {
-    const fields: Fields = {
-      myField: {
-        type: 'text',
-        required: true
-      }
-    }
-    let value = {}
-    const onChange: FormChangeHandler<FormValue & { myField?: string }> = (v) => {
-      value = v
-    }
-    const mockFn = jest.fn(onChange)
-    const { result, rerender: rerenderHook } = renderHook(() => useValidate())
-
-    const { rerender: rerenderDOM } = Render(
-      <BaseForm
-        validate={result.current}
-        fields={fields}
-        onChange={mockFn}
-        value={value}
-      />)
-    rerenderHook()
-    expect(mockFn).not.toHaveBeenCalled()
-    expect(BaseForm).toBeTruthy()
-
-    expect(result.current()).toEqual({
-      myField: ['required']
-    })
-
-    const input = screen.getByDisplayValue('')
-    expect(input).toBeTruthy()
-    fireEvent.change(input, { target: { value: 'new value' } })
-    expect(value).toEqual({
-      myField: 'new value'
-    })
-    rerenderDOM(<BaseForm validate={result.current} fields={fields} onChange={mockFn} value={value}/>)
-    rerenderHook()
-
-    expect(result.current()).toEqual(undefined)
-  })
   //
   // it('can get touched fields', () => {
   //   const fields: Fields = {
