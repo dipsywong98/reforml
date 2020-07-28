@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   FieldComponent,
@@ -13,6 +13,7 @@ import { getComponent } from '../../utils/getComponent'
 import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
 import { useValidatorDictionary } from '../ValidatorDictionaryContext'
 import { validateForm } from '../../utils/validateForm'
+import { fieldsConstrainToValidate } from '../../utils/fieldsConstrainToValidate'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -48,7 +49,10 @@ export function BaseForm<T extends FormValue> ({
     flag = mergeDefaultValue(propFields, value)
     appliedDefault.current = true
   }
-  const [fields, setFields] = useState(propFields)
+  const processedPropFields = useMemo(() => {
+    return fieldsConstrainToValidate(propFields)
+  }, [propFields])
+  const [fields, setFields] = useState(processedPropFields)
   const [validateErrors, setValidateErrors] = useState<ValidateErrors>(undefined)
   const validatorDictionary = useValidatorDictionary()
   const getValidate = (value: T) => (): ValidateErrors => {

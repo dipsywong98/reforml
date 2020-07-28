@@ -7,6 +7,7 @@ import { DefaultFieldComponents } from './fields'
 import { BaseComponents } from './base'
 import { ValidatorDictionary } from '../types/Validator'
 import { ValidatorDictionaryContext } from './ValidatorDictionaryContext'
+import { defaultValidators } from '../utils/defaultValidators'
 
 export interface ReformlProviderProps {
   fieldComponents?: Partial<FieldComponents>
@@ -17,7 +18,7 @@ export interface ReformlProviderProps {
 
 export const ReformlProvider: FunctionComponent<ReformlProviderProps> = ({ validatorDictionary, fieldComponents, baseComponents, children }) => {
   return (
-    <ValidatorDictionaryContext.Provider value={validatorDictionary ?? {}}>
+    <ValidatorDictionaryContext.Provider value={{ ...defaultValidators, ...validatorDictionary }}>
       <BaseComponentsContext.Provider value={{ ...DefaultBaseComponents, ...baseComponents }}>
         <FieldComponentsContext.Provider value={{ ...DefaultFieldComponents, ...fieldComponents }}>
           {children}

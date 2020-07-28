@@ -3,12 +3,27 @@ myTextField:
   label: a simple text field
   helperText: some helper text
   required: true
+myConstrainedTextField:
+  type: text
+  label: a simple text field
+  helperText: some helper text
+  required: true
+  pattern: abc\d{3}
 myNumberField:
   type: number
   label: a number field
   helperText: some helper text
   defaultVal: 123
   required: true
+myConstrainedNumberField:
+  type: number
+  label: a constrained number field
+  helperText: some helper text
+  defaultVal: 123
+  required: true
+  min: 3
+  max: 1000
+  step: 200
 mySelectField:
   label: a select field
   type: select
