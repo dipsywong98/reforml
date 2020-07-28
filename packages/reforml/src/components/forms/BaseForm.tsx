@@ -14,6 +14,7 @@ import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
 import { useValidatorDictionary } from '../ValidatorDictionaryContext'
 import { validateForm } from '../../utils/validateForm'
 import { fieldsConstrainToValidate } from '../../utils/fieldsConstrainToValidate'
+import { useValidateErrorFormatter } from '../ValidatorErrorFormatterContext'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -55,8 +56,9 @@ export function BaseForm<T extends FormValue> ({
   const [fields, setFields] = useState(processedPropFields)
   const [validateErrors, setValidateErrors] = useState<ValidateErrors>(undefined)
   const validatorDictionary = useValidatorDictionary()
+  const validateErrorFormatter = useValidateErrorFormatter()
   const getValidate = (value: T) => (): ValidateErrors => {
-    const error = validateForm(value, fields, validatorDictionary)
+    const error = validateForm(value, fields, validatorDictionary, validateErrorFormatter)
     setValidateErrors(error)
     return error
   }

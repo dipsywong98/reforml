@@ -5,42 +5,43 @@ import {
   isValidatorSettings,
   FieldValidators
 } from '../types/Validator'
+import { ValidateErrorFormatter } from '../types'
 
-export const validateFieldOneRule = <T>(value: T, fieldValidator: FieldValidator<T>, validatorDictionary: ValidatorDictionary): boolean => {
-  let validate: Validator<T> | undefined
-  let params: unknown[] = []
+export const fieldValidatorToNameFunctionAndParams = <T> (fieldValidator: FieldValidator<T>, validatorDictionary: ValidatorDictionary): [string, Validator<T>, never[]] => {
+  let ruleName = ''
+  let validate: Validator<T>
+  let params: never[] = []
   if (typeof fieldValidator === 'string') {
     validate = validatorDictionary[fieldValidator] as Validator<T>
+    ruleName = fieldValidator
   } else if (isValidatorSettings(fieldValidator)) {
     const [validatorName, validatorParams] = Object.entries(fieldValidator)[0]
+    ruleName = validatorName
     if (typeof validatorParams === 'function') {
       validate = validatorParams as Validator<T>
+    } else if (Array.isArray(validatorParams)) {
+      validate = validatorDictionary[validatorName] as Validator<T>
+      params = validatorParams as never[]
     } else {
       validate = validatorDictionary[validatorName] as Validator<T>
-      params = validatorParams
+      params.push(validatorParams as never)
     }
-  }
-
-  if (validate !== undefined) {
-    return validate(value, ...params as never[])
   } else {
-    throw new Error('Wrong validator')
+    throw new Error('Wrong Validator Settings')
   }
+  return [ruleName, validate, params]
 }
 
-export const validateField = <T>(value: T, fieldValidators: FieldValidators<T>, validatorDictionary: ValidatorDictionary): string[] | undefined => {
-  const ruleNames = fieldValidators.map(fieldValidator => {
-    let ruleName = ''
-    if (typeof fieldValidator === 'string') {
-      ruleName = fieldValidator
-    } else if (isValidatorSettings(fieldValidator)) {
-      const [validatorName] = Object.entries(fieldValidator)[0]
-      ruleName = validatorName
-    } else {
-      throw new Error('Wrong validator')
-    }
-    return ruleName
-  })
-  const result: string[] = fieldValidators.map((validator, k) => validateFieldOneRule(value, validator, validatorDictionary) ? undefined : ruleNames[k]).filter(v => typeof v === 'string') as string[]
+export const validateField = <T> (value: T, fieldValidators: FieldValidators<T>, validatorDictionary: ValidatorDictionary, validateErrorFormatter?: ValidateErrorFormatter): string[] | undefined => {
+  const result: string[] = fieldValidators
+    .map((validator) => {
+      const [ruleName, validate, params] = fieldValidatorToNameFunctionAndParams(validator, validatorDictionary)
+      if (validate(value, ...params)) {
+        return undefined
+      } else {
+        return validateErrorFormatter?.(value, ruleName, params) ?? ruleName
+      }
+    })
+    .filter(v => typeof v === 'string') as string[]
   return result.length > 0 ? result : undefined
 }
