@@ -13,7 +13,7 @@ import { getComponent } from '../../utils/getComponent'
 import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
 import { useValidatorDictionary } from '../ValidatorDictionaryContext'
 import { validateForm } from '../../utils/validateForm'
-import { fieldsConstrainToValidate } from '../../utils/fieldsConstrainToValidate'
+import { fieldsConstraintsToValidate } from '../../utils/fieldsConstraintsToValidate'
 import { useValidateErrorFormatter } from '../ValidatorErrorFormatterContext'
 
 export const BaseFormPropTypes = {
@@ -51,7 +51,7 @@ export function BaseForm<T extends FormValue> ({
     appliedDefault.current = true
   }
   const processedPropFields = useMemo(() => {
-    return fieldsConstrainToValidate(propFields)
+    return fieldsConstraintsToValidate(propFields)
   }, [propFields])
   const [fields, setFields] = useState(processedPropFields)
   const [validateErrors, setValidateErrors] = useState<ValidateErrors>(undefined)

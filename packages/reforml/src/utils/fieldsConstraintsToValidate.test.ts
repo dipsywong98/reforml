@@ -1,8 +1,8 @@
-import { fieldsConstrainToValidate } from './fieldsConstrainToValidate'
+import { fieldsConstraintsToValidate } from './fieldsConstraintsToValidate'
 
-describe('fieldsConstrainToValidate', () => {
+describe('fieldsConstraintsToValidate', () => {
   it('can convert constrains to validate', () => {
-    expect(fieldsConstrainToValidate({
+    expect(fieldsConstraintsToValidate({
       f1: {
         type: 'number',
         max: 10
@@ -20,7 +20,7 @@ describe('fieldsConstrainToValidate', () => {
     })
   })
   it('can convert constrains of list field to validate', () => {
-    expect(fieldsConstrainToValidate({
+    expect(fieldsConstraintsToValidate({
       f1: {
         type: 'list',
         of: {
@@ -45,7 +45,7 @@ describe('fieldsConstrainToValidate', () => {
   })
 
   it('can convert constrains of object field to validate', () => {
-    expect(fieldsConstrainToValidate({
+    expect(fieldsConstraintsToValidate({
       f1: {
         type: 'object',
         fields: {
