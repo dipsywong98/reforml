@@ -1,19 +1,25 @@
-import { FieldComponent, FieldPropTypes } from '../../types'
+import { BasicFieldComponent, FieldPropTypes } from '../../types'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { TextInput } from './TextInput'
 
-export const NumberInput: FieldComponent<number> = ({
+export const NumberInput: BasicFieldComponent<number> = ({
   onChange,
   value,
   defaultVal,
   ...props
 }) => {
-  const handleChange = (value: string | {target: {value: string}}): void => {
+  const handleChange = (value: string | { target: { value: string } }): void => {
+    let str = ''
     if (typeof value === 'string') {
-      onChange?.(Number.parseFloat(value))
+      str = value
     } else if ('value' in value.target) {
-      onChange?.(Number.parseFloat(value.target.value))
+      str = value.target.value
+    }
+    if (str === '') {
+      onChange?.(null as unknown as number)
+    } else {
+      onChange?.(Number.parseFloat(str))
     }
   }
   return (

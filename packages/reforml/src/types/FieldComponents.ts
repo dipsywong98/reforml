@@ -1,5 +1,10 @@
 import { FunctionComponent } from 'react'
-import { FieldComponent, MultiSelectFieldComponent, MultiSelectValue, OptionsFieldComponent } from './fields'
+import {
+  FieldComponent,
+  MultiSelectFieldComponent,
+  MultiSelectValue,
+  OptionsFieldComponent
+} from './fields'
 
 /**
  * Type of lookup dictionary of field components

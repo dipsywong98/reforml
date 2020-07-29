@@ -44,4 +44,28 @@ describe('NumberInput', () => {
       expect(value.myField).toEqual(123)
     }
   })
+
+  it('can input empty value', () => {
+    const fields: Fields = {
+      myField: {
+        type: 'number'
+      }
+    }
+    let value: FormValue = {}
+    const mockFn = jest.fn((v: FormValue) => {
+      value = v
+    })
+    act(() => {
+      render(<BaseForm fields={fields} onChange={mockFn} value={value}/>, container)
+    })
+    expect(mockFn).not.toHaveBeenCalled()
+    const input = container?.querySelector('input[name="myField"]')
+    expect(input).toBeTruthy()
+    if (input !== null && input !== undefined) {
+      act(() => {
+        fireEvent.change(input, { target: { value: '' } })
+      })
+      expect(value.myField).toEqual(undefined)
+    }
+  })
 })

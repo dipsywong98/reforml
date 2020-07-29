@@ -6,6 +6,9 @@ import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { useFieldComponents } from '../FieldComponentsContext'
 import { getComponent } from '../../utils'
+import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
+import { FieldDecorationComponent } from '../base/FieldDecoration'
+import { FieldValidateError } from '../../types/ValidateErrors'
 
 export type ListInputComponentProps<T> = CommonFieldComponentProps<T> & Field<T> & {
   onDelete?: () => unknown
@@ -20,13 +23,11 @@ export type ListInputComponentProps<T> = CommonFieldComponentProps<T> & Field<T>
 
 export type ListInputComponent<T> = FunctionComponent<ListInputComponentProps<T>>
 
-export type ListDecorationComponentProps<T > = Field<T>
-
-export type ListDecorationComponent<T> = FunctionComponent<ListDecorationComponentProps<T>>
+export type ListDecorationComponent = FieldDecorationComponent
 
 export interface ListInputBuilderOptions<T> {
   InputComponent?: ListInputComponent<T>
-  DecorationComponent?: ListDecorationComponent<T>
+  DecorationComponent?: ListDecorationComponent
   defaultProps?: Record<string, unknown>
 }
 
@@ -62,14 +63,14 @@ DefaultInputComponent.propTypes = {
   ...FieldPropTypes
 }
 
-const DefaultDecorationComponent: ListDecorationComponent<unknown> = (props) => {
+const DefaultDecorationComponent: ListDecorationComponent = (props) => {
   const { ListInputDecoration } = useBaseComponents()
   return <ListInputDecoration {...props} />
 }
 
 export function ListInputBuilder <T> ({
   InputComponent = DefaultInputComponent as ListInputComponent<T>,
-  DecorationComponent = DefaultDecorationComponent as ListDecorationComponent<T>,
+  DecorationComponent = DefaultDecorationComponent,
   defaultProps
 }: ListInputBuilderOptions<T> = {}): ListFieldComponent<T> {
   const ListInput: ListFieldComponent<T> = (props) => {
@@ -78,19 +79,26 @@ export function ListInputBuilder <T> ({
       deletable = true,
       creatable = true,
       editable = true,
-      helperText,
-      label,
       of,
       value = [],
       name,
       defaultNewVal,
       createLabel,
       placeholder,
-      inlineDelete
+      inlineDelete,
+      errors
     } = props
-    // if (defaultNewVal === undefined) {
-    //   throw new MissingAttributeError('defaultNewVal', name, type)
-    // }
+
+    let subErrors: FieldValidateError[] = value.map(() => undefined)
+    let rootErrors: FieldValidateError
+    if (errors !== undefined && errors !== null) {
+      const nestedErrors = errors?.filter(e => Array.isArray(e))
+      if (nestedErrors.length > 0 && Array.isArray(nestedErrors[0]) && nestedErrors[0] !== undefined) {
+        subErrors = nestedErrors[0]
+      }
+      rootErrors = errors?.filter(e => typeof e === 'string')
+    }
+
     const handleEdit = (index: number) => (v: T) => {
       if (value !== undefined && editable) {
         value[index] = v
@@ -112,7 +120,8 @@ export function ListInputBuilder <T> ({
         }
       }
     }
-    return <DecorationComponent label={label} helperText={helperText}>
+    const [decorationProps] = partitionDecorationProps(props)
+    return <DecorationComponent {...decorationProps} errors={rootErrors}>
       {
         [...value, defaultNewVal].map((v: T|undefined, index) => (
           index !== value.length
@@ -122,7 +131,7 @@ export function ListInputBuilder <T> ({
                 name={name}
                 type={typeof of === 'string' ? of : undefined}
                 {...(typeof of !== 'string' ? of : {})}
-                of={of}
+                of={of as unknown as Field<unknown>|string}
                 value={v}
                 onChange={generalizeValueCallback(handleEdit(index))}
                 disabled={!editable}
@@ -131,6 +140,7 @@ export function ListInputBuilder <T> ({
                 onDelete={handleDelete(index)}
                 isCreating={false}
                 inlineDelete={inlineDelete}
+                errors={subErrors[index]}
               />
             )
             : (
@@ -140,7 +150,7 @@ export function ListInputBuilder <T> ({
                   name={name}
                   type={typeof of === 'string' ? of : undefined}
                   {...(typeof of !== 'string' ? of : {})}
-                  of={of}
+                  of={of as unknown as Field<unknown>|string}
                   label={createLabel}
                   placeholder={placeholder}
                   value={v}

@@ -1,0 +1,177 @@
+# Validation
+
+Reforml provides way to utilize [HTML constraints](//wiki.developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation) and any custom validators including validators from other libraries.
+You can also customize the error message
+
+## HTML Constraints
+
+You can directly supply [HTML constraints](//wiki.developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation) in field definition, if you are using controlled form,
+you need to manually called `validate` in `onChange` handler since HTML constraints are only validated in uncontrolled form
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const [hasError, setHasError] = useState(false)
+  const handleChange = (newValue, {validate}) => {
+    const error = validate()
+    setHasError(!!error)
+    setValue(newValue)
+  }
+  const fields = useMemo(() => jsyaml.load(`
+  myText:
+    type: text
+    label: Input some value
+    helperText: a required field with minLength
+    required: true
+    minLength: 6
+  myNumber:
+    type: number
+    label: Number
+    required: true
+    min: 0
+    max: 10
+    step: 2
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={handleChange}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+      <p>{hasError ? 'ERROR' : 'OK'}</p>
+    </div>
+  )
+}
+```
+
+## Custom Validation
+
+By supplying a validatorDictionary to ReformlProvider,
+BasicForm inside it can use yaml with field containing a validation property.
+The validation property is a list of "validation rule name" or "rule name to params array map" or "rule name to single param"
+You can notice the mapping of params in YAML definition to validator function implementation
+
+validatorDictionary is a rule name to validator map,
+a validator is a function that accept first parameter as the field value,
+rest parameter from field validation settings from the yaml,
+and return a boolean to determine whether the value passes the validation.
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const [hasError, setHasError] = useState(false)
+  const handleChange = (newValue, {validate}) => {
+    const error = validate()
+    setHasError(!!error)
+    setValue(newValue)
+  }
+  const fields = useMemo(() => jsyaml.load(`
+  myText:
+    type: text
+    label: Must be Foo
+    required: true
+    validate:
+      - isFoo
+      - isEqual: Foo
+      - isLengthBetween:
+        - 2
+        - 4
+  `), [])
+  return (
+    <ReformlProvider validatorDictionary={{
+    isFoo: (value) => value === 'Foo',
+    isEqual: (value, compare) => value === compare,
+    isLengthBetween: (value, a, b) => value.length >= a && value.length <= b
+    }}>
+      <BaseForm fields={fields} value={value} onChange={handleChange}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+      <p>{hasError ? 'ERROR' : 'OK'}</p>
+    </ReformlProvider>
+  )
+}
+```
+
+In field definition you can even implement a validator function directly
+
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const [hasError, setHasError] = useState(false)
+  const handleChange = (newValue, {validate}) => {
+    const error = validate()
+    setHasError(!!error)
+    setValue(newValue)
+  }
+  const fields = useMemo(() => {
+  const fields = jsyaml.load(`
+  myText:
+    type: text
+    label: Must be Foo
+    required: true
+  `)
+  fields.myText.validate = [{
+    isFoo: (value) => value === 'Foo'
+  }]
+  return fields
+  }, [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={handleChange}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+      <p>{hasError ? 'ERROR' : 'OK'}</p>
+    </div>
+  )
+}
+```
+
+## validator.js integration
+
+The Validators used in reforml shares the same interface as validator.js, so you can use them directly
+
+```bash
+npm i validator
+```
+
+```jsx
+import validators from 'validator'
+
+const myValidators = {
+  isFoo: (value) => value === 'Foo',
+  isEqual: (value, compare) => value === compare,
+  isLengthBetween: (value, a, b) => value.length >= a && value.length <= b
+}
+
+() => {
+return <ReformlProvider validatorDictionary={{
+  ...validators,
+  ...myValidators
+  }}>
+    {/* BaseForm here */}
+  </Reforml>
+}
+```
+
+## Customize the error message
+
+ValidateErrorFormatter has the following signature
+
+```ts
+export type ValidateErrorFormatter = <T>(value: T, ruleName: string, params: never[]) => string
+```
+
+value is the value supplied in the form, ruleName is the name of validation, params is the array of param supply to the validator
+
+and you can supply the formatter to ReformlProvider
+
+```jsx
+const validateErrorFormatter = (_, ruleName, params) => {
+  return ruleName + (params.length === 0 ? '' : ':' + params.join(','))
+}
+() => {
+  return <ReformlProvider validateErrorFormatter={validateErrorFormatter}>
+      {/* BaseForm here */}
+    </ReformlProvider>
+  }
+```

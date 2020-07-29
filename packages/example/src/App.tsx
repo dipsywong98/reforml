@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import TextPage from './examples/checkbox_group'
+import TextPage from './components/Demo'
 
 const App: FunctionComponent = () => {
   return (

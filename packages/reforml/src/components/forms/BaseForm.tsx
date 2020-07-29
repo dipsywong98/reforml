@@ -1,11 +1,20 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { FieldComponent, FieldComponents, Fields, FormValue } from '../../types'
+import {
+  FieldComponent,
+  FieldComponents,
+  Fields,
+  FormValue, ValidateErrors
+} from '../../types'
 import { useFieldComponents } from '../FieldComponentsContext'
 import { mergeDefaultValue } from '../../utils/mergeDefaultValue'
 import { useBaseComponents } from '../BaseComponentsContext'
 import { getComponent } from '../../utils/getComponent'
 import { generalizeValueCallback } from '../../utils/generalizeValueCallback'
+import { useValidatorDictionary } from '../ValidatorDictionaryContext'
+import { validateForm } from '../../utils/validateForm'
+import { fieldsConstraintsToValidate } from '../../utils/fieldsConstraintsToValidate'
+import { useValidateErrorFormatter } from '../ValidatorErrorFormatterContext'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -17,6 +26,7 @@ export type ReduceFields = (reducer: (currentFields: Fields) => Fields) => void
 
 export interface FormSettings {
   reduceFields: ReduceFields
+  validate: () => ValidateErrors
 }
 
 export type FormChangeHandler<T extends FormValue> = (value: T, settings: FormSettings) => unknown
@@ -40,10 +50,21 @@ export function BaseForm<T extends FormValue> ({
     flag = mergeDefaultValue(propFields, value)
     appliedDefault.current = true
   }
-  const [fields, setFields] = useState(propFields)
+  const processedPropFields = useMemo(() => {
+    return fieldsConstraintsToValidate(propFields)
+  }, [propFields])
+  const [fields, setFields] = useState(processedPropFields)
+  const [validateErrors, setValidateErrors] = useState<ValidateErrors>(undefined)
+  const validatorDictionary = useValidatorDictionary()
+  const validateErrorFormatter = useValidateErrorFormatter()
+  const getValidate = (value: T) => (): ValidateErrors => {
+    const error = validateForm(value, fields, validatorDictionary, validateErrorFormatter)
+    setValidateErrors(error)
+    return error
+  }
   const reduceFields: ReduceFields = reducer => setFields(reducer(fields))
   const changeHandler = (value: T): void => {
-    onChange(value, { reduceFields })
+    onChange(value, { reduceFields, validate: getValidate(value) })
   }
   useEffect(() => {
     if (flag) {
@@ -60,7 +81,7 @@ export function BaseForm<T extends FormValue> ({
     <React.Fragment>
       {Object.entries(fields).map(([fieldName, field]) => {
         const Component: FieldComponent<unknown> = getComponent(Components, field, fieldName)
-
+        const errors = validateErrors?.[fieldName]
         const changeHandler = generalizeValueCallback((value) => handleChange(fieldName, value))
 
         return (
@@ -70,6 +91,7 @@ export function BaseForm<T extends FormValue> ({
               value={value[fieldName]}
               name={fieldName}
               onChange={changeHandler}
+              errors={errors}
             />
           </FieldWrapper>
         )

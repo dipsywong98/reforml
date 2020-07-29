@@ -14,7 +14,7 @@ export const BaseSelect: BaseSelectComponent<unknown> = ({ value = '', options, 
     onChange?.(options[Number.parseInt(value)]?.value)
   }
   return (
-    <select className='form-control' onChange={handleChange} {...props}>
+    <select className='form-control' onChange={handleChange} value={options.findIndex(({ value: v }) => value === v) ?? ''} {...props}>
       <option value="">{props.placeholder}</option>
       {options.map(({ label }, index) => (
         <option key={label} value={index}>{label}</option>
@@ -32,46 +32,48 @@ export const BaseCheckbox: FunctionComponent = (props) => (
     {...props}
   />)
 
-export const HelperText: FunctionComponent = ({ ...props }) => <small className='box form-text text-muted' {...props} />
+export const HelperText: FunctionComponent = (props) => <small className='box form-text text-muted' {...props} />
 
-export const LabelText: FunctionComponent = ({ ...props }) => <label className='box form-label' {...props} />
+export const LabelText: FunctionComponent = (props) => <span className='box form-label' {...props} />
 
-export const FieldWrapper: FunctionComponent = ({ ...props }) => <div className='reforml-form-group' {...props} />
+export const Label: FunctionComponent = (props) => <label {...props} />
+
+export const FieldWrapper: FunctionComponent = (props) => <div className='reforml-form-group' {...props} />
 
 export { FieldDecoration } from './FieldDecoration'
 
-export const ListInputDecoration: FieldDecorationComponent = ({ label, helperText, children, ...props }) => (
+export const ListInputDecoration: FieldDecorationComponent = ({ required, errors, label, helperText, children, ...props }) => (
   <div>
     <div className='list-input-decoration' {...props}>
       {label !== undefined ? <div className='list-input-label'>
         <div>
-          {label}
+          {label}{required ?? false ? <Error> *</Error> : null}
         </div>
       </div> : null}
       <div>
         {children}
       </div>
     </div>
-    <small className='form-text text-muted' style={{ marginLeft: '0.75rem' }}>
-      {helperText}
-    </small>
+    {((helperText !== undefined || (errors !== undefined && errors !== null)) ? <HelperText>{helperText}{
+      ((errors !== undefined && errors !== null) ? <Box><Error>{errors.join()}</Error></Box> : null)
+    }</HelperText> : null)}
   </div>
 )
 ListInputDecoration.propTypes = FieldDecorationPropTypes
 
-export const ObjectInputDecoration: FieldDecorationComponent = ({ label, helperText, children, ...props }) => (
+export const ObjectInputDecoration: FieldDecorationComponent = ({ required, errors, label, helperText, children, ...props }) => (
   <div>
     <div className='object-input-decoration' {...props}>
       {label !== undefined ? <div className='object-input-label'>
-        {label}
+        {label}{required ?? false ? <Error> *</Error> : null}
       </div> : null}
       <div>
         {children}
       </div>
     </div>
-    <small className='form-text text-muted' style={{ marginLeft: '0.75rem' }}>
-      {helperText}
-    </small>
+    {((helperText !== undefined || (errors !== undefined && errors !== null)) ? <HelperText>{helperText}{
+      ((errors !== undefined && errors !== null) ? <Box><Error>{errors.join()}</Error></Box> : null)
+    }</HelperText> : null)}
   </div>
 )
 ObjectInputDecoration.propTypes = FieldDecorationPropTypes
@@ -96,6 +98,8 @@ Button.propTypes = {
   className: PropTypes.string
 }
 
+export const Error: FunctionComponent = (props) => <small style={{ color: 'red' }} {...props}/>
+
 export interface BaseComponents {
   BaseInput: BaseFieldComponent<string>
   BaseSelect: BaseSelectComponent<unknown>
@@ -110,4 +114,6 @@ export interface BaseComponents {
   Flex: FunctionComponent<{ className?: string }>
   Box: FunctionComponent<{ className?: string }>
   Button: FunctionComponent<{ className?: string } & React.HTMLProps<HTMLButtonElement>>
+  Error: FunctionComponent
+  Label: FunctionComponent
 }

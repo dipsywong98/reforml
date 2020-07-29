@@ -6,12 +6,22 @@ import { MultiSelectField, MultiSelectValue } from './multiSelect'
 import { ListField } from './list'
 import { ObjectField } from './object'
 import { FormValue } from '../FormValue'
+import { FieldValidators } from '../Validator'
 
 /**
  * Definition of any Field in yaml
  * Update this when new field is added
  */
-export type Field<T> = BasicField<T> | OptionsField<T> | BoolField<T> | MultiSelectField<MultiSelectValue<T>> | ListField<T> | ObjectField<FormValue>
+export type Field<T> = (
+  BasicField<T>
+  | OptionsField<T>
+  | BoolField<T>
+  | MultiSelectField<MultiSelectValue<T>>
+  | ListField<T>
+  | ObjectField<FormValue>
+) & {
+  validate?: FieldValidators<T>
+}
 
 /**
  * Definition of field dictionary

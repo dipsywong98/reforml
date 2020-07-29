@@ -12,6 +12,6 @@ export class UndefinedFieldTypeError extends Error {
         : `Field '${fieldName}'`
     ) + ` uses an undefined field type '${fieldType}',
      please make sure you had register a FieldComponent for this type in ReformlProvider, 
-     or specify another field type for this field`
+     or specify another field type for this field.`
   }
 }
