@@ -1,6 +1,7 @@
 import { fieldValidatorToNameFunctionAndParams, validateField } from './validateField'
-import { FieldValidators } from '../types/Validator'
+import { FieldValidator, FieldValidators } from '../types/Validator'
 import { defaultValidateErrorFormatter } from './defaultValidateErrorFormatter'
+import { WrongValidatorSettingError } from '../errors/WrongValidatorSettingError'
 
 describe('fieldValidatorToNameFunctionAndParams', () => {
   it('can extract by validator name', () => {
@@ -9,7 +10,6 @@ describe('fieldValidatorToNameFunctionAndParams', () => {
     const validatorDictionary = {
       isFoo: foo
     }
-
     expect(fieldValidatorToNameFunctionAndParams(fieldValidator, validatorDictionary)).toEqual(['isFoo', foo, []])
   })
 
@@ -43,6 +43,18 @@ describe('fieldValidatorToNameFunctionAndParams', () => {
     }
 
     expect(fieldValidatorToNameFunctionAndParams(fieldValidator, validatorDictionary)).toEqual(['isEqual', equal1, ['foo']])
+  })
+
+  it('should throw if the field validation setting is wrong', () => {
+    const fieldValidator: FieldValidator<unknown> = [] as unknown as FieldValidator<unknown>
+    const equal1 = (value: string, compare: string): boolean => value === compare
+    const validatorDictionary = {
+      isEqual: equal1
+    }
+    const t = (): void => {
+      fieldValidatorToNameFunctionAndParams(fieldValidator, validatorDictionary)
+    }
+    expect(t).toThrow(WrongValidatorSettingError)
   })
 })
 

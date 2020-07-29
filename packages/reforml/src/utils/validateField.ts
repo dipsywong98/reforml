@@ -6,6 +6,7 @@ import {
   FieldValidators
 } from '../types/Validator'
 import { ValidateErrorFormatter } from '../types'
+import { WrongValidatorSettingError } from '../errors/WrongValidatorSettingError'
 
 export const fieldValidatorToNameFunctionAndParams = <T> (fieldValidator: FieldValidator<T>, validatorDictionary: ValidatorDictionary): [string, Validator<T>, never[]] => {
   let ruleName = ''
@@ -27,7 +28,7 @@ export const fieldValidatorToNameFunctionAndParams = <T> (fieldValidator: FieldV
       params.push(validatorParams as never)
     }
   } else {
-    throw new Error('Wrong Validator Settings')
+    throw new WrongValidatorSettingError()
   }
   return [ruleName, validate, params]
 }

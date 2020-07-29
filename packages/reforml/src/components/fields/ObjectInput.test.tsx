@@ -5,6 +5,7 @@ import { BaseForm } from '../..'
 import React from 'react'
 import { container } from '../../utils/testHelper'
 import { fireEvent } from '@testing-library/react'
+import { ObjectInput } from './ObjectInput'
 
 describe('ObjectInput', () => {
   it('can render minimal object form', () => {
@@ -83,5 +84,19 @@ describe('ObjectInput', () => {
         f1: 'default value'
       }
     })
+  })
+
+  it('should throw Error if onChange is not given', () => {
+    const t = (): void => {
+      render(<ObjectInput />, container)
+    }
+    expect(t).toThrow(Error)
+  })
+
+  it('should throw MissingAttributeError if field is not given', () => {
+    const t = (): void => {
+      render(<ObjectInput onChange={() => {}}/>, container)
+    }
+    expect(t).toThrow(Error)
   })
 })

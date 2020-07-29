@@ -38,6 +38,9 @@ describe('defaultValidators', () => {
     it('should return false when value - min is not integer multiplication of step', () => {
       expect(defaultValidators?.step?.(1 as never, 0.3 as never, 0 as never)).toEqual(false)
     })
+    it('should return false when value is not number or date', () => {
+      expect(defaultValidators?.step?.('1' as never, 0.2 as never, 0 as never)).toEqual(false)
+    })
   })
 
   describe('minLength', () => {
