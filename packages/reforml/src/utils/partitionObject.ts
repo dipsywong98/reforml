@@ -9,9 +9,9 @@ export const partitionObject = (object: PartitionableObject, keys: string[]): [P
   const set = new Set(keys)
   return Object.keys(object).reduce<[PartitionableObject, PartitionableObject]>((prev, key) => {
     if (set.has(key)) {
-      prev[0][key] = object[key] as unknown
+      prev[0][key] = object[key]
     } else {
-      prev[1][key] = object[key] as unknown
+      prev[1][key] = object[key]
     }
     return prev
   }, [{}, {}])
