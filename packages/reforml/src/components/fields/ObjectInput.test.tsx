@@ -95,7 +95,7 @@ describe('ObjectInput', () => {
 
   it('should throw MissingAttributeError if field is not given', () => {
     const t = (): void => {
-      render(<ObjectInput onChange={() => {}}/>, container)
+      render(<ObjectInput onChange={console.log}/>, container)
     }
     expect(t).toThrow(Error)
   })
