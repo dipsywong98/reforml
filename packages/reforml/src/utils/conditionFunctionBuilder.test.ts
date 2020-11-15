@@ -129,4 +129,22 @@ describe('conditionFunctionBuilder', () => {
       }
     })).toBeFalsy()
   })
+  it('condition with undefined rhs should always false', () => {
+    const condition = {
+      foo: {
+        $eq: undefined,
+        $neq: undefined,
+        $gt: undefined,
+        $gte: undefined,
+        $lte: undefined,
+        $lt: undefined,
+        $in: undefined,
+        unknown: undefined
+      }
+    }
+    const fn = conditionFunctionBuilder(condition)
+    expect(fn({
+      foo: 456
+    })).toBeFalsy()
+  })
 })
