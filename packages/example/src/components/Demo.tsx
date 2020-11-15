@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState } from 'react'
-import 'reforml/dist/index.css'
 import { FormSettings, FormChangeHandler, FormValue, BaseForm, Fields, ReformlProvider } from 'reforml'
 import jsyaml from 'js-yaml'
+import 'reforml/dist/index.css'
 
 import fields from './form.yml'
+import { MaterialBaseComponents, MaterialFieldComponents } from '@reforml/material-ui'
 
 const Demo: FunctionComponent = () => {
   const [value, setValue] = useState({})
@@ -18,7 +19,7 @@ const Demo: FunctionComponent = () => {
     setValue(v)
   }
   return (
-    <ReformlProvider validatorDictionary={{isFoo(value: string): boolean{return value === 'Foo'}, isEqual(value: unknown, comp: unknown): boolean{return value === comp}}}>
+    <ReformlProvider baseComponents={MaterialBaseComponents} fieldComponents={MaterialFieldComponents} validatorDictionary={{isFoo(value: string): boolean{return value === 'Foo'}, isEqual(value: unknown, comp: unknown): boolean{return value === comp}}}>
       <div style={{ display: 'flex', width: '100%', margin: 'auto' }}>
         <div style={{ flex: 1 }}>
           <code>

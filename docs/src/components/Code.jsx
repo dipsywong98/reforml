@@ -16,6 +16,7 @@ import * as Reforml from 'reforml'
 import jsyaml from 'js-yaml'
 import DatePicker from './DatePicker'
 import 'reforml/dist/index.css'
+import { MaterialBaseComponents, MaterialFieldComponents } from '@reforml/material-ui'
 
 const scope = {
   ...Rebass,
@@ -26,6 +27,8 @@ const scope = {
   ThemeProvider,
   jsyaml,
   DatePicker,
+  MaterialBaseComponents,
+  MaterialFieldComponents,
   props: {
     image: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=2048&q=20',
     countries
@@ -92,8 +95,9 @@ const Code = ({
       <LiveProvider
         {...props}
         code={code}
-        scope={scope}>
-        <Preview fullwidth/>
+        scope={scope}
+      >
+        <Preview fullwidth />
       </LiveProvider>
     )
   }
@@ -104,23 +108,26 @@ const Code = ({
       <LiveProvider
         {...props}
         code={code}
-        scope={scope}>
+        scope={scope}
+      >
         <Flex
           sx={{
             mb: 4,
             border: t => `1px solid ${t.colors.muted}`,
             borderRadius: 2,
-            flexDirection: ['column',null,'row']
-          }}>
+            flexDirection: ['column', null, 'row']
+          }}
+        >
           <Box
             sx={{
               flex: 1,
               position: 'relative'
-            }}>
+            }}
+          >
             <Editor
               className={className}
             />
-            <Err/>
+            <Err />
             <Box
               sx={{
                 position: 'absolute',
@@ -132,11 +139,12 @@ const Code = ({
                 fontSize: 0,
                 fontWeight: 'bold',
                 color: 'accent'
-              }}>
+              }}
+            >
               Live Demo
             </Box>
           </Box>
-          <Box as={Preview} sx={{flex: 1}}/>
+          <Box as={Preview} sx={{ flex: 1 }} />
         </Flex>
       </LiveProvider>
     )

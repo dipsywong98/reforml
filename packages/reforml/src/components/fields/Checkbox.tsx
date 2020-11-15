@@ -23,7 +23,7 @@ export const Checkbox: BoolFieldComponent<unknown> = (props) => {
   return (
     <Box>
       <Label>
-        <Flex>
+        <Flex style={{ alignItems: 'baseline' }}>
           <Box>
             <BaseCheckbox onChange={handleChange} checked={flag} {...otherProps} />
           </Box>

@@ -80,13 +80,13 @@ ObjectInputDecoration.propTypes = FieldDecorationPropTypes
 
 export const ListInputCreateBox: FunctionComponent = (props) => <div className='list-input-create-box' {...props}/>
 
-export const Flex: FunctionComponent<{ className?: string }> = ({ className = '', ...props }) =>
+export const Flex: FunctionComponent<{ className?: string, style?: Record<string, string> }> = ({ className = '', ...props }) =>
   <div className={`flex ${className}`} {...props}/>
 Flex.propTypes = {
   className: PropTypes.string
 }
 
-export const Box: FunctionComponent<{ className?: string }> = ({ className = '', ...props }) =>
+export const Box: FunctionComponent<{ className?: string, style?: Record<string, string> }> = ({ className = '', ...props }) =>
   <div className={`box ${className}`} {...props}/>
 Box.propTypes = {
   className: PropTypes.string
@@ -111,8 +111,8 @@ export interface BaseComponents {
   ObjectInputDecoration: FieldDecorationComponent
   ListInputCreateBox: FunctionComponent
   FieldDecoration: FieldDecorationComponent
-  Flex: FunctionComponent<{ className?: string }>
-  Box: FunctionComponent<{ className?: string }>
+  Flex: FunctionComponent<{ className?: string, style?: Record<string, string> }>
+  Box: FunctionComponent<{ className?: string, style?: Record<string, string> }>
   Button: FunctionComponent<{ className?: string } & React.HTMLProps<HTMLButtonElement>>
   Error: FunctionComponent
   Label: FunctionComponent
