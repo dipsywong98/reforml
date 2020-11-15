@@ -39,6 +39,7 @@
     "@testing-library/react": "^10.4.4",
     "@testing-library/react-hooks": "^3.3.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/get-value": "^3.0.1",
     "@types/jest": "^25.1.4",
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
@@ -72,5 +73,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "get-value": "^3.0.1"
+  }
 }

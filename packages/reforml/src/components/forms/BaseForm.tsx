@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import {
+  Field,
   FieldComponent,
   FieldComponents,
   Fields,
@@ -15,6 +16,7 @@ import { useValidatorDictionary } from '../ValidatorDictionaryContext'
 import { validateForm } from '../../utils/validateForm'
 import { fieldsConstraintsToValidate } from '../../utils/fieldsConstraintsToValidate'
 import { useValidateErrorFormatter } from '../ValidatorErrorFormatterContext'
+import { getIfFilter } from '../../utils/getIfFilter'
 
 export const BaseFormPropTypes = {
   onChange: PropTypes.func,
@@ -53,7 +55,7 @@ export function BaseForm<T extends FormValue> ({
   const processedPropFields = useMemo(() => {
     return fieldsConstraintsToValidate(propFields)
   }, [propFields])
-  const [fields, setFields] = useState(processedPropFields)
+  const [fields, setFields] = useState<Record<string, Field<unknown>>>(processedPropFields)
   const [validateErrors, setValidateErrors] = useState<ValidateErrors>(undefined)
   const validatorDictionary = useValidatorDictionary()
   const validateErrorFormatter = useValidateErrorFormatter()
@@ -79,7 +81,7 @@ export function BaseForm<T extends FormValue> ({
     // TODO: IDK how to remove this fragment without conflicting the type
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <React.Fragment>
-      {Object.entries(fields).map(([fieldName, field]) => {
+      {Object.entries(fields).filter(([, field]) => getIfFilter(value, 'showIf')([undefined, field])).map(([fieldName, { showIf, ...field }]) => {
         const Component: FieldComponent<unknown> = getComponent(Components, field, fieldName)
         const errors = validateErrors?.[fieldName]
         const changeHandler = generalizeValueCallback((value) => handleChange(fieldName, value))

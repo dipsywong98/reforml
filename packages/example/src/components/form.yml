@@ -1,8 +1,14 @@
 myTextField:
   type: text
   label: a simple text field
-  helperText: some helper text
+  helperText: some helper text, type 'foo' will show hidden field
   required: true
+ifcondition:
+  label: showIf myTextField is foo
+  type: text
+  showIf:
+    myTextField:
+      $eq: foo
 myConstrainedTextField:
   type: text
   label: a simple text field
@@ -37,6 +43,15 @@ check:
   type: checkbox
   label: check me!
   helperText: some helper text
+  required: true
+ifbool:
+  label: showIf check
+  type: checkbox
+  showIf: check
+checkTrue123:
+  type: checkbox
+  label: check and it will be 123!
+  helperText: some helper text
   trueValue: 123
   required: true
 check_group:
@@ -70,15 +85,33 @@ text_ll:
   inlineDelete: true
   placeholder: new text
   required: true
+f0:
+  type: text
+  label: show when input foo in list of text
+  showIf:
+    text_ll.0:
+      $eq: foo
 object:
   type: object
   label: Object Field
   helperText: this is an object field
   fields:
     field1:
-      label: 'f1'
-      type: 'text'
+      label: f1
+      type: text
+    field2:
+      label: f2
+      type: text
+      showIf:
+        field1:
+          $eq: foo
   required: true
+field3:
+  label: f3
+  type: text
+  showIf:
+    object.field1:
+      $eq: foo
 copy:
   label: the label will be same as input content
   type: 'text'
