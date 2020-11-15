@@ -81,7 +81,7 @@ export function BaseForm<T extends FormValue> ({
     // TODO: IDK how to remove this fragment without conflicting the type
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <React.Fragment>
-      {Object.entries(fields).filter(([, field]) => getIfFilter(value, 'showIf')([, field])).map(([fieldName, { showIf, ...field }]) => {
+      {Object.entries(fields).filter(([, field]) => getIfFilter(value, 'showIf')([undefined, field])).map(([fieldName, { showIf, ...field }]) => {
         const Component: FieldComponent<unknown> = getComponent(Components, field, fieldName)
         const errors = validateErrors?.[fieldName]
         const changeHandler = generalizeValueCallback((value) => handleChange(fieldName, value))

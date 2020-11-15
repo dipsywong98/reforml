@@ -4,7 +4,7 @@ import get from 'get-value'
 
 export const conditionFunctionBuilder = (condition: Condition) => (formValue: FormValue): boolean => {
   return Object.entries(condition).map(([fieldName, compare]): boolean => {
-    const lhs = get(formValue, fieldName)
+    const lhs = get(formValue, fieldName) as string | number | boolean | symbol
     return Object.keys(compare).map((operator): boolean => {
       switch (operator) {
         case Comparison.EQ:
@@ -46,7 +46,7 @@ export const conditionFunctionBuilder = (condition: Condition) => (formValue: Fo
         case Comparison.IN: {
           const rhs = compare[operator]
           if (Array.isArray(rhs)) {
-            return rhs.includes(lhs as string | number | boolean | symbol)
+            return rhs.includes(lhs)
           } else {
             return false
           }
