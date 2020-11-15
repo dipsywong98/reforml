@@ -34,7 +34,9 @@ You can directly supply a field name of boolean field. If that boolean field is 
 
 ## Depend on any field
 
-You can directly supply a field name to comparison map to determine whether this field should show. Here are the list of supported operators:
+You can directly supply a field name to comparison map to determine whether this field should show.
+You may use . to denote value inside a nest field, for example if form value is `{foo: {bar: 1}}` you can use `{'foo.bar': {$eq: 1}`.
+Here are the list of supported operators:
 
 |key|description|
 |---|-----------|

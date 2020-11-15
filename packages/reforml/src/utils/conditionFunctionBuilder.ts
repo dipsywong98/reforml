@@ -1,9 +1,10 @@
 import { Comparison, Condition } from '../types/Condition'
 import { FormValue } from '../types'
+import get from 'get-value'
 
 export const conditionFunctionBuilder = (condition: Condition) => (formValue: FormValue): boolean => {
   return Object.entries(condition).map(([fieldName, compare]): boolean => {
-    const lhs = formValue[fieldName]
+    const lhs = get(formValue, fieldName)
     return Object.keys(compare).map((operator): boolean => {
       switch (operator) {
         case Comparison.EQ:

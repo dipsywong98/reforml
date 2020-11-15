@@ -110,4 +110,23 @@ describe('conditionFunctionBuilder', () => {
       foo: 12
     })).toBeFalsy()
   })
+  it('can check nested value', () => {
+    const condition: Condition = {
+      'foo.bar': {
+        $eq: 123
+      }
+    }
+    const fn = conditionFunctionBuilder(condition)
+
+    expect(fn({
+      foo: {
+        bar: 123
+      }
+    })).toBeTruthy()
+    expect(fn({
+      foo: {
+        bar: 456
+      }
+    })).toBeFalsy()
+  })
 })
