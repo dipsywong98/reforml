@@ -1,0 +1,85 @@
+# Show If
+
+Reforml provides way to decide whether to show a field depending on value of other field
+
+## Depend on boolean field
+
+You can directly supply a field name of boolean field. If that boolean field is true, this field will show.
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const handleChange = (newValue) => {
+    setValue(newValue)
+  }
+  const fields = useMemo(() => jsyaml.load(`
+  showHidden:
+    type: checkbox
+    label: show hidden field
+    defaultVal: true
+  myText:
+    type: text
+    label: Input some value
+    showIf: showHidden
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={handleChange}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
+
+## Depend on any field
+
+You can directly supply a field name to comparison map to determine whether this field should show. Here are the list of supported operators:
+
+|key|description|
+|---|-----------|
+|$eq|equal|
+|$neq|not equal|
+|$gt|greater than|
+|$gte|greater than or equal|
+|$lte|less than or equal|
+|$lt|less than|
+|$in|is member of array|
+
+
+```jsx live=true
+() => {
+  const [value, setValue] = useState({})
+  const handleChange = (newValue) => {
+    setValue(newValue)
+  }
+  const fields = useMemo(() => jsyaml.load(`
+  showHiddenIfShow:
+    type: text
+    label: type show to show the hidden field
+    defaultVal: show
+  myText:
+    type: text
+    label: show when showHiddenIfShow is show
+    showIf:
+      showHiddenIfShow:
+        $eq: show
+  myText2:
+    type: text
+    label: Shown when matches any of show's
+    showIf:
+      showHiddenIfShow:
+        $in:
+          - show
+          - Show
+          - sHoW
+  `), [])
+  return (
+    <div>
+      <BaseForm fields={fields} value={value} onChange={handleChange}/>
+      value:
+      <pre>{JSON.stringify(value, null, 2)}</pre>
+    </div>
+  )
+}
+```
