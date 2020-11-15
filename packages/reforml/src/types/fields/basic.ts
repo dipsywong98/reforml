@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react'
 import PropTypes from 'prop-types'
 import { ValueEventCallback } from '../ValueEventCallback'
 import { FieldValidateError } from '../ValidateErrors'
+import { IfFieldType } from '../IfFieldKey'
 
 export interface BasicField<T> {
   type?: string
@@ -13,6 +14,7 @@ export interface BasicField<T> {
   createLabel?: string
   inlineDelete?: boolean
   required?: boolean
+  showIf?: IfFieldType
   [key: string]: unknown | undefined
   [key: number]: unknown | undefined
 }
