@@ -1,7 +1,7 @@
 {
   "name": "@reforml/example",
   "homepage": "https://dipsywong98.github.io/reforml",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
@@ -14,6 +14,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@reforml/material-ui": "^0.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.4.4",
     "@testing-library/user-event": "^7.2.1",
@@ -26,8 +27,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
-    "reforml": "^0.3.0",
-    "@reforml/material-ui": "^0.3.0",
+    "reforml": "^0.4.0",
     "typescript": "^3.9.5"
   },
   "devDependencies": {
