@@ -19,7 +19,6 @@
     "watch:css": "node-sass --watch --output-style expanded src/stylesheets/index.scss -o dist/",
     "start": "run-p watch:**",
     "watch": "run-p watch:**",
-    "prepublishOnly": "run-s build",
     "test": "run-s test:unit test:eslint test:build",
     "test:build": "run-s build",
     "test:lint": "run-p test:eslint test:sass-lint",
