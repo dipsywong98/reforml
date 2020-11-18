@@ -9,6 +9,7 @@ import { getComponent } from '../../utils'
 import { partitionDecorationProps } from '../../utils/partitionDecorationProps'
 import { FieldDecorationComponent } from '../base/FieldDecoration'
 import { FieldValidateError } from '../../types/ValidateErrors'
+import { Remove } from '../svg/Remove'
 
 export type ListInputComponentProps<T> = CommonFieldComponentProps<T> & Field<T> & {
   onDelete?: () => unknown
@@ -52,7 +53,7 @@ const DefaultInputComponent: ListInputComponent<unknown> = ({
           />
         </Box>
         <Box>
-          {!isCreating && deletable ? <Button className='btn-danger' onClick={onDelete}>Delete</Button> : null}
+          {!isCreating && deletable ? <Button className='btn-danger' onClick={onDelete}><Remove/></Button> : null}
         </Box>
       </Box>
     </Box>

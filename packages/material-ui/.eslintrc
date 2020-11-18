@@ -1,0 +1,91 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jquery": true
+  },
+  "extends": [
+    "standard-with-typescript",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "settings": {
+    "react": {
+      "version": "16.12"
+    }
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "react"
+  ],
+  "rules": {
+    "react/jsx-max-props-per-line": [
+      2,
+      {
+        "when": "multiline"
+      }
+    ],
+    "react/jsx-first-prop-new-line": [
+      2,
+      "multiline"
+    ],
+    "react/jsx-closing-bracket-location": [
+      2,
+      {
+        "nonEmpty": "after-props",
+        "selfClosing": "tag-aligned"
+      }
+    ],
+    "react/jsx-no-useless-fragment": [
+      2
+    ],
+    "react/jsx-pascal-case": [
+      2
+    ],
+    "react/jsx-props-no-multi-spaces": [
+      2
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.js",
+        "*.jsx"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/prefer-regexp-exec": "off",
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": [
+        "*.js",
+        "*.jsx",
+        "*.ts",
+        "*.tsx"
+      ],
+      "rules": {
+        "@typescript-eslint/camelcase": "off"
+      }
+    }
+  ]
+}

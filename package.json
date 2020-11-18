@@ -12,7 +12,6 @@
     "build": "cd packages/reforml && yarn build",
     "watch": "cd packages/reforml && yarn start",
     "example": "cd packages/example && yarn start",
-    "prepublishOnly": "cd packages/reforml && yarn prepublishOnly",
     "test": "run-s test:*",
     "test:build": "yarn workspace reforml test:build",
     "test:lint": "yarn workspace reforml test:lint",

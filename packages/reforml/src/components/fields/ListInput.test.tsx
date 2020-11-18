@@ -36,7 +36,7 @@ describe('ListInput', () => {
     const input3 = screen.getByDisplayValue('edited value')
     expect(input3).toBeTruthy()
     expect(input3).toBe(input2)
-    const deleteButton = screen.getByText('Delete')
+    const deleteButton = screen.getByRole('button')
     expect(deleteButton).toBeTruthy()
     fireEvent.click(deleteButton)
     expect(value).toEqual({
