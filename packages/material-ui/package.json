@@ -1,6 +1,6 @@
 {
   "name": "@reforml/material-ui",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "material-ui binding for reforml, the react form defined by yaml",
   "author": "dipsywong98",
   "license": "MIT",

@@ -2,7 +2,7 @@
   "private": true,
   "name": "@reforml/docs",
   "homepage": "https://dipsywong98.github.io/reforml",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -22,7 +22,7 @@
     "@rebass/preset": "^4.0.5",
     "@rebass/preset-material": "^4.0.5",
     "@rebass/space": "^4.0.5",
-    "@reforml/material-ui": "^0.4.0",
+    "@reforml/material-ui": "^0.4.1",
     "@theme-ui/presets": "^0.3.0",
     "@theme-ui/prism": "^0.3.0",
     "@theme-ui/sidenav": "^0.3.1",
